@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"><!-- Aqui se agrega el bootstrap de las tablas-->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+    <title>Document</title>
+</head>
+<body>
+    <h1 class="titulo">Iowa Gambling Task</h1>
+    <h2 class="subtitulo">Iniciar Sesion</h2>
+    <section class="middle">
+        <form action="javascript:void(0);" class="formulario" autocomplete="off">
+            <ul>
+                <li>
+                    <label for="correo">Correo Electronico</label><br>
+                    <input type="text" name="correo" class="campo" placeholder = "juanPerez@gmail.com" maxlength="40">
+                </li>   
+                <li>
+                    <label for="contraseñas">Contraseña</label><br>
+                    <input type="password" name="password" class="campo" placeholder = "Contraseña" pattern = "[a-zA-Z\d\w\s\D\W]{6-15}" autocomplete="new-password"  maxlength="15"><br>
+                </li>      
+            </ul>
+            <a href="opciones.html">
+                <button class="boton" href="opciones.html" type="button">Ingresar</button><br>
+            </a>
+            <small>
+                <a href="registro.html" class="link">Registrarse</a>
+            </small>
+        </form>
+    </section>
+    
+</body>
+</html>
