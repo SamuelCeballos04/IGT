@@ -10,6 +10,7 @@ body {
     font-size: 2em;
     text-align: center;
     margin-top: 1em;
+    display: block;
 
 }
 
@@ -108,6 +109,10 @@ body {
    
     padding: 10px 0px 0px 0px;
 }
+.formulario .label{
+    display: inline-block;
+}
+
 .formulario ul {
     width: 100%;
     padding-inline-start: 0px;
@@ -117,12 +122,12 @@ body {
     width: 49%;
     display: inline-block;
     margin: 0em 2em 0em 2em;
-
 }
 
 .formulario ul li > * {
     width: 100%;
 }
+
 .formulario .boton {
     background-color: #D99729;
     color: white;
@@ -167,6 +172,28 @@ body {
     font-weight: bold;
 }
 
+.formulario .boton3 {
+    background-color: #D99729;
+    color: white;
+    border-radius: 15px;
+    border-color: #D99729;
+    border-style: solid;
+    padding: 5px 15px;
+    margin-top: 15px;
+    width: 35%;
+    height: 45px;
+    font-size: medium;
+    font-weight: bold;
+}
+
+.formulario .boton3:hover{
+    background-color: #eebb2e;
+    color: #2C2C2C;
+    text-decoration: none;
+    box-shadow: 4px 4px;
+    font-weight: bold;
+}
+
 .formulario .campo {
     background-color: rgba(37, 37, 37, .61);
     border-radius: 5px;
@@ -177,6 +204,42 @@ body {
     margin-bottom: 10px;
     color: white;
     
+}
+
+.formulario2 {
+    margin: auto;
+    display: block;
+    text-align: center;
+    font-size: 18px;
+}
+
+.formulario2 ul li > * {
+    width: 100%;
+
+}
+
+.formulario2 ul {
+    width: 100%;
+    padding-inline-start: 0px;
+    padding-top: 50px;
+}
+
+.formulario2 ul li {
+    width: 49%;
+    display: inline-flex;
+    margin: 0em 2em 0em 2em;
+    color: white;
+    text-align: center;
+}
+
+.formulario2 label {
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    display: inline-flex;
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+
 }
 
 .link {
@@ -242,3 +305,17 @@ body {
     height: -webkit-fill-available;
     position: absolute;  
 }
+
+.perfil {
+    position: absolute;
+    top: 15px;
+    right: 300px;
+  }
+
+.profileButton{
+    background-color:#2D3264;
+    border-color: #2D3264;
+    border-style: solid;
+}
+
+
