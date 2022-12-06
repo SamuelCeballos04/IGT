@@ -13,15 +13,15 @@
 </head>
 <body onload="onload()">
     <h1 class="titulo">Iowa Gambling Task</h1>
-    <h2 class="subtitulo">Escala de Impulsividad Estado (EIE)</h2>
+    
     <section class="pregunta">
         <h2 class="texto" id="texto">1.- Busco actividades en las que obtengo un placer rápido, aunque sean perjudiciales</h2>
         <div class="btn-group d-flex align-items-center" role="group" aria-label="Basic mixed styles example">
-            <button type="button" class="btn btn-secondary" onclick="activar(this)">0</button>
-            <button type="button" class="btn btn-secondary" onclick="activar(this)">1</button>
-            <button type="button" class="btn btn-secondary" onclick="activar(this)">2</button>
-            <button type="button" class="btn btn-secondary" onclick="activar(this)">3</button>
-            <button type="button" class="btn btn-secondary" onclick="activar(this)">4</button>
+            <button type="button" class="btn btn-info" onclick="activar(this)">Nunca</button>
+            <button type="button" class="btn btn-info" onclick="activar(this)">Rara Vez</button>
+            <button type="button" class="btn btn-info" onclick="activar(this)">Algunas Veces</button>
+            <button type="button" class="btn btn-info" onclick="activar(this)">Con Frecuencia</button>
+            <button type="button" class="btn btn-info" onclick="activar(this)">Muy Frecuentemente</button>
         </div>
         <a id="link">
             <button type="button" class="btn btn-light enviar" id="siguiente"disabled onclick="pasar()">Siguiente</button>
