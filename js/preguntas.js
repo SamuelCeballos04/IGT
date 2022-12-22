@@ -2,6 +2,7 @@ let preguntas = ["2.- Suelo caer en tentaciones que me dificultan cumplir con un
 var i=0
 let intervalo = 100/preguntas.length;
 let progreso = 0
+var valor = 0
 
 window.addEventListener("beforeunload", function(event) {
     event.returnValue = "Write something clever here..";
@@ -15,9 +16,10 @@ async function onload(){
 }
 
 
-async function activar(element){
+async function activar(element, val){
     bt= document.getElementById("siguiente");
     bt.disabled = false;
+    valor = val;
 }
 
 async function enviar(){
@@ -33,6 +35,7 @@ async function pasar(){
         btn.id="resultados";
         document.getElementById("resultados").setAttribute("onclick", "enviar()")
     }
+    console.log("El valor es ", valor)
     console.log(preguntas.length)
     progreso = intervalo + progreso
     console.log(progreso)
