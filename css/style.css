@@ -24,6 +24,16 @@ body {
     margin-top: 1em;
 }
 
+.usuario{
+    top: 10%;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #2D3264;
+    color: white;   
+    font-size: 50em;
+    text-align: left;
+    margin-top: 1em;
+}
+
 .pregunta {
     margin: 0;
     position: absolute;
@@ -316,6 +326,5 @@ body {
     background-color:#2D3264;
     border-color: #2D3264;
     border-style: solid;
+    
 }
-
-
