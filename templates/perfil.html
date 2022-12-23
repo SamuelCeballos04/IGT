@@ -19,15 +19,15 @@
         <ul>
             <li>
                 <label for="nombre">Nombre:</label>
-                <label for="nombre">Juan Ulises</label>
+                <label for="nombre">{{data[1]}}</label>
             </li>
             <li>
                 <label for="edad">Edad:</label>
-                <label for="edad">20</label>
+                <label for="edad">{{edad}} años</label>
             </li>   
             <li>
                 <label for="escolaridad">Escolaridad:</label>
-                <label for="escolaridad">Bachillerato</label>
+                <label for="escolaridad">{{data[5]}}</label>
             </li>   
             <li>
                 <label for="sexo">Sexo:</label>
@@ -35,25 +35,25 @@
             </li>
             <li>
                 <label for="sexo">Teléfono:</label>
-                <label for="sexo">3365412984</label>
+                <label for="sexo">{{data[4]}}</label>
             </li>
             <li>
                 <label for="correo">Correo Electrónico:</label>
-                <label for="correo">micorreo@gmail.com</label>
+                <label for="correo">{{data[7]}}</label>
             </li>   
             <li>
                 <label for="contraseñas">Contraseña:</label>
-                <label for="contraseñas">Hola1234</label>
+                <label for="contraseñas">{{data[8]}}</label>
             </li>      
         </ul>
     </form>
     <section class="bottom">
         <form action="javascript:void(0);" class="formulario" autocomplete="off">
-            <a href="editarDatos.html">
+            <a href="{{url_for('editarDatos')}}">
                 <button type="button" class="boton3" href="pregunta.html">Editar tus datos</button><br>
             </a>
-            <a href = "opciones.html">
-                <button type="button" class="boton3" href="pregunta.html">Volver</button><br>
+            <a href = "{{url_for('opciones')}}">
+                <button type="button" class="boton3">Volver</button><br>
             </a>
         </form>
 

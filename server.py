@@ -1,5 +1,7 @@
-from flask import Flask, render_template, request, redirect, url_for, make_response,flash
+from flask import Flask, render_template, request, redirect, url_for, make_response,flash, session
 from conexion import conexion
+from datetime import datetime, timedelta
+import math
 
 database = conexion()
 
@@ -9,6 +11,8 @@ app.secret_key='secreta'
 
 @app.route('/')
 def index():
+    session['my_var'] = ''
+    session['my_var2'] = ''
     return redirect(url_for('login'))
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -29,7 +33,10 @@ def login():
                 band = False
             if band == True:   
                 if data[7] == user and data[8] == password:
-                    return redirect(url_for('opciones')) 
+                    session['my_var'] = user
+                    session['my_var2'] = password
+                    session['my_var3'] = data[1]
+                    return redirect(url_for('opciones'))
             elif band == False:
                 return redirect(url_for('login'))
 
@@ -38,20 +45,50 @@ def login():
 
 @app.route('/opciones')
 def opciones():
-    
-    
-    
-    return render_template('opciones.html')
+    user = session.get('my_var', None)
+    password = session.get('my_var2', None)
+    if user == '' and password == "":
+        return redirect(url_for('login'))
+    else:
+        my_var3 = session.get('my_var3', None)
+        return render_template('opciones.html', name=my_var3)
 
 @app.route('/perfil')
 def perfil():
-    
-    return render_template('perfil.html')
+    user = session.get('my_var', None)
+    password = session.get('my_var2', None)
+    if user == '' and password == "":
+        return redirect(url_for('login'))
+    else:
+        if database:
+            cursor = database.cursor()
+            cursor.execute("SELECT * FROM participante WHERE correo=%s AND contraseña=%s;", (user, password))
+            data = cursor.fetchone()
+            print("Data: ", data)
+            print("Fecha de nacimiento: ", data[3])
+            fechaActual = datetime.now()
+            fechaFinal = fechaActual.date()
+            print("Fecha final: ", fechaFinal)
+            edadDias = fechaFinal - data[3]
+            print("Edad: ", edadDias)
+            año = timedelta(days=365)
+            print("Año: ", año)
+            print(type(año))
+            print(type(edadDias))
+            edad = edadDias / año
+            print("Edad final: ", edad)
+            edad = math.trunc(edad)
+            print("Edad final en enteros: ", edad)
+        return render_template('perfil.html', data = data, edad=edad)
 
 @app.route('/pregunta')
 def pregunta():
-    
-    return render_template('pregunta.html')
+    user = session.get('my_var', None)
+    password = session.get('my_var2', None)
+    if user == '' and password == "":
+        return redirect(url_for('login'))
+    else:
+        return render_template('pregunta.html')
 
 @app.route('/registro', methods=['GET', 'POST'])
 def registro():
@@ -84,6 +121,14 @@ def registro():
                 return redirect(url_for('registro'))
     return render_template('registro.html')
 
+@app.route('/editarDatos', methods=['GET', 'POST'])
+def editarDatos():
+    user = session.get('my_var', None)
+    password = session.get('my_var2', None)
+    if user == '' and password == "":
+        return redirect(url_for('login'))
+    else:
+        return render_template('editarDatos.html')
 
 
 '''
