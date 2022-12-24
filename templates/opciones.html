@@ -25,9 +25,13 @@
     <section class="middle">
         <form action="{{url_for('pregunta')}}" method = 'get' class="formulario" autocomplete="off">
             <a href="{{url_for('pregunta')}}">
-            <button type="button" class="boton2" action="{{url_for('pregunta')}}">Comenzar encuesta</button><br>
+                <button type="button" class="boton2" action="{{url_for('pregunta')}}">Comenzar encuesta</button><br>
             </a>
         </form>
+
+        <a href="{{url_for('login')}}">
+                <button class="boton" style = "text-align: center; display: inline; margin-left: 46.5%" action="{{url_for('login')}}" type="submit">Salir</button>
+        </a>
 
     </section>
     

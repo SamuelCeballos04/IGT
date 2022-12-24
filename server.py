@@ -43,7 +43,7 @@ def login():
 
     return render_template('login.html')
 
-@app.route('/opciones')
+@app.route('/opciones', methods=["GET", "POST"])
 def opciones():
     user = session.get('my_var', None)
     password = session.get('my_var2', None)
@@ -53,7 +53,7 @@ def opciones():
         my_var3 = session.get('my_var3', None)
         return render_template('opciones.html', name=my_var3)
 
-@app.route('/perfil')
+@app.route('/perfil', methods=['GET', 'POST'])
 def perfil():
     user = session.get('my_var', None)
     password = session.get('my_var2', None)
@@ -79,7 +79,12 @@ def perfil():
             print("Edad final: ", edad)
             edad = math.trunc(edad)
             print("Edad final en enteros: ", edad)
-        return render_template('perfil.html', data = data, edad=edad)
+            print("Sexo: ", data[10])
+            if data[10] == False:
+                sexo = "MUJER"
+            elif data[10] == True:
+                sexo = "HOMBRE"
+        return render_template('perfil.html', data = data, edad=edad, sexo = sexo)
 
 @app.route('/pregunta')
 def pregunta():
@@ -101,6 +106,7 @@ def registro():
         telefono = request.form["telefono"]
         correoE = request.form["correo"]
         contraseña = request.form["password"]
+        sexo = request.form["sexo"]
         print("Nombre: ", nombre)
         print("Apellidos: ", apellidos)
         print("Fecha de nacimiento: ", fechaN)
@@ -109,12 +115,13 @@ def registro():
         print("Telefono: ", telefono)
         print("Correo: ", correoE)
         print("Contraseña: ", contraseña)
+        print("Sexo: ", sexo)    
         if database:
             cursor = database.cursor()
             cursor.execute("SELECT * FROM participante WHERE correo=%s AND contraseña=%s;", (correoE, contraseña))
             data = cursor.fetchone()
             if data == None:
-                cursor.execute("INSERT INTO participante (nombre, apellidos, fechanac, telefono, escolaridad, carrera, correo, contraseña)VALUES(%s, %s, %s, %s, %s, %s, %s, %s)", (nombre, apellidos, fechaN, telefono, escolaridad, carrera, correoE, contraseña))
+                cursor.execute("INSERT INTO participante (nombre, apellidos, fechanac, telefono, escolaridad, carrera, correo, contraseña, sexo)VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)", (nombre, apellidos, fechaN, telefono, escolaridad, carrera, correoE, contraseña, sexo))
                 database.commit()
                 return redirect(url_for('login'))
             else:
@@ -125,35 +132,37 @@ def registro():
 def editarDatos():
     user = session.get('my_var', None)
     password = session.get('my_var2', None)
-    if user == '' and password == "":
-        return redirect(url_for('login'))
-    else:
-        return render_template('editarDatos.html')
-
-
-'''
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        user = request.form['user']
-        password = request.form['pass']
-
-        if database:
-            cursor = database.cursor()
-            cursor.execute("SELECT * FROM participante WHERE correo=%s AND contraseña=%s;", (user, password))
-            data = cursor.fetchone()
-
-            print("Datos: ", data)
-    else:
-        return render_template('login.html')
-
-@app.route('/registro', methods=['GET', 'POST'])
-def pagina_principal():
+    '''if user == '' and password == "":
+        return redirect(url_for('login'))'''
     if database:
         cursor = database.cursor()
-        cursor.execute("SELECT * FROM resultado")
+        cursor.execute("SELECT * FROM participante WHERE correo=%s AND contraseña=%s;", (user, password))
         data = cursor.fetchone()
-        print("Datos: ", data)'''
+        print("Carrera: ", data[6])
+        print(type(data[6]))
+        if request.method == "POST":
+            print("Sí entra al POST")
+            nombre = request.form["nombre"].upper()
+            apellidos = request.form["apellidos"].upper()
+            fechaN = request.form["fechaN"]
+            escolaridad = request.form["escolaridad"].upper()
+            carrera = request.form["carrera"].upper()
+            telefono = request.form["telefono"]
+            contraseña = request.form["password"]
+            sexo = request.form["sexo"]
+            print("Nombre: ", nombre)
+            print("Apellidos: ", apellidos)
+            print("Fecha de nacimiento: ", fechaN)
+            print("Escolaridad: ", escolaridad)
+            print("Carrera: ", carrera)
+            print("Telefono: ", telefono)
+            print("Contraseña: ", contraseña)
+            print("Sexo: ", sexo)
+            cursor.execute("UPDATE participante SET nombre=%s, apellidos=%s, fechanac=%s, telefono=%s, escolaridad=%s, carrera=%s, contraseña=%s, sexo=%s WHERE correo=%s", (nombre, apellidos, fechaN, telefono, escolaridad, carrera, contraseña, sexo, user))
+            database.commit()
+            return redirect(url_for('opciones'))
+    return render_template('editarDatos.html', data = data)
+     
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port='5000')
