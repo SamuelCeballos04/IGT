@@ -14,21 +14,29 @@
 <body>
     <h1 class="titulo">Iowa Gambling Task</h1>
     <h2 class="subtitulo">Edita tus datos</h2>
-    <section class="middle">
-        <form action="" class="formulario" autocomplete="off" method="POST">
+    <section class="middle3">
+        <form action="/editarDatos" class="formulario" autocomplete="off" method="POST">
             <ul>
                 <li>
                     <label for="nombre">Nombre</label><br>
-                    <input type="text" name="nombre" class="campo" placeholder = "Juan" maxlength="15">
+                    <input value = {{data[1]}} type="text" name="nombre" class="campo" placeholder = "Juan" maxlength="15" required>
                 </li>
                 <li>
-                    <label for="edad">Edad</label><br>
-                    <input type="text" name="edad" class="campo" placeholder = "18" pattern = "[a-zA-Z\s]{3-20}" maxlength="20">
+                    <label for="nombre">Apellidos</label><br>
+                    <input value = {{data[2]}} type="text" name="apellidos" class="campo" placeholder = "Juan" maxlength="15" required>
+                </li>
+                <li>
+                    <label for="edad">Fecha de nacimiento</label><br>
+                    <input type="date" name="fechaN" value = {{data[3]}} class="campo" placeholder = "18" pattern = "[a-zA-Z\s]{3-20}" maxlength="20" required>
                 </li>   
                 <li>
                     <label for="escolaridad">Escolaridad</label><br>
-                    <input type="text" name="escolaridad" class="campo" placeholder = "Secundaria"  pattern = "[a-zA-Z\s]{3-20}" maxlength="20">
-                </li>   
+                    <input type="text" value = {{data[5]}} name="escolaridad" class="campo" placeholder = "Secundaria"  pattern = "[a-zA-Z\s]{3-20}" maxlength="20" required>
+                </li>
+                <li>
+                    <label for="escolaridad">Carrera</label><br>
+                    <input type="text" value = {{data[6]}} name="carrera" class="campo" placeholder = "Contabilidad"  pattern = "[a-zA-Z\s]{3-20}" maxlength="20">
+                </li>      
                 <li>
                     <label for="sexo">Sexo</label><br>
                     <label for="Hombre" class="radio">Hombre</label>
@@ -37,11 +45,15 @@
                     <input type="radio" name="sexo" id="mujer" class="radio2" value="0">
                 </li>  
                 <li>
+                    <label for="telefono">Telefono</label><br>
+                    <input type="text" value = {{data[4]}} name="telefono" class="campo" placeholder = "3311756820" maxlength="10" required>
+                </li> 
+                <li>
                     <label for="contraseñas">Contraseña</label><br>
-                    <input type="password" name="password" class="campo" placeholder = "Contraseña" pattern = "[a-zA-Z\d\w\s\D\W]{6-15}" autocomplete="new-password"  maxlength="15"><br>
+                    <input type="password" name="password" value = {{data[8]}} class="campo" placeholder = "Contraseña" pattern = "[a-zA-Z\d\w\s\D\W]{6-15}" autocomplete="new-password"  maxlength="15" required><br>
                 </li>      
             </ul>
-            <a href = "opciones.html">
+            <a href = "{{url_for('opciones')}}">
                 <button type="submit" class="boton">Guardar</button>
             </a>
         </form>

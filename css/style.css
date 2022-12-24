@@ -97,7 +97,25 @@ body {
 
 }
 
+.middle3 {
+    
+    position: absolute;
+    width: 100%;
+   
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+
+}
+
 .formulario {
+    margin: auto;
+    display: block;
+    text-align: center;
+}
+
+.formulario2 {
     margin: auto;
     display: block;
     text-align: center;
@@ -326,5 +344,5 @@ body {
     background-color:#2D3264;
     border-color: #2D3264;
     border-style: solid;
-    
+
 }

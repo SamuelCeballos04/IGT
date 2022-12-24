@@ -14,12 +14,20 @@
 <body>
     <h1 class="titulo">Iowa Gambling Task</h1>
     <h2 class="subtitulo">Datos del usuario</h2>
-    <h2 class="subtitulo">UserName</h2>
+    <h2 class="subtitulo">{{data[1]}}</h2>
     <form action="" class="formulario2" autocomplete="off" method="POST">
         <ul>
             <li>
                 <label for="nombre">Nombre:</label>
                 <label for="nombre">{{data[1]}}</label>
+            </li>
+            <li>
+                <label for="nombre">Apellidos:</label>
+                <label for="nombre">{{data[2]}}</label>
+            </li>
+            <li>
+                <label for="nombre">Fecha de nacimiento:</label>
+                <label for="nombre">{{data[3]}}</label>
             </li>
             <li>
                 <label for="edad">Edad:</label>
@@ -28,10 +36,14 @@
             <li>
                 <label for="escolaridad">Escolaridad:</label>
                 <label for="escolaridad">{{data[5]}}</label>
+            </li> 
+            <li>
+                <label for="escolaridad">Carrera:</label>
+                <label for="escolaridad">{{data[6]}}</label>
             </li>   
             <li>
                 <label for="sexo">Sexo:</label>
-                <label for="sexo">Hombre</label>
+                <label for="sexo">{{sexo}}</label>
             </li>
             <li>
                 <label for="sexo">Teléfono:</label>
