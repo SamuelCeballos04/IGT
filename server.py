@@ -132,6 +132,7 @@ def registro():
 def editarDatos():
     user = session.get('my_var', None)
     password = session.get('my_var2', None)
+        
     '''if user == '' and password == "":
         return redirect(url_for('login'))'''
     if database:
@@ -160,6 +161,8 @@ def editarDatos():
             print("Sexo: ", sexo)
             cursor.execute("UPDATE participante SET nombre=%s, apellidos=%s, fechanac=%s, telefono=%s, escolaridad=%s, carrera=%s, contraseña=%s, sexo=%s WHERE correo=%s", (nombre, apellidos, fechaN, telefono, escolaridad, carrera, contraseña, sexo, user))
             database.commit()
+            session['my_var3'] = nombre
+            session['my_var2'] = request.form['password']
             return redirect(url_for('opciones'))
     return render_template('editarDatos.html', data = data)
      
