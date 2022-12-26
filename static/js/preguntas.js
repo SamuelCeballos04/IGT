@@ -21,7 +21,7 @@ async function activar(element){
 }
 
 async function enviar(){
-    document.getElementById("link").setAttribute("href", "resultados.html")
+    document.getElementById("link").setAttribute("href", "resultados")
 }
 
 async function pasar(){

@@ -165,7 +165,15 @@ def editarDatos():
             session['my_var2'] = request.form['password']
             return redirect(url_for('opciones'))
     return render_template('editarDatos.html', data = data)
-     
+
+@app.route('/resultados', methods=['GET', 'POST'])
+def resultados():
+    user = session.get('my_var', None)
+    password = session.get('my_var2', None)
+    if user == '' and password == "":
+        return redirect(url_for('login'))
+    else:
+        return render_template('resultados.html')
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port='5000')
