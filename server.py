@@ -177,11 +177,20 @@ def resultadoss(puntos, total_puntos):
         return redirect(url_for('login'))
     else:
         valores = json.loads(puntos)
+        numpre = [1, 2, 3, 4, 5]
+        enunciado = ["1.- Busco actividades en las que obtengo un placer rápido, aunque sean perjudiciales", "2.- Suelo caer en tentaciones que me dificultan cumplir con un compromiso", "3.- Busco conseguir beneficios inmediatos, en vez de esperar algo mejor más tarde", "4.- Continúo haciendo determinadas actividades placenteras a pesar de que los demás me advierten que me perjudican", "5.- Cuando algo se me antoja voy a por ello de forma inmediata, sin poder esperar"]
         valor = valores
         print(valor)
         total = json.loads(total_puntos)
         puntos_totales = total
         print("Los puntos obtenidos son: %s" % (puntos_totales))
+        if database:
+            cursor = database.cursor()
+            cursor.execute("SELECT id_participante FROM participante WHERE correo=%s AND contraseña=%s;", (user, password))
+            data = cursor.fetchone()
+            cursor.execute("INSERT INTO encuesta (id_participante, numpre, enunciado, respuesta) VALUES (%s, %s, %s, %s)", (data, numpre, enunciado, valor))
+            database.commit()
+ 
         return render_template('resultados.html')
 
 @app.route('/resultados', methods=['GET', 'POST'])
@@ -200,6 +209,14 @@ def resultados():
             print("Hora: ", hora)
             horafin = request.form["fin"]
             print("Hora final: ", horafin)
+            horaAp = hora + '-' + horafin
+            print("Hora de la cita: ", horaAp)
+            if database:
+                cursor = database.cursor()
+                cursor.execute("SELECT id_participante FROM participante WHERE correo=%s AND contraseña=%s;", (user, password))
+                data = cursor.fetchone()
+                cursor.execute("UPDATE encuesta set diascita = %s, horacita=%s where id_participante=%s", (dias, horaAp, data))
+                database.commit()
             return redirect(url_for('opciones'))
         return render_template('resultados.html')
 
