@@ -3,6 +3,8 @@ from conexion import conexion
 from datetime import datetime, timedelta
 import math
 
+
+
 database = conexion()
 
 app = Flask("__name__")
@@ -133,8 +135,8 @@ def editarDatos():
     user = session.get('my_var', None)
     password = session.get('my_var2', None)
         
-    '''if user == '' and password == "":
-        return redirect(url_for('login'))'''
+    if user == '' and password == "":
+        return redirect(url_for('login'))
     if database:
         cursor = database.cursor()
         cursor.execute("SELECT * FROM participante WHERE correo=%s AND contraseña=%s;", (user, password))
@@ -173,6 +175,16 @@ def resultados():
     if user == '' and password == "":
         return redirect(url_for('login'))
     else:
+        print("Entra al else")
+        if request.method == "POST":
+            print("Sí entra al POST")
+            dias = request.form.getlist("dias")
+            print("Dias: ", dias)
+            hora = request.form["hora"]
+            print("Hora: ", hora)
+            horafin = request.form["fin"]
+            print("Hora final: ", horafin)
+            return redirect(url_for('opciones'))
         return render_template('resultados.html')
 
 if __name__ == '__main__':
