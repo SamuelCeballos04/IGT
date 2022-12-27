@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, make_response,flash, session
 from conexion import conexion
 from datetime import datetime, timedelta
+import json
 import math
 
 
@@ -168,8 +169,21 @@ def editarDatos():
             return redirect(url_for('opciones'))
     return render_template('editarDatos.html', data = data)
 
+@app.route('/resultados/<string:puntos>', methods=['GET', 'POST'])
+def resultadoss(puntos):
+    user = session.get('my_var', None)
+    password = session.get('my_var2', None)
+    if user == '' and password == "":
+        return redirect(url_for('login'))
+    else:
+        valores = json.loads(puntos)
+        valor = valores
+        print(valor)
+        return render_template('resultados.html')
+
 @app.route('/resultados', methods=['GET', 'POST'])
 def resultados():
+    print("hola")
     user = session.get('my_var', None)
     password = session.get('my_var2', None)
     if user == '' and password == "":
