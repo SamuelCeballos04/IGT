@@ -4,6 +4,7 @@ let intervalo = 100/(preguntas.length+1);
 let progreso = 0
 var puntos = []
 var valor
+var total_puntos = 0
 
 window.addEventListener("beforeunload", function(event) {
     event.returnValue = "Write something clever here..";
@@ -25,9 +26,9 @@ async function activar(element, val){
 
 async function enviar(){
     document.getElementById("link").setAttribute("href", "resultados")
-    console.log(puntos)
+    console.log(total_puntos)
     const request = new XMLHttpRequest()
-    request.open('POST', `/resultados/${JSON.stringify(puntos)}`)
+    request.open('POST', `/resultados/${JSON.stringify(puntos)}/${JSON.stringify(total_puntos)}`)
     request.send();
 }
 
@@ -44,6 +45,7 @@ async function pasar(){
     progreso = intervalo + progreso
     console.log(progreso)
     puntos.push(valor)
+    total_puntos = total_puntos + valor
     document.getElementById("barra").setAttribute("style", "width: "+progreso+"%")
     document.getElementById("barra").setAttribute("aria-valuenow", progreso)
     document.getElementById("btnradio1").checked = false;

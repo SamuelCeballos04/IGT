@@ -169,8 +169,8 @@ def editarDatos():
             return redirect(url_for('opciones'))
     return render_template('editarDatos.html', data = data)
 
-@app.route('/resultados/<string:puntos>', methods=['GET', 'POST'])
-def resultadoss(puntos):
+@app.route('/resultados/<string:puntos>/<string:total_puntos>', methods=['GET', 'POST'])
+def resultadoss(puntos, total_puntos):
     user = session.get('my_var', None)
     password = session.get('my_var2', None)
     if user == '' and password == "":
@@ -179,11 +179,13 @@ def resultadoss(puntos):
         valores = json.loads(puntos)
         valor = valores
         print(valor)
+        total = json.loads(total_puntos)
+        puntos_totales = total
+        print("Los puntos obtenidos son: %s" % (puntos_totales))
         return render_template('resultados.html')
 
 @app.route('/resultados', methods=['GET', 'POST'])
 def resultados():
-    print("hola")
     user = session.get('my_var', None)
     password = session.get('my_var2', None)
     if user == '' and password == "":
