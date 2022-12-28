@@ -220,10 +220,10 @@ def resultados():
             cursor.execute("SELECT * FROM encuesta WHERE id_participante=%s;", (data))
             data_2 = cursor.fetchone()
             band = True
-            print(data_2[3])
-            if data_2[4] == None:
-                band = False
-                print(band)
+            if data_2 != None:
+                band = True
+                if data_2[4] == None:
+                    band = False
             if band == True:
                 return redirect(url_for('opciones'))
         print("Entra al else")
