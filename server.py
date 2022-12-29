@@ -212,6 +212,20 @@ def resultados():
     if user == '' and password == "":
         return redirect(url_for('login'))
     else:
+        if database:
+            cursor = database.cursor()
+            cursor.execute("SELECT id_participante FROM participante WHERE correo=%s AND contraseña=%s;", (user, password))
+            data = cursor.fetchone()
+            cursor = database.cursor()
+            cursor.execute("SELECT * FROM encuesta WHERE id_participante=%s;", (data))
+            data_2 = cursor.fetchone()
+            band = True
+            if data_2 != None:
+                band = True
+                if data_2[4] == None:
+                    band = False
+            if band == True:
+                return redirect(url_for('opciones'))
         print("Entra al else")
         if request.method == "POST":
             print("Sí entra al POST")
