@@ -1,6 +1,6 @@
-let preguntas = ["2.- Suelo caer en tentaciones que me dificultan cumplir con un compromiso", "3.- Busco conseguir beneficios inmediatos, en vez de esperar algo mejor más tarde", "4.- Continúo haciendo determinadas actividades placenteras a pesar de que los demás me advierten que me perjudican", "5.- Cuando algo se me antoja voy a por ello de forma inmediata, sin poder esperar"]
+let preguntas = ["2.- Suelo caer en tentaciones que me dificultan cumplir con un compromiso", "3.- Busco conseguir beneficios inmediatos, en vez de esperar algo mejor más tarde", "4.- Continúo haciendo determinadas actividades placenteras a pesar de que los demás me advierten que me perjudican", "5.- Cuando algo se me antoja voy a por ello de forma inmediata, sin poder esperar", "Has terminado la encuesta, haz clic en aceptar para continuar"]
 var i=0
-let intervalo = 100/(preguntas.length+1);
+let intervalo = 100/(preguntas.length);
 let progreso = 0
 var puntos = []
 var valor
@@ -37,7 +37,7 @@ async function pasar(){
     if (i==4)
     {
         btn = document.getElementById("siguiente");
-        btn.innerHTML= "Resultados";
+        btn.innerHTML= "Aceptar";
         btn.id="resultados";
         document.getElementById("resultados").setAttribute("onclick", "enviar()")
     }

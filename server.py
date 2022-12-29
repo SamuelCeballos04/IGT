@@ -223,7 +223,7 @@ def resultados():
             print("Hora final: ", horafin)
             horaAp = hora + '-' + horafin
             print("Hora de la cita: ", horaAp)
-            if database:
+            if database:            
                 cursor = database.cursor()
                 cursor.execute("SELECT id_participante FROM participante WHERE correo=%s AND contraseña=%s;", (user, password))
                 data = cursor.fetchone()
