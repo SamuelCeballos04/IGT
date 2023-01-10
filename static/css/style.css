@@ -29,6 +29,7 @@ body {
     position: absolute;
     top: 50%;
     left: 50%;
+    min-width: 70%;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 }
@@ -283,8 +284,10 @@ body {
     margin: 2%;
     margin-left: 6.1%;
     border-radius: 20px;
-    width: -webkit-fill-available;
-    height: -webkit-fill-available;
+    /*width: -webkit-fill-available;*/
+    /*height: -webkit-fill-available;*/
+    height: 65%;
+    width: 85%;
     position: absolute;   
 }
 

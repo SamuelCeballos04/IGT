@@ -189,8 +189,29 @@ def resultadoss(puntos, total_puntos):
         return redirect(url_for('login'))
     else:
         valores = json.loads(puntos)
-        numpre = [1, 2, 3, 4, 5]
-        enunciado = ["1.- Busco actividades en las que obtengo un placer rápido, aunque sean perjudiciales", "2.- Suelo caer en tentaciones que me dificultan cumplir con un compromiso", "3.- Busco conseguir beneficios inmediatos, en vez de esperar algo mejor más tarde", "4.- Continúo haciendo determinadas actividades placenteras a pesar de que los demás me advierten que me perjudican", "5.- Cuando algo se me antoja voy a por ello de forma inmediata, sin poder esperar"]
+        numpre = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
+        #enunciado = ["1.- Busco actividades en las que obtengo un placer rápido, aunque sean perjudiciales", "2.- Suelo caer en tentaciones que me dificultan cumplir con un compromiso", "3.- Busco conseguir beneficios inmediatos, en vez de esperar algo mejor más tarde", "4.- Continúo haciendo determinadas actividades placenteras a pesar de que los demás me advierten que me perjudican", "5.- Cuando algo se me antoja voy a por ello de forma inmediata, sin poder esperar"]
+        enunciado = ["1. Me ha costado mucho descargar la tensión", 
+                    "2. Me di cuenta que tenía la boca seca", 
+                    "3. No podía sentir ningún sentimiento positivo", 
+                    "4. Se me hizo difícil respirar", 
+                    "5. Se me hizo difícil tomar la iniciativa para hacer cosas", 
+                    "6. Reaccioné exageradamente en ciertas situaciones", 
+                    "7. Sentí que mis manos temblaban", 
+                    "8. He sentido que estaba gastando una gran cantidad de energía", 
+                    "9. Estaba preocupado por situaciones en las cuales podía tener pánico o en las que podría hacer el ridículo", 
+                    "10. He sentido que no había nada que me ilusionara", 
+                    "11. Me he sentido inquieto", 
+                    "12. Se me hizo difícil relajarme", 
+                    "13. Me sentí triste y deprimido", 
+                    "14. No toleré nada que no me permitiera continuar con lo que estaba haciendo", 
+                    "15. Sentí que estaba al punto de pánico", 
+                    "16. No me pude entusiasmar por nada", 
+                    "17. Sentí que valía muy poco como persona", 
+                    "18. He tendido a sentirme enfadado con facilidad", 
+                    "19. Sentí los latidos de mi corazón a pesar de no haber hecho ningún esfuerzo físico", 
+                    "20. Tuve miedo sin razón", 
+                    "21. Sentí que la vida no tenía ningún sentido"]
         valor = valores
         print(valor)
         total = json.loads(total_puntos)

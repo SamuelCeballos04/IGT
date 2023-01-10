@@ -13,24 +13,21 @@
 </head>
 <body onload="onload()">
     <h1 class="titulo">Iowa Gambling Task</h1>
-    
+    <h2 class="subtitulo">Por favor lea las siguientes afirmaciones y seleccione en qué grado le ha ocurrido a usted esta afirmación durante la semana pasada</h2>
     <section class="pregunta">
-        <h2 class="texto" id="texto">1.- Busco actividades en las que obtengo un placer rápido, aunque sean perjudiciales</h2>
+        <h2 class="texto" id="texto">1. Me ha costado mucho descargar la tensión</h2>
         <div class="btn-group d-flex align-items-center" role="group" aria-label="Basic radio toggle button group">
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" onclick="activar(this, 1)">
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" onclick="activar(this, 0)">
             <label class="btn btn-outline-info" for="btnradio1">Nunca</label>
           
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" onclick="activar(this, 2)">
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" onclick="activar(this, 1)">
             <label class="btn btn-outline-info" for="btnradio2">Rara Vez</label>
           
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" onclick="activar(this, 3)">
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" onclick="activar(this, 2)">
             <label class="btn btn-outline-info" for="btnradio3">Algunas Veces</label>
 
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off" onclick="activar(this, 4)">
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off" onclick="activar(this, 3)">
             <label class="btn btn-outline-info" for="btnradio4">Con Frecuencia</label>
-
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio5" autocomplete="off" onclick="activar(this, 5)">
-            <label class="btn btn-outline-info" for="btnradio5">Muy Frecuentemente</label>
         </div>
         <a id="link">
             <button type="button" class="btn btn-light enviar" id="siguiente"disabled onclick="pasar()">Siguiente</button>

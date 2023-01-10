@@ -1,4 +1,25 @@
-let preguntas = ["2.- Suelo caer en tentaciones que me dificultan cumplir con un compromiso", "3.- Busco conseguir beneficios inmediatos, en vez de esperar algo mejor más tarde", "4.- Continúo haciendo determinadas actividades placenteras a pesar de que los demás me advierten que me perjudican", "5.- Cuando algo se me antoja voy a por ello de forma inmediata, sin poder esperar", "Has terminado la encuesta, haz clic en aceptar para continuar"]
+//let preguntas = ["2.- Suelo caer en tentaciones que me dificultan cumplir con un compromiso", "3.- Busco conseguir beneficios inmediatos, en vez de esperar algo mejor más tarde", "4.- Continúo haciendo determinadas actividades placenteras a pesar de que los demás me advierten que me perjudican", "5.- Cuando algo se me antoja voy a por ello de forma inmediata, sin poder esperar", "Has terminado la encuesta, haz clic en aceptar para continuar"]
+let preguntas = ["2. Me di cuenta que tenía la boca seca", 
+                "3. No podía sentir ningún sentimiento positivo", 
+                "4. Se me hizo difícil respirar", 
+                "5. Se me hizo difícil tomar la iniciativa para hacer cosas", 
+                "6. Reaccioné exageradamente en ciertas situaciones", 
+                "7. Sentí que mis manos temblaban", 
+                "8. He sentido que estaba gastando una gran cantidad de energía", 
+                "9. Estaba preocupado por situaciones en las cuales podía tener pánico o en las que podría hacer el ridículo", 
+                "10. He sentido que no había nada que me ilusionara", 
+                "11. Me he sentido inquieto", 
+                "12. Se me hizo difícil relajarme", 
+                "13. Me sentí triste y deprimido", 
+                "14. No toleré nada que no me permitiera continuar con lo que estaba haciendo", 
+                "15. Sentí que estaba al punto de pánico", 
+                "16. No me pude entusiasmar por nada", 
+                "17. Sentí que valía muy poco como persona", 
+                "18. He tendido a sentirme enfadado con facilidad", 
+                "19. Sentí los latidos de mi corazón a pesar de no haber hecho ningún esfuerzo físico", 
+                "20. Tuve miedo sin razón", 
+                "21. Sentí que la vida no tenía ningún sentido",
+                "Has terminado la encuesta, haz clic en aceptar para continuar"]
 var i=0
 let intervalo = 100/(preguntas.length);
 let progreso = 0
@@ -34,7 +55,7 @@ async function enviar(){
 
 async function pasar(){
     document.getElementById("texto").innerHTML = preguntas[i]
-    if (i==4)
+    if (i==20)
     {
         btn = document.getElementById("siguiente");
         btn.innerHTML= "Aceptar";
@@ -52,7 +73,7 @@ async function pasar(){
     document.getElementById("btnradio2").checked = false;
     document.getElementById("btnradio3").checked = false;
     document.getElementById("btnradio4").checked = false;
-    document.getElementById("btnradio5").checked = false;
+    //document.getElementById("btnradio5").checked = false;
     bt= document.getElementById("siguiente");
     bt.disabled = true;
 }
