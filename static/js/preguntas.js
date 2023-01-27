@@ -60,13 +60,13 @@ async function enviar(){
 async function pasar(){
     document.getElementById("texto").innerHTML = preguntas[i]
     if (i == preguntas.length-1){
-        btn4 = document.getElementById("btnradio4");
+        btn2 = document.getElementById("btnradio2");
         btn1 = document.getElementById("btnradio1");
-        btn4.remove()
+        btn2.remove()
         btn1.remove()
-        btn4 = document.getElementById("btn4");
+        btn2 = document.getElementById("btn2");
         btn1 = document.getElementById("btn1");
-        btn4.remove()
+        btn2.remove()
         btn1.remove()
         console.log("Los valores son: ", puntos)
         btn = document.getElementById("siguiente");
@@ -78,19 +78,20 @@ async function pasar(){
     {
         texto = document.getElementById("instruccion");
         texto.innerHTML = "Por favor seleccione cierto o falso para cada una de las siguientes afirmaciones"
-        btn2 = document.getElementById("btnradio2");
         btn3 = document.getElementById("btnradio3");
-        btn2.remove()
+        btn4 = document.getElementById("btnradio4");
         btn3.remove()
-        btn2 = document.getElementById("btn2");
+        btn4.remove()
         btn3 = document.getElementById("btn3");
-        btn2.remove()
-        btn3.remove()
-        btn1 = document.getElementById("btn1");
         btn4 = document.getElementById("btn4");
+        btn3.remove()
+        btn4.remove()
+        btn1 = document.getElementById("btn1");
+        btn2 = document.getElementById("btn2");
         btn1.innerHTML= "Cierto";
-        btn4.innerHTML= "Falso";
+        btn2.innerHTML= "Falso";
     }
+    console.log("Valor del boton: ", valor)
     console.log(preguntas.length)
     progreso = intervalo + progreso
     console.log(progreso)
@@ -98,12 +99,14 @@ async function pasar(){
     total_puntos = total_puntos + valor
     document.getElementById("barra").setAttribute("style", "width: "+progreso+"%")
     document.getElementById("barra").setAttribute("aria-valuenow", progreso)
-    document.getElementById("btnradio1").checked = false;
-    if (i < 20){
+    if (i < preguntas.length-1){
+        document.getElementById("btnradio1").checked = false;
         document.getElementById("btnradio2").checked = false;
-        document.getElementById("btnradio3").checked = false;
     }
-    document.getElementById("btnradio4").checked = false;
+    if (i < 20){
+        document.getElementById("btnradio3").checked = false;
+        document.getElementById("btnradio4").checked = false;
+    }
     //document.getElementById("btnradio5").checked = false;
     bt= document.getElementById("siguiente");
     bt.disabled = true;
