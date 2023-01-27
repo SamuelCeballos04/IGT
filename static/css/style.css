@@ -53,6 +53,10 @@ body {
     color: #fff;
 }
 
+.btn-warning {
+    border-color: #2D3264;
+}
+
 
 .texto{
     color: white;

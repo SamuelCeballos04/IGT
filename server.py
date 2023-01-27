@@ -189,7 +189,7 @@ def resultadoss(puntos, total_puntos):
         return redirect(url_for('login'))
     else:
         valores = json.loads(puntos)
-        numpre = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
+        numpre = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]
         #enunciado = ["1.- Busco actividades en las que obtengo un placer rápido, aunque sean perjudiciales", "2.- Suelo caer en tentaciones que me dificultan cumplir con un compromiso", "3.- Busco conseguir beneficios inmediatos, en vez de esperar algo mejor más tarde", "4.- Continúo haciendo determinadas actividades placenteras a pesar de que los demás me advierten que me perjudican", "5.- Cuando algo se me antoja voy a por ello de forma inmediata, sin poder esperar"]
         enunciado = ["1. Me ha costado mucho descargar la tensión", 
                     "2. Me di cuenta que tenía la boca seca", 
@@ -211,9 +211,18 @@ def resultadoss(puntos, total_puntos):
                     "18. He tendido a sentirme enfadado con facilidad", 
                     "19. Sentí los latidos de mi corazón a pesar de no haber hecho ningún esfuerzo físico", 
                     "20. Tuve miedo sin razón", 
-                    "21. Sentí que la vida no tenía ningún sentido"]
+                    "21. Sentí que la vida no tenía ningún sentido",
+                    "22. Tienes un diagnóstico previo de enfermedades psicológicas, neurológicas o psiquiátricas",
+                    "23. Eres zurdo",
+                    "24. Consumes alcohol o drogas",
+                    "25. Tienes un diagnóstico de enfermedades visuales"]
         valor = valores
-        print(valor)
+        aptitud = True
+        print(valor[21])
+        print("Tipo de dato de valor: ", type(valor[21]))
+        if (valor[21] == 0 or valor[22] == 0 or valor[23] == 0 or valor[24] == 0):
+            aptitud = False
+        print("Aptitud: ", aptitud)
         total = json.loads(total_puntos)
         puntos_totales = total
         print("Los puntos obtenidos son: %s" % (puntos_totales))
@@ -222,6 +231,7 @@ def resultadoss(puntos, total_puntos):
             cursor.execute("SELECT id_participante FROM participante WHERE correo=%s AND contraseña=%s;", (user, password))
             data = cursor.fetchone()
             cursor.execute("INSERT INTO encuesta (id_participante, numpre, enunciado, respuesta) VALUES (%s, %s, %s, %s)", (data, numpre, enunciado, valor))
+            cursor.execute("UPDATE participante set aptitud = %s where id_participante = %s;", (aptitud, data))
             database.commit()
  
         return render_template('resultados.html')
