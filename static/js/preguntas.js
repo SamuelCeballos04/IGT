@@ -19,6 +19,10 @@ let preguntas = ["2. Me di cuenta que tenía la boca seca",
                 "19. Sentí los latidos de mi corazón a pesar de no haber hecho ningún esfuerzo físico", 
                 "20. Tuve miedo sin razón", 
                 "21. Sentí que la vida no tenía ningún sentido",
+                "22. Tienes un diagnóstico previo de enfermedades psicológicas, neurológicas o psiquiátricas",
+                "23. Eres zurdo",
+                "24. Consumes alcohol o drogas",
+                "25. Tienes un diagnóstico de enfermedades visuales",
                 "Has terminado la encuesta, haz clic en aceptar para continuar"]
 var i=0
 let intervalo = 100/(preguntas.length);
@@ -55,12 +59,37 @@ async function enviar(){
 
 async function pasar(){
     document.getElementById("texto").innerHTML = preguntas[i]
-    if (i==20)
-    {
+    if (i == preguntas.length-1){
+        btn4 = document.getElementById("btnradio4");
+        btn1 = document.getElementById("btnradio1");
+        btn4.remove()
+        btn1.remove()
+        btn4 = document.getElementById("btn4");
+        btn1 = document.getElementById("btn1");
+        btn4.remove()
+        btn1.remove()
+        console.log("Los valores son: ", puntos)
         btn = document.getElementById("siguiente");
         btn.innerHTML= "Aceptar";
         btn.id="resultados";
         document.getElementById("resultados").setAttribute("onclick", "enviar()")
+    }
+    if (i==20)
+    {
+        texto = document.getElementById("instruccion");
+        texto.innerHTML = "Por favor seleccione cierto o falso para cada una de las siguientes afirmaciones"
+        btn2 = document.getElementById("btnradio2");
+        btn3 = document.getElementById("btnradio3");
+        btn2.remove()
+        btn3.remove()
+        btn2 = document.getElementById("btn2");
+        btn3 = document.getElementById("btn3");
+        btn2.remove()
+        btn3.remove()
+        btn1 = document.getElementById("btn1");
+        btn4 = document.getElementById("btn4");
+        btn1.innerHTML= "Cierto";
+        btn4.innerHTML= "Falso";
     }
     console.log(preguntas.length)
     progreso = intervalo + progreso
@@ -70,8 +99,10 @@ async function pasar(){
     document.getElementById("barra").setAttribute("style", "width: "+progreso+"%")
     document.getElementById("barra").setAttribute("aria-valuenow", progreso)
     document.getElementById("btnradio1").checked = false;
-    document.getElementById("btnradio2").checked = false;
-    document.getElementById("btnradio3").checked = false;
+    if (i < 20){
+        document.getElementById("btnradio2").checked = false;
+        document.getElementById("btnradio3").checked = false;
+    }
     document.getElementById("btnradio4").checked = false;
     //document.getElementById("btnradio5").checked = false;
     bt= document.getElementById("siguiente");
