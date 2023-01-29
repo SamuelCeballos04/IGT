@@ -189,38 +189,64 @@ def resultadoss(puntos, total_puntos):
         return redirect(url_for('login'))
     else:
         valores = json.loads(puntos)
-        numpre = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]
+        dicc = dict()
+        dicc2 = dict()
         #enunciado = ["1.- Busco actividades en las que obtengo un placer rápido, aunque sean perjudiciales", "2.- Suelo caer en tentaciones que me dificultan cumplir con un compromiso", "3.- Busco conseguir beneficios inmediatos, en vez de esperar algo mejor más tarde", "4.- Continúo haciendo determinadas actividades placenteras a pesar de que los demás me advierten que me perjudican", "5.- Cuando algo se me antoja voy a por ello de forma inmediata, sin poder esperar"]
-        enunciado = ["1. Me ha costado mucho descargar la tensión", 
-                    "2. Me di cuenta que tenía la boca seca", 
-                    "3. No podía sentir ningún sentimiento positivo", 
-                    "4. Se me hizo difícil respirar", 
-                    "5. Se me hizo difícil tomar la iniciativa para hacer cosas", 
-                    "6. Reaccioné exageradamente en ciertas situaciones", 
-                    "7. Sentí que mis manos temblaban", 
-                    "8. He sentido que estaba gastando una gran cantidad de energía", 
-                    "9. Estaba preocupado por situaciones en las cuales podía tener pánico o en las que podría hacer el ridículo", 
-                    "10. He sentido que no había nada que me ilusionara", 
-                    "11. Me he sentido inquieto", 
-                    "12. Se me hizo difícil relajarme", 
-                    "13. Me sentí triste y deprimido", 
-                    "14. No toleré nada que no me permitiera continuar con lo que estaba haciendo", 
-                    "15. Sentí que estaba al punto de pánico", 
-                    "16. No me pude entusiasmar por nada", 
-                    "17. Sentí que valía muy poco como persona", 
-                    "18. He tendido a sentirme enfadado con facilidad", 
-                    "19. Sentí los latidos de mi corazón a pesar de no haber hecho ningún esfuerzo físico", 
-                    "20. Tuve miedo sin razón", 
-                    "21. Sentí que la vida no tenía ningún sentido",
-                    "22. Tienes un diagnóstico previo de enfermedades psicológicas, neurológicas o psiquiátricas",
-                    "23. Eres zurdo",
-                    "24. Consumes alcohol o drogas",
-                    "25. Tienes un diagnóstico de enfermedades visuales"]
-        valor = valores
+        enunciado = ["Me ha costado mucho descargar la tension", 
+                    "Me di cuenta que tenia la boca seca", 
+                    "No podia sentir ningun sentimiento positivo", 
+                    "Se me hizo dificil respirar", 
+                    "Se me hizo dificil tomar la iniciativa para hacer cosas", 
+                    "Reaccione exageradamente en ciertas situaciones", 
+                    "Senti que mis manos temblaban", 
+                    "He sentido que estaba gastando una gran cantidad de energia", 
+                    "Estaba preocupado por situaciones en las cuales podia tener panico o en las que podria hacer el ridiculo", 
+                    "He sentido que no habia nada que me ilusionara", 
+                    "Me he sentido inquieto", 
+                    "Se me hizo dificil relajarme", 
+                    "Me senti triste y deprimido", 
+                    "No tolere nada que no me permitiera continuar con lo que estaba haciendo", 
+                    "Senti que estaba al punto de panico", 
+                    "No me pude entusiasmar por nada", 
+                    "Senti que valia muy poco como persona", 
+                    "He tendido a sentirme enfadado con facilidad", 
+                    "Senti los latidos de mi corazon a pesar de no haber hecho ningun esfuerzo fisico", 
+                    "Tuve miedo sin razon", 
+                    "Senti que la vida no tenia ningún sentido",
+                    "Tienes un diagnostico previo de enfermedades psicologicas, neurologicas o psiquiatricas",
+                    "Eres zurdo",
+                    "Consumes alcohol o drogas",
+                    "Tienes un diagnostico de enfermedades visuales"]
+        i = 1
+        while (i<26):
+            num = str(i)
+            clave = "Enunciado " + num
+            dicc[clave] = [enunciado[i-1]]
+            if i <= 21:
+                if(valores[i-1] == 0):
+                    dicc2[clave] = ["Nunca", valores[i-1]]
+                elif(valores[i-1] == 1):
+                    dicc2[clave] = ["Rara vez", valores[i-1]]
+                elif(valores[i-1] == 2):
+                    dicc2[clave] = ["Algunas veces", valores[i-1]]
+                elif(valores[i-1] == 3):
+                    dicc2[clave] = ["Con frecuencia", valores[i-1]]
+            else: 
+                if(valores[i-1] == 0):
+                    dicc2[clave] = ["Cierto"]
+                elif(valores[i-1] == 1):
+                    dicc2[clave] = ["Falso"]
+            i+=1
+        
+        valores
+        preguntasJson = json.dumps(dicc)
+        respuestasJson = json.dumps(dicc2)
+        print("Preguntas Json: ", preguntasJson)
+        print("\nRespuestas Json: ", respuestasJson)
         aptitud = True
-        print(valor[21])
-        print("Tipo de dato de valor: ", type(valor[21]))
-        if (valor[21] == 0 or valor[22] == 0 or valor[23] == 0 or valor[24] == 0):
+        #print(valor[21])
+        #print("Tipo de dato de valor: ", type(valor[21]))
+        if (valores[21] == 0 or valores[22] == 0 or valores[23] == 0 or valores[24] == 0):
             aptitud = False
         print("Aptitud: ", aptitud)
         total = json.loads(total_puntos)
@@ -230,7 +256,7 @@ def resultadoss(puntos, total_puntos):
             cursor = database.cursor()
             cursor.execute("SELECT id_participante FROM participante WHERE correo=%s AND contraseña=%s;", (user, password))
             data = cursor.fetchone()
-            cursor.execute("INSERT INTO encuesta (id_participante, numpre, enunciado, respuesta) VALUES (%s, %s, %s, %s)", (data, numpre, enunciado, valor))
+            cursor.execute("INSERT INTO encuesta (id_participante, pregunta, respuesta) VALUES (%s, %s, %s)", (data, preguntasJson, respuestasJson))
             cursor.execute("UPDATE participante set aptitud = %s where id_participante = %s;", (aptitud, data))
             database.commit()
  
@@ -253,7 +279,7 @@ def resultados():
             band = True
             if data_2 != None:
                 band = True
-                if data_2[4] == None:
+                if data_2[1] == None:
                     band = False
             if band == True:
                 return redirect(url_for('opciones'))
@@ -272,8 +298,8 @@ def resultados():
                 cursor = database.cursor()
                 cursor.execute("SELECT id_participante FROM participante WHERE correo=%s AND contraseña=%s;", (user, password))
                 data = cursor.fetchone()
-                cursor.execute("UPDATE encuesta set diascita = %s, horacita=%s where id_participante=%s", (dias, horaAp, data))
-                database.commit()
+                #cursor.execute("UPDATE encuesta set diascita = %s, horacita=%s where id_participante=%s", (dias, horaAp, data))
+                #database.commit()
             return redirect(url_for('opciones'))
         return render_template('resultados.html')
 
