@@ -278,9 +278,9 @@ def resultados():
             data_2 = cursor.fetchone()
             band = True
             if data_2 != None:
-                band = True
-                if data_2[1] == None:
-                    band = False
+                band = False
+                if data_2[0] == None:
+                    band = True
             if band == True:
                 return redirect(url_for('opciones'))
         print("Entra al else")
