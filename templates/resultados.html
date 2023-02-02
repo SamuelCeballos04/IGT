@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"><!-- Aqui se agrega el bootstrap de las tablas-->
-    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> -->
-    <link rel = "stylesheet" href = "../static/css/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- <link rel = "stylesheet" href = "../static/css/style.css"> -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.13.1/sl-1.5.0/datatables.min.css"/>
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.13.1/sl-1.5.0/datatables.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -166,10 +166,12 @@
                     <td class = "cell" id="cell50"><a  onclick="colorearCelda('cell50', 'ch50')"><input id="ch50" type = "checkbox" class = "check" value = "V6"></a></td>
                 </tr>
               </table>
-                <button type="button" class="boton" style="position: relative; left: 43.8%;" onclick = "valores()">Enviar</button><br>
+                <input type = "text" style="display: none;" name = "diccInvisible" id = "diccInvisible">
+                <button type="sumbit" class="boton" style="position: relative; left: 43.8%;" onclick = "valores()">Enviar</button><br>
         </form>
     </div>
 
-    <script src = "/static/js/resultados.js"></script>
+    <!-- <script src = "/static/js/resultados.js"></script> -->
+    <script src = "{{ url_for('static', filename='js/resultados.js') }}"></script>
 </body>
 </html>
