@@ -301,10 +301,10 @@ body {
     background-color: #CECECE;
     margin: 2%;
     margin-left: 6.1%;
-    border-radius: 20px;
+    border-radius: 3.5%;
     /*width: -webkit-fill-available;*/
     /*height: -webkit-fill-available;*/
-    height: 65%;
+    height: 85%;
     width: 85%;
     position: absolute;   
 }
@@ -449,4 +449,50 @@ body {
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
+  }
+
+  .table{
+    border-spacing: 30%;
+    border:2px solid #111546;
+    width: 75%;
+    height: 50%;
+    margin-left: auto;
+    margin-right: auto;
+  } 
+
+  .table tr{
+    line-height: 14px; 
+}
+
+  .cell{
+    text-align: center;
+    border:2px solid #111546;
+    width: 2%;
+
+  }
+
+  .celltitle{
+    background-color: #afa7a7b7;
+    text-align: center;
+    border:2px solid #111546;
+    width: 2%;
+  }
+
+  input[type="checkbox"]:focus {
+    outline: max(2px, 0.15em) solid currentColor;
+    outline-offset: max(2px, 0.15em);
+    color: #D99729;
+    accent-color: #eebb2e;
+  }
+
+  input[type="checkbox"]:checked::after {
+    accent-color: #D99729;
+  }
+
+  input[type="checkbox"]:checked::before {
+    accent-color: #D99729;
+  }
+
+  input[type="checkbox"] {
+    accent-color: #eebb2e;
   }

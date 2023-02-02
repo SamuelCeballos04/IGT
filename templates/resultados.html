@@ -5,8 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"><!-- Aqui se agrega el bootstrap de las tablas-->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <!-- <link rel = "stylesheet" href = "../static/css/style.css"> -->
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> -->
+    <link rel = "stylesheet" href = "../static/css/style.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.13.1/sl-1.5.0/datatables.min.css"/>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.13.1/sl-1.5.0/datatables.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
@@ -19,99 +21,142 @@
             <h2 class="res">Selecciona los horarios en los que preferirías asistir. Podríamos contactarte para confirmar.
             </h2>
             <form action = "/resultados" autocomplete="off" method = "POST"> 
-                <label class="container-2">Lunes
-                    <input type="checkbox" name = "dias" id = "lunes" value = "Lunes">
-                    <span class="checkmark"></span>
-                  </label>
-                  
-                  <label class="container-2">Martes
-                    <input type="checkbox" name = "dias" id = "martes" value = "Martes">
-                    <span class="checkmark"></span>
-                  </label>
-                  
-                  <label class="container-2">Miércoles
-                    <input type="checkbox" name = "dias" id = "miercoles" value = "Miércoles">
-                    <span class="checkmark"></span>
-                  </label>
-                  
-                  <label class="container-2">Jueves
-                    <input type="checkbox" name = "dias" id = "jueves" value = "Jueves">
-                    <span class="checkmark"></span>
-                  </label>
-
-                  <label class="container-2">Viernes
-                    <input type="checkbox" name = "dias" id = "viernes" value = "Viernes">
-                    <span class="checkmark"></span>
-                  </label>
-                  
-                  <label class="container-2">Sábado
-                    <input type="checkbox" name = "dias" id = "sabado" value = "Sábado">
-                    <span class="checkmark"></span>
-                  </label>
-
-                  <label style="display: block; width: 65%; position: relative; left: 38%;">
-                    <span>Entre</span>
-
-                    <select style = "display: inline; background-color: rgb(31, 31, 109); color: white; top: 100em;" name="hora" id="time" value = "Inicio">
-                      <option value="8:00am">8:00 am</option>
-                      <option value="8:30am">8:30 am</option>
-                      <option value="9:00am">9:00 am</option>
-                      <option value="9:30am">9:30 am</option>
-                      <option value="10:00am">10:00 am</option>
-                      <option value="10:30am">10:30 am</option>
-                      <option value="11:00am">11:00 am</option>
-                      <option value="11:30am">11:30 am</option>
-                      <option value="12:00pm">12:00 pm</option>
-                      <option value="12:30pm">12:30 pm</option>
-                      <option value="1:00pm">1:00 pm</option>
-                      <option value="1:30pm">1:30 pm</option>
-                      <option value="2:00pm">2:00 pm</option>
-                      <option value="2:30pm">2:30 pm</option>
-                      <option value="3:00pm">3:00 pm</option>
-                      <option value="3:30pm">3:30 pm</option>
-                      <option value="4:00pm">4:00 pm</option>
-                      <option value="4:30pm">4:30 pm</option>
-                      <option value="5:00pm">5:00 pm</option>
-                      <option value="5:30pm">5:30 pm</option>
-                      <option value="6:00pm">6:00 pm</option>
-                      <option value="6:30pm">6:30 pm</option>
-                      <option value="7:00pm">7:00 pm</option>
-                      <option value="7:30pm">7:30 pm</option>
-                    </select>
-
-                    <span>Y</span>
-
-                    <select style = "display: inline; background-color: rgb(31, 31, 109); color: white; top: 100em;" name="fin" id="time" value = "Fin">
-                      <option value="8:00am">8:00 am</option>
-                      <option value="8:30am">8:30 am</option>
-                      <option value="9:00am">9:00 am</option>
-                      <option value="9:30am">9:30 am</option>
-                      <option value="10:00am">10:00 am</option>
-                      <option value="10:30am">10:30 am</option>
-                      <option value="11:00am">11:00 am</option>
-                      <option value="11:30am">11:30 am</option>
-                      <option value="12:00pm">12:00 pm</option>
-                      <option value="12:30pm">12:30 pm</option>
-                      <option value="1:00pm">1:00 pm</option>
-                      <option value="1:30pm">1:30 pm</option>
-                      <option value="2:00pm">2:00 pm</option>
-                      <option value="2:30pm">2:30 pm</option>
-                      <option value="3:00pm">3:00 pm</option>
-                      <option value="3:30pm">3:30 pm</option>
-                      <option value="4:00pm">4:00 pm</option>
-                      <option value="4:30pm">4:30 pm</option>
-                      <option value="5:00pm">5:00 pm</option>
-                      <option value="5:30pm">5:30 pm</option>
-                      <option value="6:00pm">6:00 pm</option>
-                      <option value="6:30pm">6:30 pm</option>
-                      <option value="7:00pm">7:00 pm</option>
-                      <option value="7:30pm">7:30 pm</option>
-                    </select>
-                  </label>
-                  
-                <button type="submit" class="boton" style="position: relative; left: 43.8%;">Enviar</button><br>
+              <!-- <p>Simple table with header</p>
+                <table>
+                  <tr>
+                    <th>Hora</th>
+                    <th>Lunes</th>
+                    <th>Martes</th>
+                    <th>Miércoles</th>
+                    <th>Jueves</th>
+                    <th>Viernes</th>
+                  </tr>
+                  <tr>
+                    <td>9:00 a.m.</td>
+                  </tr>
+                  <tr>
+                    <td>10:00 a.m.</td>
+                  </tr>
+                  <tr>
+                    <td>11:00 a.m.</td>
+                  </tr>
+                  <tr>
+                    <td>12:00 p.m.</td>
+                  </tr>
+                  <tr>
+                    <td>1:00 p.m.</td>
+                  </tr>
+                  <tr>
+                    <td>2:00 p.m.</td>
+                  </tr>
+                  <tr>
+                    <td>3:00 p.m.</td>
+                  </tr>
+                  <tr>
+                    <td>4:00 p.m.</td>
+                  </tr>                  
+                  <tr>
+                    <td>5:00 p.m.</td>
+                  </tr>
+                  <tr>
+                    <td>6:00 p.m.</td>
+                  </tr>
+                </table>   
+                 -->
+                <table class = "table">
+                  <tr>
+                      <td class = "celltitle">Horas</td>
+                      <td class = "celltitle">Lunes</td>
+                      <td class = "celltitle">Martes</td>
+                      <td class = "celltitle">Miércoles</td>
+                      <td class = "celltitle">Jueves</td>
+                      <td class = "celltitle">Viernes</td>
+                  </tr>
+                  <tr>
+                      <td class = "celltitle">9:00 a.m.</td>
+                      <td class = "cell"><input type = "checkbox" class = "check" value = "L9"></td>
+                      <td class = "cell"><input type = "checkbox" class = "check" value = "M9"></td>
+                      <td class = "cell"><input type = "checkbox" class = "check" value = "I9"></td>
+                      <td class = "cell"><input type = "checkbox" class = "check" value = "J9"></td>
+                      <td class = "cell"><input type = "checkbox" class = "check" value = "V9"></td>
+                  </tr>
+                  <tr>
+                    <td class = "celltitle">10:00 a.m.</td>
+                    <td class = "cell"><input type = "checkbox" class = "check" value = "L10"></td>
+                    <td class = "cell"><input type = "checkbox" class = "check" value = "M10"></td>
+                    <td class = "cell"><input type = "checkbox" class = "check" value = "I10"></td>
+                    <td class = "cell"><input type = "checkbox" class = "check" value = "J10"></td>
+                    <td class = "cell"><input type = "checkbox" class = "check" value = "V10"></td>
+                  </tr>
+                  <tr>
+                      <td class = "celltitle">11:00 a.m.</td>
+                      <td class = "cell"><input type = "checkbox" class = "check" value = "L11"></td>
+                      <td class = "cell"><input type = "checkbox" class = "check" value = "M11"></td>
+                      <td class = "cell"><input type = "checkbox" class = "check" value = "I11"></td>
+                      <td class = "cell"><input type = "checkbox" class = "check" value = "J11"></td>
+                      <td class = "cell"><input type = "checkbox" class = "check" value = "V11"></td>
+                  </tr>
+                  <tr>
+                    <td class = "celltitle">12:00 p.m.</td>
+                    <td class = "cell"><input type = "checkbox" class = "check" value = "L12"></td>
+                    <td class = "cell"><input type = "checkbox" class = "check" value = "M12"></td>
+                    <td class = "cell"><input type = "checkbox" class = "check" value = "I12"></td>
+                    <td class = "cell"><input type = "checkbox" class = "check" value = "J12"></td>
+                    <td class = "cell"><input type = "checkbox" class = "check" value = "V12"></td>
+                  </tr>
+                  <tr>
+                    <td class = "celltitle">1:00 p.m.</td>
+                    <td class = "cell"><input type = "checkbox" class = "check" value = "L1"></td>
+                    <td class = "cell"><input type = "checkbox" class = "check" value = "M1"></td>
+                    <td class = "cell"><input type = "checkbox" class = "check" value = "I1"></td>
+                    <td class = "cell"><input type = "checkbox" class = "check" value = "J1"></td>
+                    <td class = "cell"><input type = "checkbox" class = "check" value = "V1"></td>
+                  </tr>
+                  <tr>
+                    <td class = "celltitle">2:00 p.m.</td>
+                    <td class = "cell"><input type = "checkbox" class = "check" value = "L2"></td>
+                    <td class = "cell"><input type = "checkbox" class = "check" value = "M2"></td>
+                    <td class = "cell"><input type = "checkbox" class = "check" value = "I2"></td>
+                    <td class = "cell"><input type = "checkbox" class = "check" value = "J2"></td>
+                    <td class = "cell"><input type = "checkbox" class = "check" value = "V2"></td>
+                  </tr>
+                  <tr>
+                    <td class = "celltitle">3:00 p.m.</td>
+                    <td class = "cell"><input type = "checkbox" class = "check" value = "L3"></td>
+                    <td class = "cell"><input type = "checkbox" class = "check" value = "M3"></td>
+                    <td class = "cell"><input type = "checkbox" class = "check" value = "I3"></td>
+                    <td class = "cell"><input type = "checkbox" class = "check" value = "J3"></td>
+                    <td class = "cell"><input type = "checkbox" class = "check" value = "V3"></td>
+                  </tr>
+                  <tr>
+                    <td class = "celltitle">4:00 p.m.</td>
+                    <td class = "cell"><input type = "checkbox" class = "check" value = "L4"></td>
+                    <td class = "cell"><input type = "checkbox" class = "check" value = "M4"></td>
+                    <td class = "cell"><input type = "checkbox" class = "check" value = "I4"></td>
+                    <td class = "cell"><input type = "checkbox" class = "check" value = "J4"></td>
+                    <td class = "cell"><input type = "checkbox" class = "check" value = "V4"></td>
+                  </tr>
+                  <tr>
+                    <td class = "celltitle">5:00 p.m.</td>
+                    <td class = "cell"><input type = "checkbox" class = "check" value = "L5"></td>
+                    <td class = "cell"><input type = "checkbox" class = "check" value = "M5"></td>
+                    <td class = "cell"><input type = "checkbox" class = "check" value = "I5"></td>
+                    <td class = "cell"><input type = "checkbox" class = "check" value = "J5"></td>
+                    <td class = "cell"><input type = "checkbox" class = "check" value = "V5"></td>
+                  </tr>
+                  <tr>
+                    <td class = "celltitle">6:00 p.m.</td>
+                    <td class = "cell"><input type = "checkbox" class = "check" value = "L6"></td>
+                    <td class = "cell"><input type = "checkbox" class = "check" value = "M6"></td>
+                    <td class = "cell"><input type = "checkbox" class = "check" value = "I6"></td>
+                    <td class = "cell"><input type = "checkbox" class = "check" value = "J6"></td>
+                    <td class = "cell"><input type = "checkbox" class = "check" value = "V6"></td>
+                </tr>
+              </table>
+                <button type="button" class="boton" style="position: relative; left: 43.8%;" onclick = "valores()">Enviar</button><br>
         </form>
     </div>
 
+    <script src = "/static/js/resultados.js"></script>
 </body>
 </html>
