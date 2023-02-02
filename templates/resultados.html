@@ -64,6 +64,19 @@
                 </table>   
                  -->
                 <table class = "table">
+                  <script type="text/javascript">
+                    function colorearCelda(cellID, checkID) {
+                      ch = document.getElementById(checkID)
+                      if (ch.checked != false){
+                        var celda = document.getElementById(cellID);
+                        celda.style.backgroundColor = "#eebb2e"
+                      }
+                      else {
+                        var celda = document.getElementById(cellID);
+                        celda.style.backgroundColor = "transparent"
+                      }  
+                    }
+                  </script>
                   <tr>
                       <td class = "celltitle">Horas</td>
                       <td class = "celltitle">Lunes</td>
@@ -74,83 +87,83 @@
                   </tr>
                   <tr>
                       <td class = "celltitle">9:00 a.m.</td>
-                      <td class = "cell"><input type = "checkbox" class = "check" value = "L9"></td>
-                      <td class = "cell"><input type = "checkbox" class = "check" value = "M9"></td>
-                      <td class = "cell"><input type = "checkbox" class = "check" value = "I9"></td>
-                      <td class = "cell"><input type = "checkbox" class = "check" value = "J9"></td>
-                      <td class = "cell"><input type = "checkbox" class = "check" value = "V9"></td>
+                      <td class = "cell" id="cell1"><a  onclick="colorearCelda('cell1', 'ch1')"><input id="ch1" type = "checkbox" class = "check" value = "L9"></a></td>
+                      <td class = "cell" id="cell2"><a  onclick="colorearCelda('cell2', 'ch2')"><input id="ch2" type = "checkbox" class = "check" value = "M9"></a></td>
+                      <td class = "cell" id="cell3"><a  onclick="colorearCelda('cell3', 'ch3')"><input id="ch3" type = "checkbox" class = "check" value = "I9"></a></td>
+                      <td class = "cell" id="cell4"><a  onclick="colorearCelda('cell4', 'ch4')"><input id="ch4" type = "checkbox" class = "check" value = "J9"></a></td>
+                      <td class = "cell" id="cell5"><a  onclick="colorearCelda('cell5', 'ch5')"><input id="ch5" type = "checkbox" class = "check" value = "V9"></a></td>
                   </tr>
                   <tr>
                     <td class = "celltitle">10:00 a.m.</td>
-                    <td class = "cell"><input type = "checkbox" class = "check" value = "L10"></td>
-                    <td class = "cell"><input type = "checkbox" class = "check" value = "M10"></td>
-                    <td class = "cell"><input type = "checkbox" class = "check" value = "I10"></td>
-                    <td class = "cell"><input type = "checkbox" class = "check" value = "J10"></td>
-                    <td class = "cell"><input type = "checkbox" class = "check" value = "V10"></td>
+                    <td class = "cell" id="cell6"><a  onclick="colorearCelda('cell6', 'ch6')"><input id="ch6" type = "checkbox" class = "check" value = "L10"></a></td>
+                    <td class = "cell" id="cell7"><a  onclick="colorearCelda('cell7', 'ch7')"><input id="ch7" type = "checkbox" class = "check" value = "M10"></a></td>
+                    <td class = "cell" id="cell8"><a  onclick="colorearCelda('cell8', 'ch8')"><input id="ch8" type = "checkbox" class = "check" value = "I10"></a></td>
+                    <td class = "cell" id="cell9"><a  onclick="colorearCelda('cell9', 'ch9')"><input id="ch9" type = "checkbox" class = "check" value = "J10"></a></td>
+                    <td class = "cell" id="cell10"><a  onclick="colorearCelda('cell10', 'ch10')"><input id="ch10" type = "checkbox" class = "check" value = "V10"></a></td>
                   </tr>
                   <tr>
                       <td class = "celltitle">11:00 a.m.</td>
-                      <td class = "cell"><input type = "checkbox" class = "check" value = "L11"></td>
-                      <td class = "cell"><input type = "checkbox" class = "check" value = "M11"></td>
-                      <td class = "cell"><input type = "checkbox" class = "check" value = "I11"></td>
-                      <td class = "cell"><input type = "checkbox" class = "check" value = "J11"></td>
-                      <td class = "cell"><input type = "checkbox" class = "check" value = "V11"></td>
+                      <td class = "cell" id="cell11"><a  onclick="colorearCelda('cell11', 'ch11')"><input id="ch11" type = "checkbox" class = "check" value = "L11"></a></td>
+                      <td class = "cell" id="cell12"><a  onclick="colorearCelda('cell12', 'ch12')"><input id="ch12" type = "checkbox" class = "check" value = "M11"></a></td>
+                      <td class = "cell" id="cell13"><a  onclick="colorearCelda('cell13', 'ch13')"><input id="ch13" type = "checkbox" class = "check" value = "I11"></a></td>
+                      <td class = "cell" id="cell14"><a  onclick="colorearCelda('cell14', 'ch14')"><input id="ch14" type = "checkbox" class = "check" value = "J11"></a></td>
+                      <td class = "cell" id="cell15"><a  onclick="colorearCelda('cell15', 'ch15')"><input id="ch15" type = "checkbox" class = "check" value = "V11"></a></td>
                   </tr>
                   <tr>
                     <td class = "celltitle">12:00 p.m.</td>
-                    <td class = "cell"><input type = "checkbox" class = "check" value = "L12"></td>
-                    <td class = "cell"><input type = "checkbox" class = "check" value = "M12"></td>
-                    <td class = "cell"><input type = "checkbox" class = "check" value = "I12"></td>
-                    <td class = "cell"><input type = "checkbox" class = "check" value = "J12"></td>
-                    <td class = "cell"><input type = "checkbox" class = "check" value = "V12"></td>
+                    <td class = "cell" id="cell16"><a  onclick="colorearCelda('cell16', 'ch16')"><input id="ch16" type = "checkbox" class = "check" value = "L12"></a></td>
+                    <td class = "cell" id="cell17"><a  onclick="colorearCelda('cell17', 'ch17')"><input id="ch17" type = "checkbox" class = "check" value = "M12"></a></td>
+                    <td class = "cell" id="cell18"><a  onclick="colorearCelda('cell18', 'ch18')"><input id="ch18" type = "checkbox" class = "check" value = "I12"></a></td>
+                    <td class = "cell" id="cell19"><a  onclick="colorearCelda('cell19', 'ch19')"><input id="ch19" type = "checkbox" class = "check" value = "J12"></a></td>
+                    <td class = "cell" id="cell20"><a  onclick="colorearCelda('cell20', 'ch20')"><input id="ch20" type = "checkbox" class = "check" value = "V12"></a></td>
                   </tr>
                   <tr>
                     <td class = "celltitle">1:00 p.m.</td>
-                    <td class = "cell"><input type = "checkbox" class = "check" value = "L1"></td>
-                    <td class = "cell"><input type = "checkbox" class = "check" value = "M1"></td>
-                    <td class = "cell"><input type = "checkbox" class = "check" value = "I1"></td>
-                    <td class = "cell"><input type = "checkbox" class = "check" value = "J1"></td>
-                    <td class = "cell"><input type = "checkbox" class = "check" value = "V1"></td>
+                    <td class = "cell" id="cell21"><a  onclick="colorearCelda('cell21', 'ch21')"><input id="ch21" type = "checkbox" class = "check" value = "L1"></a></td>
+                    <td class = "cell" id="cell22"><a  onclick="colorearCelda('cell22', 'ch22')"><input id="ch22" type = "checkbox" class = "check" value = "M1"></a></td>
+                    <td class = "cell" id="cell23"><a  onclick="colorearCelda('cell23', 'ch23')"><input id="ch23" type = "checkbox" class = "check" value = "I1"></a></td>
+                    <td class = "cell" id="cell24"><a  onclick="colorearCelda('cell24', 'ch24')"><input id="ch24" type = "checkbox" class = "check" value = "J1"></a></td>
+                    <td class = "cell" id="cell25"><a  onclick="colorearCelda('cell25', 'ch25')"><input id="ch25" type = "checkbox" class = "check" value = "V1"></a></td>
                   </tr>
                   <tr>
                     <td class = "celltitle">2:00 p.m.</td>
-                    <td class = "cell"><input type = "checkbox" class = "check" value = "L2"></td>
-                    <td class = "cell"><input type = "checkbox" class = "check" value = "M2"></td>
-                    <td class = "cell"><input type = "checkbox" class = "check" value = "I2"></td>
-                    <td class = "cell"><input type = "checkbox" class = "check" value = "J2"></td>
-                    <td class = "cell"><input type = "checkbox" class = "check" value = "V2"></td>
+                    <td class = "cell" id="cell26"><a  onclick="colorearCelda('cell26', 'ch26')"><input id="ch26" type = "checkbox" class = "check" value = "L2"></a></td>
+                    <td class = "cell" id="cell27"><a  onclick="colorearCelda('cell27', 'ch27')"><input id="ch27" type = "checkbox" class = "check" value = "M2"></a></td>
+                    <td class = "cell" id="cell28"><a  onclick="colorearCelda('cell28', 'ch28')"><input id="ch28" type = "checkbox" class = "check" value = "I2"></a></td>
+                    <td class = "cell" id="cell29"><a  onclick="colorearCelda('cell29', 'ch29')"><input id="ch29" type = "checkbox" class = "check" value = "J2"></a></td>
+                    <td class = "cell" id="cell30"><a  onclick="colorearCelda('cell30', 'ch30')"><input id="ch30" type = "checkbox" class = "check" value = "V2"></a></td>
                   </tr>
                   <tr>
                     <td class = "celltitle">3:00 p.m.</td>
-                    <td class = "cell"><input type = "checkbox" class = "check" value = "L3"></td>
-                    <td class = "cell"><input type = "checkbox" class = "check" value = "M3"></td>
-                    <td class = "cell"><input type = "checkbox" class = "check" value = "I3"></td>
-                    <td class = "cell"><input type = "checkbox" class = "check" value = "J3"></td>
-                    <td class = "cell"><input type = "checkbox" class = "check" value = "V3"></td>
+                    <td class = "cell" id="cell31"><a  onclick="colorearCelda('cell31', 'ch31')"><input id="ch31" type = "checkbox" class = "check" value = "L3"></a></td>
+                    <td class = "cell" id="cell32"><a  onclick="colorearCelda('cell32', 'ch32')"><input id="ch32" type = "checkbox" class = "check" value = "M3"></a></td>
+                    <td class = "cell" id="cell33"><a  onclick="colorearCelda('cell33', 'ch33')"><input id="ch33" type = "checkbox" class = "check" value = "I3"></a></td>
+                    <td class = "cell" id="cell34"><a  onclick="colorearCelda('cell34', 'ch34')"><input id="ch34" type = "checkbox" class = "check" value = "J3"></a></td>
+                    <td class = "cell" id="cell35"><a  onclick="colorearCelda('cell35', 'ch35')"><input id="ch35" type = "checkbox" class = "check" value = "V3"></a></td>
                   </tr>
                   <tr>
                     <td class = "celltitle">4:00 p.m.</td>
-                    <td class = "cell"><input type = "checkbox" class = "check" value = "L4"></td>
-                    <td class = "cell"><input type = "checkbox" class = "check" value = "M4"></td>
-                    <td class = "cell"><input type = "checkbox" class = "check" value = "I4"></td>
-                    <td class = "cell"><input type = "checkbox" class = "check" value = "J4"></td>
-                    <td class = "cell"><input type = "checkbox" class = "check" value = "V4"></td>
+                    <td class = "cell" id="cell36"><a  onclick="colorearCelda('cell36', 'ch36')"><input id="ch36" type = "checkbox" class = "check" value = "L4"></a></td>
+                    <td class = "cell" id="cell37"><a  onclick="colorearCelda('cell37', 'ch37')"><input id="ch37" type = "checkbox" class = "check" value = "M4"></a></td>
+                    <td class = "cell" id="cell38"><a  onclick="colorearCelda('cell38', 'ch38')"><input id="ch38" type = "checkbox" class = "check" value = "I4"></a></td>
+                    <td class = "cell" id="cell39"><a  onclick="colorearCelda('cell39', 'ch39')"><input id="ch39" type = "checkbox" class = "check" value = "J4"></a></td>
+                    <td class = "cell" id="cell40"><a  onclick="colorearCelda('cell40', 'ch40')"><input id="ch40" type = "checkbox" class = "check" value = "V4"></a></td>
                   </tr>
                   <tr>
                     <td class = "celltitle">5:00 p.m.</td>
-                    <td class = "cell"><input type = "checkbox" class = "check" value = "L5"></td>
-                    <td class = "cell"><input type = "checkbox" class = "check" value = "M5"></td>
-                    <td class = "cell"><input type = "checkbox" class = "check" value = "I5"></td>
-                    <td class = "cell"><input type = "checkbox" class = "check" value = "J5"></td>
-                    <td class = "cell"><input type = "checkbox" class = "check" value = "V5"></td>
+                    <td class = "cell" id="cell41"><a  onclick="colorearCelda('cell41', 'ch41')"><input id="ch41" type = "checkbox" class = "check" value = "L5"></a></td>
+                    <td class = "cell" id="cell42"><a  onclick="colorearCelda('cell42', 'ch42')"><input id="ch42" type = "checkbox" class = "check" value = "M5"></a></td>
+                    <td class = "cell" id="cell43"><a  onclick="colorearCelda('cell43', 'ch43')"><input id="ch43" type = "checkbox" class = "check" value = "I5"></a></td>
+                    <td class = "cell" id="cell44"><a  onclick="colorearCelda('cell44', 'ch44')"><input id="ch44" type = "checkbox" class = "check" value = "J5"></a></td>
+                    <td class = "cell" id="cell45"><a  onclick="colorearCelda('cell45', 'ch45')"><input id="ch45" type = "checkbox" class = "check" value = "V5"></a></td>
                   </tr>
                   <tr>
                     <td class = "celltitle">6:00 p.m.</td>
-                    <td class = "cell"><input type = "checkbox" class = "check" value = "L6"></td>
-                    <td class = "cell"><input type = "checkbox" class = "check" value = "M6"></td>
-                    <td class = "cell"><input type = "checkbox" class = "check" value = "I6"></td>
-                    <td class = "cell"><input type = "checkbox" class = "check" value = "J6"></td>
-                    <td class = "cell"><input type = "checkbox" class = "check" value = "V6"></td>
+                    <td class = "cell" id="cell46"><a  onclick="colorearCelda('cell46', 'ch46')"><input id="ch46" type = "checkbox" class = "check" value = "L6"></a></td>
+                    <td class = "cell" id="cell47"><a  onclick="colorearCelda('cell47', 'ch47')"><input id="ch47" type = "checkbox" class = "check" value = "M6"></a></td>
+                    <td class = "cell" id="cell48"><a  onclick="colorearCelda('cell48', 'ch48')"><input id="ch48" type = "checkbox" class = "check" value = "I6"></a></td>
+                    <td class = "cell" id="cell49"><a  onclick="colorearCelda('cell49', 'ch49')"><input id="ch49" type = "checkbox" class = "check" value = "J6"></a></td>
+                    <td class = "cell" id="cell50"><a  onclick="colorearCelda('cell50', 'ch50')"><input id="ch50" type = "checkbox" class = "check" value = "V6"></a></td>
                 </tr>
               </table>
                 <button type="button" class="boton" style="position: relative; left: 43.8%;" onclick = "valores()">Enviar</button><br>
