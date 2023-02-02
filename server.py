@@ -53,8 +53,20 @@ def opciones():
     if user == '' and password == "":
         return redirect(url_for('login'))
     else:
-        my_var3 = session.get('my_var3', None)               
-        return render_template('opciones.html', name=my_var3)
+        my_var3 = session.get('my_var3', None)  
+        if database:
+            cursor = database.cursor()
+            cursor.execute("SELECT id_participante FROM participante WHERE correo=%s AND contraseña=%s;", (user, password))
+            data = cursor.fetchone()
+            cursor = database.cursor()
+            cursor.execute("SELECT * FROM encuesta WHERE id_participante=%s;", (data))
+            data_2 = cursor.fetchone()
+            band = 1
+            if data_2 == None:
+                band = 0
+            else:
+                band = 1      
+        return render_template('opciones.html', name=my_var3, bandera = band)
 
 @app.route('/perfil', methods=['GET', 'POST'])
 def perfil():

@@ -169,6 +169,20 @@ body {
     font-weight: bold;
 }
 
+.formulario .boton4{
+    background-color: #a06f1b;
+    color: white;
+    border-radius: 15px;
+    border-color: #D99729;
+    border-style: solid;
+    padding: 5px 15px;
+    margin-top: 15px;
+    width: 49%;
+    height: 45px;
+    font-size: medium;
+    font-weight: bold;
+}
+
 .formulario .boton2:hover{
     background-color: #eebb2e;
     color: #2C2C2C;

@@ -9,9 +9,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+    <script type="text/javascript" src = "{{ url_for('static', filename='js/opciones.js') }}"></script>
+    <script type="text/javascript">
+        var flag = {{bandera}}
+    </script>
     <title>Document</title>
 </head>
-<body>
+<body onload="onload({{bandera}})">
     <h1 class="titulo">Iowa Gambling Task
         <div class = "usuario" style = "font-size: 70%" >¡Bienvenid@, {{name}}!</div>
     </h1>
@@ -24,8 +28,8 @@
     </div>
     <section class="middle">
         <form action="{{url_for('pregunta')}}" method = 'get' class="formulario" autocomplete="off">
-            <a href="{{url_for('pregunta')}}">
-                <button type="button" class="boton2" action="{{url_for('pregunta')}}">Comenzar encuesta</button><br>
+            <a href="{{url_for('pregunta')}}" id="startL">
+                <button type="button" class="boton2" action="{{url_for('pregunta')}}" id="start">Comenzar encuesta</button><br>
             </a>
         </form>
 
