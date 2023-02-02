@@ -250,7 +250,6 @@ def resultadoss(puntos, total_puntos):
                     dicc2[clave] = ["Falso"]
             i+=1
         
-        valores
         preguntasJson = json.dumps(dicc)
         respuestasJson = json.dumps(dicc2)
         print("Preguntas Json: ", preguntasJson)
@@ -298,20 +297,54 @@ def resultados():
         print("Entra al else")
         if request.method == "POST":
             print("Sí entra al POST")
-            dias = request.form.getlist("dias")
-            print("Dias: ", dias)
-            hora = request.form["hora"]
-            print("Hora: ", hora)
-            horafin = request.form["fin"]
-            print("Hora final: ", horafin)
-            horaAp = hora + '-' + horafin
-            print("Hora de la cita: ", horaAp)
+            dicc = request.form["diccInvisible"]
+            print("Dias: ", dicc)
+            print("Tipo de dicc: ", type(dicc))
+            aux = ""
+            lista = []
+            dicc3 = dict()
+            horasLunes = []
+            horasMartes = []
+            horasMiercoles = []
+            horasJueves = []
+            horasViernes = []
+            for i in dicc:
+                if i != ",":
+                    aux += i
+                else:
+                    lista.append(aux)
+                    aux = ""
+            for obj in lista:
+                dia = obj[0]
+                print("Objeto: ", obj)
+                if dia == "L":
+                    horas = obj[1:]
+                    horasLunes.append(horas)
+                    dicc3["Lunes"] = horasLunes
+                elif dia == "M":
+                    horas = obj[1:]
+                    horasMartes.append(horas)
+                    dicc3["Martes"] = horasMartes
+                elif dia == "I":
+                    horas = obj[1:]
+                    horasMiercoles.append(horas)
+                    dicc3["Miercoles"] = horasMiercoles
+                elif dia == "J":
+                    horas = obj[1:]
+                    horasJueves.append(horas)
+                    dicc3["Jueves"] = horasJueves
+                elif dia == "V":
+                    horas = obj[1:]
+                    horasViernes.append(horas)
+                    dicc3["Viernes"] = horasViernes
+
+            diasJson = json.dumps(dicc3)
             if database:            
                 cursor = database.cursor()
                 cursor.execute("SELECT id_participante FROM participante WHERE correo=%s AND contraseña=%s;", (user, password))
                 data = cursor.fetchone()
-                #cursor.execute("UPDATE encuesta set diascita = %s, horacita=%s where id_participante=%s", (dias, horaAp, data))
-                #database.commit()
+                cursor.execute("UPDATE encuesta set cita = %s where id_participante=%s", (diasJson, data))
+                database.commit()
             return redirect(url_for('opciones'))
         return render_template('resultados.html')
 

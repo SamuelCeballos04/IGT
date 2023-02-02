@@ -17,43 +17,44 @@ async function valores(){
     horasMiercoles = []
     horasJueves = []
     horasViernes = []
-    for(var j=0; j < lista.length; j++)
-        {
-        dia = lista[j][0]
-        diaHora = lista[j]
-        if (dia == "L")
-            {
-            diaHora = diaHora.slice(1)
-            horasLunes.push(diaHora)
-            dict["Lunes"] = horasLunes
-            } 
+    // for(var j=0; j < lista.length; j++)
+    //     {
+    //     dia = lista[j][0]
+    //     diaHora = lista[j]
+    //     if (dia == "L")
+    //         {
+    //         diaHora = diaHora.slice(1)
+    //         horasLunes.push(diaHora)
+    //         dict["Lunes"] = horasLunes
+    //         } 
 
-        else if (dia == "M")
-            {
-            diaHora = diaHora.slice(1)
-            horasMartes.push(diaHora)
-            dict["Martes"] = horasMartes
-            } 
-        else if (dia == "I")
-            {
-            diaHora = diaHora.slice(1)
-            horasMiercoles.push(diaHora)
-            dict["Miércoles"] = horasMiercoles
-            } 
-        else if (dia == "J")
-            {
-            diaHora = diaHora.slice(1)
-            horasJueves.push(diaHora)
-            dict["Jueves"] = horasJueves
-            } 
-        else if (dia == "V")
-            {
-            diaHora = diaHora.slice(1)
-            horasViernes.push(diaHora)
-            dict["Viernes"] = horasViernes
-            } 
-        }
+    //     else if (dia == "M")
+    //         {
+    //         diaHora = diaHora.slice(1)
+    //         horasMartes.push(diaHora)
+    //         dict["Martes"] = horasMartes
+    //         } 
+    //     else if (dia == "I")
+    //         {
+    //         diaHora = diaHora.slice(1)
+    //         horasMiercoles.push(diaHora)
+    //         dict["Miércoles"] = horasMiercoles
+    //         } 
+    //     else if (dia == "J")
+    //         {
+    //         diaHora = diaHora.slice(1)
+    //         horasJueves.push(diaHora)
+    //         dict["Jueves"] = horasJueves
+    //         } 
+    //     else if (dia == "V")
+    //         {
+    //         diaHora = diaHora.slice(1)
+    //         horasViernes.push(diaHora)
+    //         dict["Viernes"] = horasViernes
+    //         } 
+    //     }
     console.log("Dias: ", dict)
+    document.getElementById("diccInvisible").value = lista
 }
 
 
