@@ -41,6 +41,7 @@ def login():
                     session['my_var3'] = data[1]
                     return redirect(url_for('opciones'))
             elif band == False:
+                flash('Usuario o contraseña incorrectos', 'error')
                 return redirect(url_for('login'))
 
 
@@ -119,6 +120,7 @@ def pregunta():
             if data_2 == None:
                 band = False
             if band == True:
+                flash('Sus respuestas se registraron correctamente', 'success')
                 return redirect(url_for('opciones'))
         return render_template('pregunta.html')
 
@@ -150,6 +152,7 @@ def registro():
             if data == None:
                 cursor.execute("INSERT INTO participante (nombre, apellidos, fechanac, telefono, escolaridad, carrera, correo, contraseña, sexo)VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)", (nombre, apellidos, fechaN, telefono, escolaridad, carrera, correoE, contraseña, sexo))
                 database.commit()
+                flash('Se ha registrado correctamente', 'success')
                 return redirect(url_for('login'))
             else:
                 return redirect(url_for('registro'))
@@ -190,6 +193,7 @@ def editarDatos():
             database.commit()
             session['my_var3'] = nombre
             session['my_var2'] = request.form['password']
+            flash('Cambios guardados', 'success')
             return redirect(url_for('opciones'))
     return render_template('editarDatos.html', data = data)
 
@@ -345,6 +349,7 @@ def resultados():
                 data = cursor.fetchone()
                 cursor.execute("UPDATE encuesta set cita = %s where id_participante=%s", (diasJson, data))
                 database.commit()
+                flash('Sus respuestas se han registrado correctamente', 'succes')
             return redirect(url_for('opciones'))
         return render_template('resultados.html')
 

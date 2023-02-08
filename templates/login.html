@@ -11,6 +11,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
     <title>Document</title>
 </head>
+{% with messages = get_flashed_messages(with_categories=true) %}
+   {% if messages %}
+      {% for category, message in messages %}
+      <div class="{{category}}">{{ message }}</div>
+      {% endfor %}
+   {% endif %}
+{% endwith %}
 <body>
     <h1 class="titulo">Iowa Gambling Task</h1>
     <h2 class="subtitulo">Iniciar Sesion</h2>

@@ -496,3 +496,19 @@ body {
   input[type="checkbox"] {
     accent-color: #eebb2e;
   }
+
+  .error {
+    color: #ffffff;
+    font-size: larger;
+    text-align: center;
+    width: 30%;
+    margin: auto;
+}
+
+  .success {
+  color: #ffffff;
+  font-size: larger;
+  text-align: center;
+  width: 30%;
+  margin: auto;
+}
