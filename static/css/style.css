@@ -503,6 +503,9 @@ body {
     text-align: center;
     width: 30%;
     margin: auto;
+    background-color: #d92929;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
   .success {
@@ -511,4 +514,7 @@ body {
   text-align: center;
   width: 30%;
   margin: auto;
+  background-color: #43b928;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
