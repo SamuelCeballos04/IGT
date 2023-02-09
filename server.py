@@ -6,7 +6,7 @@ import math
 import smtplib, ssl 
 from email.message import EmailMessage
 from email.mime.text import MIMEText
-
+import blowfish
 
 database = conexion()
 
@@ -64,18 +64,17 @@ def login():
     
         if database:
             cursor = database.cursor()
-            cursor.execute("SELECT * FROM participante WHERE correo=%s AND contraseña=%s;", (user, password))
+            cursor.execute("SELECT * FROM participante WHERE correo=%s AND contraseña = crypt(%s, contraseña);", (user, password))
             data = cursor.fetchone()
             print("Data: ", data)
             band = True
             if data == None:
                 band = False
             if band == True:    
-                if data[7] == user and data[8] == password:
-                    session['my_var'] = user
-                    session['my_var2'] = password
-                    session['my_var3'] = data[1]
-                    return redirect(url_for('opciones'))
+                session['my_var'] = user
+                session['my_var2'] = password
+                session['my_var3'] = data[1]
+                return redirect(url_for('opciones'))
             elif band == False:
                 flash('Usuario o contraseña incorrectos', 'error')
                 return redirect(url_for('login'))
@@ -93,7 +92,7 @@ def opciones():
         my_var3 = session.get('my_var3', None)  
         if database:
             cursor = database.cursor()
-            cursor.execute("SELECT id_participante FROM participante WHERE correo=%s AND contraseña=%s;", (user, password))
+            cursor.execute("SELECT id_participante FROM participante WHERE correo=%s AND contraseña = crypt(%s, contraseña);", (user, password))
             data = cursor.fetchone()
             cursor = database.cursor()
             cursor.execute("SELECT * FROM encuesta WHERE id_participante=%s;", (data))
@@ -114,7 +113,7 @@ def perfil():
     else:
         if database:
             cursor = database.cursor()
-            cursor.execute("SELECT * FROM participante WHERE correo=%s AND contraseña=%s;", (user, password))
+            cursor.execute("SELECT * FROM participante WHERE correo=%s AND contraseña=crypt(%s, contraseña);", (user, password))
             data = cursor.fetchone()
             print("Data: ", data)
             print("Fecha de nacimiento: ", data[3])
@@ -147,7 +146,7 @@ def pregunta():
     else:
         if database:
             cursor = database.cursor()
-            cursor.execute("SELECT id_participante FROM participante WHERE correo=%s AND contraseña=%s;", (user, password))
+            cursor.execute("SELECT id_participante FROM participante WHERE correo=%s AND contraseña=crypt(%s, contraseña);", (user, password))
             data = cursor.fetchone()
             cursor = database.cursor()
             cursor.execute("SELECT * FROM encuesta WHERE id_participante=%s;", (data))
@@ -183,10 +182,10 @@ def registro():
         print("Sexo: ", sexo)    
         if database:
             cursor = database.cursor()
-            cursor.execute("SELECT * FROM participante WHERE correo=%s AND contraseña=%s;", (correoE, contraseña))
+            cursor.execute("SELECT * FROM participante WHERE correo=%s AND contraseña=crypt(%s, contraseña);", (correoE, contraseña))
             data = cursor.fetchone()
             if data == None:
-                cursor.execute("INSERT INTO participante (nombre, apellidos, fechanac, telefono, escolaridad, carrera, correo, contraseña, sexo)VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)", (nombre, apellidos, fechaN, telefono, escolaridad, carrera, correoE, contraseña, sexo))
+                cursor.execute("INSERT INTO participante (nombre, apellidos, fechanac, telefono, escolaridad, carrera, correo, contraseña, sexo)VALUES(%s, %s, %s, %s, %s, %s, %s, crypt(%s, gen_salt('bf')), %s)", (nombre, apellidos, fechaN, telefono, escolaridad, carrera, correoE, contraseña, sexo))
                 database.commit()
                 flash('Se ha registrado correctamente', 'success')
                 enviarCorreoRegistro(correoE)
@@ -204,7 +203,7 @@ def editarDatos():
         return redirect(url_for('login'))
     if database:
         cursor = database.cursor()
-        cursor.execute("SELECT * FROM participante WHERE correo=%s AND contraseña=%s;", (user, password))
+        cursor.execute("SELECT * FROM participante WHERE correo=%s AND contraseña=crypt(%s, contraseña);", (user, password))
         data = cursor.fetchone()
         print("Carrera: ", data[6])
         print(type(data[6]))
@@ -306,7 +305,7 @@ def resultadoss(puntos, total_puntos):
         print("Los puntos obtenidos son: %s" % (puntos_totales))
         if database:
             cursor = database.cursor()
-            cursor.execute("SELECT id_participante FROM participante WHERE correo=%s AND contraseña=%s;", (user, password))
+            cursor.execute("SELECT id_participante FROM participante WHERE correo=%s AND contraseña=crypt(%s, contraseña);", (user, password))
             data = cursor.fetchone()
             cursor.execute("INSERT INTO encuesta (id_participante, pregunta, respuesta) VALUES (%s, %s, %s)", (data, preguntasJson, respuestasJson))
             cursor.execute("UPDATE participante set aptitud = %s where id_participante = %s;", (aptitud, data))
@@ -323,7 +322,7 @@ def resultados():
     else:
         if database:
             cursor = database.cursor()
-            cursor.execute("SELECT id_participante FROM participante WHERE correo=%s AND contraseña=%s;", (user, password))
+            cursor.execute("SELECT id_participante FROM participante WHERE correo=%s AND contraseña=crypt(%s, contraseña);", (user, password))
             data = cursor.fetchone()
             cursor = database.cursor()
             cursor.execute("SELECT * FROM encuesta WHERE id_participante=%s;", (data))
@@ -382,7 +381,7 @@ def resultados():
             diasJson = json.dumps(dicc3)
             if database:            
                 cursor = database.cursor()
-                cursor.execute("SELECT id_participante FROM participante WHERE correo=%s AND contraseña=%s;", (user, password))
+                cursor.execute("SELECT id_participante FROM participante WHERE correo=%s AND contraseña=crypt(%s, contraseña);", (user, password))
                 data = cursor.fetchone()
                 cursor.execute("UPDATE encuesta set cita = %s where id_participante=%s", (diasJson, data))
                 database.commit()
