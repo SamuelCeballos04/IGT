@@ -550,7 +550,7 @@ def resultados():
                 data = cursor.fetchone()
                 cursor.execute("UPDATE encuesta set cita = %s where id_participante=%s", (diasJson, data))
                 database.commit()
-                flash('Sus respuestas se han registrado correctamente', 'succes')
+                flash('Sus respuestas se han registrado correctamente', 'success')
             return redirect(url_for('opciones'))
         return render_template('resultados.html')
 
