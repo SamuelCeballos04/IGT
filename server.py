@@ -524,7 +524,7 @@ def resultados():
             band = True
             if data_2 != None:
                 band = False
-                if data_2[0] == None:
+                if data_2[3] != None:
                     band = True
             if band == True:
                 return redirect(url_for('opciones'))

@@ -289,7 +289,21 @@ body {
     font-weight: bold;
 }
 
-.boton:hover{
+.boton:disabled {
+  background-color: #d99829c1;
+  color: rgb(184, 180, 180);
+  border-radius: 15px;
+  border-color: #d99829c1;
+  border-style: solid;
+  padding: 5px 15px;
+  margin-top: 15px;
+  width: 125px;
+  height: 45px;
+  font-size: medium;
+  font-weight: bold;
+}
+
+.boton:hover:enabled{
     background-color: #eebb2e;
     color: #2C2C2C;
     text-decoration: none;
