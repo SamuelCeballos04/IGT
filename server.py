@@ -10,7 +10,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.base import MIMEBase
 from email import encoders
 from fpdf import FPDF
-
+import pandas as pd
 
 database = conexion()
 
@@ -85,8 +85,9 @@ def enviarCorreoRegistro(destinatario):
         <H3 style = "color: #FFCF40">Gracias por tu cooperación</H3>
         <p>--</p>
         <H2 style = "text-align: center; color: #212C4F">Bio Researchers</H2>
+        <H2 style = "text-align: center; color: #212C4F">Laboratorio de Adquisición de Señales y Análisis Inteligente de Datos (LASAID)</H2>
         <H2 style = "text-align: center; color: black">Centro Universitario de Ciencias Exactas e Ingenierías</H2>
-        <H2 style = "text-align: center; color: black">Universidad de Gadalajara</H2>
+        <H2 style = "text-align: center; color: black">Universidad de Guadalajara</H2>
     </body>
     </html>
     """
@@ -175,7 +176,8 @@ def enviarCorreoHorarios(destinatario):
         <p>--</p>
         <H2 style = "text-align: center; color: #212C4F">Bio Researchers</H2>
         <H2 style = "text-align: center; color: black">Centro Universitario de Ciencias Exactas e Ingenierías</H2>
-        <H2 style = "text-align: center; color: black">Universidad de Gadalajara</H2>
+        <H2 style = "text-align: center; color: black">Laboratorio de Adquisición de Señales y Análisis Inteligente de Datos (LASAID)</H2>
+        <H2 style = "text-align: center; color: black">Universidad de Guadalajara</H2>
     </body>
     </html>
     """
@@ -196,6 +198,48 @@ def enviarCorreoHorarios(destinatario):
     server.login(sender_email, sender_password)
     server.sendmail(sender_email, recipient_email, message.as_string())
     server.quit()
+
+def horariosExcel():
+    horas = ["9", "10", "11", "12", "1", "2", "3", "4", "5", "6"]
+    dias = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes"]
+    citaLunes = []
+    citaMartes = []
+    citaMiercoles = []
+    citaJueves = []
+    citaViernes = []
+    if database:
+        for dia in dias:
+            for hora in horas:
+                cursor = database.cursor()
+                cursor.execute("select correo from participante join encuesta on participante.id_participante=encuesta.id_participante where (cita->%s)::jsonb ? %s and participante.expterminado = false", (dia, hora))
+                data = cursor.fetchall()
+                if len(data) == 0:
+                    data.append("Sin participantes")
+                if dia == "Lunes":
+                    citaLunes.append(data)
+                elif dia == "Martes":
+                    citaMartes.append(data)
+                elif dia == "Miercoles":
+                    citaMiercoles.append(data)
+                elif dia == "Jueves":
+                    citaJueves.append(data)
+                elif dia == "Viernes":
+                    citaViernes.append(data)
+                    print("Data: ", data)
+    print("Tipo de data: ", type(data))
+    print("Lunes: ", citaLunes)
+    print("Martes: ", citaMartes)
+    print("Miercoles: ", citaMiercoles)
+    print("Jueves: ", citaJueves)
+    print("Viernes: ", citaViernes)
+    col1 = "Horas"
+    col2 = dias[0]
+    col3 = dias[1]
+    col4 = dias[2]
+    col5 = dias[3]
+    col6 = dias[4]
+    data = pd.DataFrame({col1:horas,col2:citaLunes,col3:citaMartes,col4:citaMiercoles,col5:citaJueves,col6:citaViernes})
+    data.to_excel('horarios.xlsx', sheet_name='sheet1', index=False)
 
 @app.route('/')
 def index():
@@ -357,7 +401,7 @@ def editarDatos():
         print("Carrera: ", data[6])
         print(type(data[6]))
         if request.method == "POST":
-            print("Sí entra al POST")
+            print("Sí entra al POST------------------------------------------------------------------------")
             nombre = request.form["nombre"].upper()
             apellidos = request.form["apellidos"].upper()
             fechaN = request.form["fechaN"]
@@ -370,11 +414,11 @@ def editarDatos():
             print("Apellidos: ", apellidos)
             print("Fecha de nacimiento: ", fechaN)
             print("Escolaridad: ", escolaridad)
-            print("Carrera: ", carrera)
+            print("Carrera ACT: ", carrera)
             print("Telefono: ", telefono)
             print("Contraseña: ", contraseña)
             print("Sexo: ", sexo)
-            cursor.execute("UPDATE participante SET nombre=%s, apellidos=%s, fechanac=%s, telefono=%s, escolaridad=%s, carrera=%s, contraseña=%s, sexo=%s WHERE correo=%s", (nombre, apellidos, fechaN, telefono, escolaridad, carrera, contraseña, sexo, user))
+            cursor.execute("UPDATE participante SET nombre=%s, apellidos=%s, fechanac=%s, telefono=%s, escolaridad=%s, carrera=%s, contraseña=crypt(%s, gen_salt('bf')), sexo=%s WHERE correo=%s", (nombre, apellidos, fechaN, telefono, escolaridad, carrera, contraseña, sexo, user))
             database.commit()
             session['my_var3'] = nombre
             session['my_var2'] = request.form['password']
@@ -550,6 +594,7 @@ def resultados():
                 data = cursor.fetchone()
                 cursor.execute("UPDATE encuesta set cita = %s where id_participante=%s", (diasJson, data))
                 database.commit()
+                horariosExcel()
                 flash('Sus respuestas se han registrado correctamente', 'success')
             return redirect(url_for('opciones'))
         return render_template('resultados.html')
