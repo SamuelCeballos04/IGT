@@ -211,7 +211,7 @@ def horariosExcel():
         for dia in dias:
             for hora in horas:
                 cursor = database.cursor()
-                cursor.execute("select correo from participante join encuesta on participante.id_participante=encuesta.id_participante where (cita->%s)::jsonb ? %s and participante.expterminado = false", (dia, hora))
+                cursor.execute("select encuesta.id_participante from participante join encuesta on participante.id_participante=encuesta.id_participante where (cita->%s)::jsonb ? %s and participante.expterminado = false", (dia, hora))
                 data = cursor.fetchall()
                 if len(data) == 0:
                     data.append("Sin participantes")
@@ -238,8 +238,39 @@ def horariosExcel():
     col4 = dias[2]
     col5 = dias[3]
     col6 = dias[4]
-    data = pd.DataFrame({col1:horas,col2:citaLunes,col3:citaMartes,col4:citaMiercoles,col5:citaJueves,col6:citaViernes})
-    data.to_excel('horarios.xlsx', sheet_name='sheet1', index=False)
+    exportar = pd.DataFrame({col1:horas,col2:citaLunes,col3:citaMartes,col4:citaMiercoles,col5:citaJueves,col6:citaViernes})
+    if database:
+        cursor = database.cursor()
+        cursor.execute("select id_participante, nombre, apellidos, correo, telefono from participante")
+        data = cursor.fetchall()
+    id = []
+    nombres = []
+    apellidos = []
+    correo = []
+    telefono = []
+    for datos in data:
+        j = 0
+        for i in datos:
+            if j == 0:
+                id.append(i)
+            elif j == 1:
+                nombres.append(i)
+            elif j == 2:
+                apellidos.append(i)
+            elif j == 3:
+                correo.append(i)
+            elif j == 4:
+                telefono.append(i)
+            j+=1
+    col1 = "ID"
+    col2 = "Nombre"
+    col3 = "Apellidos"
+    col4 = "Correo"
+    col5 = "Teléfono"
+    exportar2 = pd.DataFrame({col1:id,col2:nombres,col3:apellidos,col4:correo,col5:telefono})
+    with pd.ExcelWriter('horarios.xlsx') as writer:
+        exportar.to_excel(writer, sheet_name='Horarios', index=False)
+        exportar2.to_excel(writer, sheet_name='Participantes', index=False)
 
 @app.route('/')
 def index():
@@ -603,12 +634,3 @@ if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port='5000')
     # Ruta para el navegador: localhost:5000
     # Si es necesario se puede cambiar el puerto si está en uso
-
-
-
-
-
-
-
-
-
