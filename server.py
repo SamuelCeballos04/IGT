@@ -498,20 +498,26 @@ def resultadoss(puntos, total_puntos):
             num = str(i)
             clave = "Enunciado " + num
             dicc[clave] = [enunciado[i-1]]
+            if (i == 1 or i == 6 or i == 8 or i == 11 or i == 12 or i == 14 or i == 18):
+                tipo = "Estres"
+            elif (i == 3 or i == 5 or i == 10 or i == 13 or i == 16 or i == 17 or i == 21):
+                tipo = "Depresion"
+            elif (i == 2 or i == 4 or i == 7 or i == 9 or i == 15 or i == 19 or i == 20):
+                tipo = "Ansiedad"
             if i <= 21:
                 if(valores[i-1] == 0):
-                    dicc2[clave] = ["Nunca", valores[i-1]]
+                    dicc2[clave] = [num, "Nunca", valores[i-1], tipo]
                 elif(valores[i-1] == 1):
-                    dicc2[clave] = ["Rara vez", valores[i-1]]
+                    dicc2[clave] = [num, "Rara vez", valores[i-1], tipo]
                 elif(valores[i-1] == 2):
-                    dicc2[clave] = ["Algunas veces", valores[i-1]]
+                    dicc2[clave] = [num, "Algunas veces", valores[i-1], tipo]
                 elif(valores[i-1] == 3):
-                    dicc2[clave] = ["Con frecuencia", valores[i-1]]
+                    dicc2[clave] = [num, "Con frecuencia", valores[i-1], tipo]
             else: 
                 if(valores[i-1] == 0):
-                    dicc2[clave] = ["Cierto"]
+                    dicc2[clave] = [num, "Cierto"]
                 elif(valores[i-1] == 1):
-                    dicc2[clave] = ["Falso"]
+                    dicc2[clave] = [num, "Falso"]
             i+=1
         
         preguntasJson = json.dumps(dicc)
