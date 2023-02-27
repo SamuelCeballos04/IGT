@@ -276,6 +276,7 @@ def horariosExcel():
 def index():
     session['my_var'] = ''
     session['my_var2'] = ''
+    session['my_var4'] = 0
     return redirect(url_for('login'))
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -290,14 +291,21 @@ def login():
             cursor = database.cursor()
             cursor.execute("SELECT * FROM participante WHERE correo=%s AND contraseña = crypt(%s, contraseña);", (user, password))
             data = cursor.fetchone()
+            cursor.execute("SELECT * FROM aplicador WHERE correo=%s AND contraseña = %s;", (user, password))
+            data2 = cursor.fetchone()
             print("Data: ", data)
+            print("Data2: ", data2)
             band = True
-            if data == None:
+            if data == None and data2 == None:
                 band = False
             if band == True:    
                 session['my_var'] = user
                 session['my_var2'] = password
-                session['my_var3'] = data[1]
+                if data2 == None:
+                    session['my_var3'] = data[1]
+                else:
+                    session['my_var4'] = 1
+                    session['my_var3'] = data2[1]
                 return redirect(url_for('opciones'))
             elif band == False:
                 flash('Usuario o contraseña incorrectos', 'error')
@@ -315,18 +323,31 @@ def opciones():
     else:
         my_var3 = session.get('my_var3', None)  
         if database:
+            band = 1
             cursor = database.cursor()
             cursor.execute("SELECT id_participante FROM participante WHERE correo=%s AND contraseña = crypt(%s, contraseña);", (user, password))
             data = cursor.fetchone()
-            cursor = database.cursor()
-            cursor.execute("SELECT * FROM encuesta WHERE id_participante=%s;", (data))
-            data_2 = cursor.fetchone()
-            band = 1
-            if data_2 == None:
-                band = 0
+            if data == None:
+                cursor.execute("SELECT id_aplicador FROM aplicador WHERE correo=%s AND contraseña = %s;", (user, password))
+                data_3 = cursor.fetchone()
+                if data_3 != None:
+                    band = 2
             else:
-                band = 1      
+                cursor = database.cursor()
+                cursor.execute("SELECT * FROM encuesta WHERE id_participante=%s;", (data))
+                data_2 = cursor.fetchone()
+                if data_2 == None:
+                    band = 0   
         return render_template('opciones.html', name=my_var3, bandera = band)
+
+@app.route('/exportarExcel')
+def exportarExcel():
+    if session['my_var4'] != 1:
+        return redirect(url_for('opciones'))
+    else:
+        print("Exportando excel")
+        #Insertar código para exportar excel
+        return redirect(url_for('opciones'))
 
 @app.route('/perfil', methods=['GET', 'POST'])
 def perfil():
@@ -334,6 +355,8 @@ def perfil():
     password = session.get('my_var2', None)
     if user == '' and password == "":
         return redirect(url_for('login'))
+    elif session['my_var4'] == 1:
+        return redirect(url_for('opciones'))
     else:
         if database:
             cursor = database.cursor()
@@ -367,6 +390,8 @@ def pregunta():
     password = session.get('my_var2', None)
     if user == '' and password == "":
         return redirect(url_for('login'))
+    elif session['my_var4'] == 1:
+        return redirect(url_for('opciones'))
     else:
         if database:
             cursor = database.cursor()
@@ -425,6 +450,8 @@ def editarDatos():
         
     if user == '' and password == "":
         return redirect(url_for('login'))
+    elif session['my_var4'] == 1:
+        return redirect(url_for('opciones'))
     if database:
         cursor = database.cursor()
         cursor.execute("SELECT * FROM participante WHERE correo=%s AND contraseña=crypt(%s, contraseña);", (user, password))
@@ -463,6 +490,8 @@ def resultadoss(puntos, total_puntos):
     password = session.get('my_var2', None)
     if user == '' and password == "":
         return redirect(url_for('login'))
+    elif session['my_var4'] == 1:
+        return redirect(url_for('opciones'))
     else:
         valores = json.loads(puntos)
         dicc = dict()
@@ -550,6 +579,8 @@ def resultados():
     nombreUsuario = session.get('my_var3', None)
     if user == '' and password == "":
         return redirect(url_for('login'))
+    elif session['my_var4'] == 1:
+        return redirect(url_for('opciones'))
     else:
         if database:
             cursor = database.cursor()

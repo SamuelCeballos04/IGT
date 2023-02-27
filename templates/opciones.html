@@ -27,8 +27,8 @@
         <div class = "usuario" style = "font-size: 70%" >¡Bienvenid@, {{name}}!</div>
     </h1>
     <div class = "perfil">
-        <a href = "{{url_for('perfil')}}">
-            <button type="button" class = "profileButton">
+        <a href = "{{url_for('perfil')}}" id="aprofile">
+            <button type="button" class = "profileButton" id="btnpr">
                 <img src="{{ url_for('static', filename='png/account-circle.png') }}" alt="Perfil" width = "65" height = "65">
             </button>
         </a>
