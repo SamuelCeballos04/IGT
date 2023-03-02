@@ -199,6 +199,123 @@ def enviarCorreoHorarios(destinatario):
     server.sendmail(sender_email, recipient_email, message.as_string())
     server.quit()
 
+def usuariosExcel():
+    if database: 
+        cursor = database.cursor()
+        cursor.execute("SELECT id_participante, id_exp from gsr")
+        data = cursor.fetchall()
+        col1 = "Tiempo"
+        col2 = "Tipo"
+        col3 = "GSR"
+        col4 = "Tiempo clic"
+        col5 = "Tiempo retroalimentación"
+        col6 = "Intervalo"
+        col7 = "Selección"
+        col8 = "Ganancia"
+        col9 = "Pérdida"
+        col10 = "Balance"
+        for i in data:
+            print("DATOS: ", i)
+            cursor.execute("SELECT json_array_elements(datos #> '{resultado}') -> 'tipo' AS Tipo FROM gsr WHERE id_participante = %s AND id_exp = %s;", (i[0], i[1]))
+            tipo = cursor.fetchall()
+
+            cursor.execute("SELECT json_array_elements(datos #> '{resultado}') -> 'tiempo' AS Tipo FROM gsr WHERE id_participante = %s AND id_exp = %s;", (i[0], i[1]))
+            tiempo = cursor.fetchall()
+
+            cursor.execute("SELECT json_array_elements(datos #> '{resultado}') -> 'gsr' AS Tipo FROM gsr WHERE id_participante = %s AND id_exp = %s;", (i[0], i[1]))
+            gsr = cursor.fetchall()
+
+            cursor.execute("SELECT tclic FROM resultado WHERE id_participante = %s AND id_exp = %s;", (i[0], i[1]))
+            tclic = cursor.fetchall()
+
+            cursor.execute("SELECT tretroalimentacion FROM resultado WHERE id_participante = %s AND id_exp = %s;", (i[0], i[1]))
+            tretro = cursor.fetchall()
+
+            cursor.execute("SELECT tintervalo FROM resultado WHERE id_participante = %s AND id_exp = %s;", (i[0], i[1]))
+            tinter = cursor.fetchall()
+
+            cursor.execute("SELECT seleccion FROM resultado WHERE id_participante = %s AND id_exp = %s;", (i[0], i[1]))
+            sel = cursor.fetchall()
+
+            cursor.execute("SELECT ganancia FROM resultado WHERE id_participante = %s AND id_exp = %s;", (i[0], i[1]))
+            ganancia = cursor.fetchall()
+
+            cursor.execute("SELECT perdida FROM resultado WHERE id_participante = %s AND id_exp = %s;", (i[0], i[1]))
+            perdida = cursor.fetchall()
+
+            cursor.execute("SELECT total FROM resultado WHERE id_participante = %s AND id_exp = %s;", (i[0], i[1]))
+            balance = cursor.fetchall()
+
+            exportar = pd.DataFrame({col1:tiempo, col2:tipo, col3:gsr})
+            exportar2 = pd.DataFrame({col4:tclic, col5:tretro, col6:tinter, col7:sel, col8:ganancia, col9:perdida, col10:balance})
+            with pd.ExcelWriter("Exp_"+str(i[1])+".xlsx") as writer: 
+                                #Nombre del archivo = id de experimento    
+                exportar.to_excel(writer, sheet_name="GSR", index=False)
+                exportar2.to_excel(writer, sheet_name="IGT", index=False) 
+
+def usuariosInfoExcel():
+    estres = 0
+    estresL = list()
+    depresion = 0
+    depresionL = list()
+    ansiedad = 0
+    ansiedadL = list()
+
+    id = list()
+    fecha = list()
+    escolaridad = list()
+    carrera = list()
+    genero = list()
+    correo = list()
+    telefono = list()
+    seed = list()
+
+    if database:
+        cursor = database.cursor()
+
+        cursor.execute("SELECT * FROM participante WHERE expterminado = true")
+        n = cursor.fetchall()
+        cursor.execute("SELECT participante.id_participante, fechanac, escolaridad, carrera, case when sexo = false then 'Mujer' when sexo = true then 'Hombre' end as sexo, correo, telefono, nombreconf, value FROM encuesta, json_each(encuesta.respuesta), participante, experimento WHERE encuesta.id_participante = participante.id_participante AND encuesta.id_participante = experimento.id_participante")
+        data = cursor.fetchall()
+        print(len(data))
+        print(len(data)/len(n))
+        num = len(data)/len(n)
+        c = 0
+
+        for i in data:
+            c +=1
+            if(c==num):
+                c=0
+                estresL.append(estres)
+                depresionL.append(depresion)
+                ansiedadL.append(ansiedad)
+                estres = 0
+                depresion = 0
+                ansiedad = 0
+                id.append(i[0])
+                fecha.append(i[1])
+                escolaridad.append(i[2])
+                carrera.append(i[3])
+                genero.append(i[4])
+                correo.append(i[5])
+                telefono.append(i[6])
+                seed.append(i[7])
+            cursor.execute("SELECT respuesta#>'{Enunciado %s}' FROM encuesta WHERE id_participante = %s ", (int(i[8][0]), i[0] ))
+            print(i)
+            if (int(i[8][0])< 22):
+                if (i[8][3]) == 'Estres':
+                    # print(i)
+                    # print(estres)
+                    estres += i[8][2]
+                elif (i[8][3]) == 'Depresion':
+                    depresion += i[8][2]
+                elif (i[8][3]) == 'Ansiedad':
+                    ansiedad += i[8][2]
+            tipo = cursor.fetchall()
+
+            exportar = pd.DataFrame({"ID":id, "Fecha":fecha, "Escolaridad":escolaridad, "Carrera": carrera, "Genero": genero, "Correo": correo, "Telefono": telefono, "DASS21 Depression": depresionL, "DASS21 Anxiety": ansiedadL, "DASS21 Stress": estresL, "Seed": seed})
+            exportar.to_excel("sujetos.xlsx", sheet_name="sujetos", index=False)
+
 def horariosExcel():
     horas = ["9", "10", "11", "12", "1", "2", "3", "4", "5", "6"]
     dias = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes"]
@@ -346,7 +463,8 @@ def exportarExcel():
         return redirect(url_for('opciones'))
     else:
         print("Exportando excel")
-        #Insertar código para exportar excel
+        usuariosExcel()
+        usuariosInfoExcel()
         return redirect(url_for('opciones'))
 
 @app.route('/perfil', methods=['GET', 'POST'])
