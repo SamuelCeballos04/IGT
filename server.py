@@ -74,18 +74,18 @@ def enviarCorreoRegistro(destinatario):
     <html>
     <body>
         <H1 style = "color: black; text-align: center;">¡Gracias por registrarte!</H1>
-        <H2 style = "color: black; text-align: center;">Tu perfil fue creado correctamente en la página web</H2>
+        <H2 style = "color: black; text-align: center;">Tu perfil fue creado correctamente</H2>
         <p style = "color: black">A continuación, deberás seguir estos pasos para realizar tu encuesta: </p>
-        <p style = "color: black">1. Inicia sesión con tu correo y contraseña previamente registrados </p>
-        <p style = "color: black">2. En la ventana principal, pulsa el botón de <b>comenzar encuesta</b></p>
-        <p style = "color: black">3. Lee las preguntas con atención y responde de acuerdo a lo que se solicite</p>
-        <p style = "color: black">4. Al terminar tu encuesta, pulsa el botón "Salir" cuando se te pregunte si realmente quieres abandonar el sitio web</p>
-        <p style = "color: black">5. Sigue las intrucciones de la ventana final</p>
+        <p style = "color: black">1. Inicia sesión con tu correo y contraseña previamente registrados. </p>
+        <p style = "color: black">2. En la ventana principal, pulsa el botón de <b>comenzar encuesta.</b></p>
+        <p style = "color: black">3. Lee las preguntas con atención y responde de acuerdo a lo que se solicite.</p>
+        <p style = "color: black">4. Al terminar tu encuesta, pulsa el botón "Salir" cuando se te pregunte si realmente quieres abandonar el sitio web.</p>
+        <p style = "color: black">5. Sigue las intrucciones de la ventana final.</p>
 
-        <H3 style = "color: #FFCF40">Gracias por tu cooperación</H3>
+        <H3 style = "color: #FFCF40">Gracias por tu cooperación.</H3>
         <p>--</p>
         <H2 style = "text-align: center; color: #212C4F">Bio Researchers</H2>
-        <H2 style = "text-align: center; color: #212C4F">Laboratorio de Adquisición de Señales y Análisis Inteligente de Datos (LASAID)</H2>
+        <H2 style = "text-align: center; color: #212C4F">Laboratorio de Adquisición de Señales y Análisis Inteligente de Datos (http://alanturing.cucei.udg.mx/lasaid/)</H2>
         <H2 style = "text-align: center; color: black">Centro Universitario de Ciencias Exactas e Ingenierías</H2>
         <H2 style = "text-align: center; color: black">Universidad de Guadalajara</H2>
     </body>
