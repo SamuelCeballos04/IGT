@@ -289,6 +289,17 @@ body {
     font-weight: bold;
 }
 
+.campo:disabled {
+  background-color: rgba(37, 37, 37, 0.311);
+  border-radius: 5px;
+  border-color: #d9982980;
+  border-style: solid;
+  width: 60%;
+  height: 35px;
+  margin-bottom: 10px;
+  color: white;
+}
+
 .boton:disabled {
   background-color: #d99829c1;
   color: rgb(184, 180, 180);

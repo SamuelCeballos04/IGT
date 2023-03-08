@@ -10,6 +10,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
     <title>Registro</title>
+    <script type="text/javascript">
+        function EnableDisableTextBox(carrera) {
+            var selectedValue = carrera.options[carrera.selectedIndex].value;
+            var txtOther = document.getElementById("otro");
+            txtOther.disabled = selectedValue == "Otro" ? false : true;
+            if (!txtOther.disabled) {
+                txtOther.focus();
+            }
+            else{
+                txtOther.value = ""
+            }
+        }
+    </script>
 </head>
 <body>
     <div class="header">
@@ -44,15 +57,19 @@
                 </li>   
                 <li>
                     <label for="carrera">Carrera</label><br>
-                    <select name="carrera" class="campo">
+                    <select name="carrera" class="campo" id="carrera" onchange = "EnableDisableTextBox(this)">
                         <option value = "Inco">Inco</option>
                         <option value = "Inni">Inni</option>
                         <option value = "Inbi">Inbi</option>
                         <option value = "Info">Info</option>
                         <option value = "Into">Into</option>
                         <option value = "Lifi">Lifi</option>
+                        <option value="Otro">Otro</option>
                     </select>
                 </li>
+                <li>
+                    <input type="text" name="otracarrera" class="campo" id="otro" disabled>
+                </li>  
                 <li>
                     <label for="sexo">Sexo</label><br>
                     <label for="Hombre" class="radio">Hombre</label>
@@ -66,7 +83,7 @@
                 </li>   
                 <li>
                     <label for="correo">Correo Electronico</label><br>
-                    <input type="text" name="correo" class="campo" placeholder = "juanPerez@gmail.com" maxlength="40" required>
+                    <input type="email" name="correo" class="campo" placeholder = "juanPerez@gmail.com" maxlength="40" required>
                 </li>   
                 <li>
                     <label for="contraseñas">Contraseña</label><br>

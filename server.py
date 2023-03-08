@@ -534,6 +534,8 @@ def registro():
         fechaN = request.form["fechaN"]
         escolaridad = request.form["escolaridad"].upper()
         carrera = request.form["carrera"].upper()
+        if carrera == "OTRO":
+            carrera = request.form["otracarrera"].upper()
         telefono = request.form["telefono"]
         correoE = request.form["correo"]
         contraseña = request.form["password"]
