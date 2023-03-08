@@ -582,6 +582,20 @@ def editarDatos():
             sex = 0
         print("Carrera: ", data[6])
         print(type(data[6]))
+        if data[6] == "INCO":
+            carrera = 1
+        elif data[6] == "INNI":
+            carrera = 2
+        elif data[6] == "INBI":
+            carrera = 3
+        elif data[6] == "INFO":
+            carrera = 4
+        elif data[6] == "INTO":
+            carrera = 5
+        elif data[6] == "LIFI":
+            carrera = 6
+        else:
+            carrera = 7
         if request.method == "POST":
             print("Sí entra al POST------------------------------------------------------------------------")
             nombre = request.form["nombre"].upper()
@@ -589,6 +603,8 @@ def editarDatos():
             fechaN = request.form["fechaN"]
             escolaridad = request.form["escolaridad"].upper()
             carrera = request.form["carrera"].upper()
+            if carrera == "OTRO":
+                carrera = request.form["otracarrera"].upper()
             telefono = request.form["telefono"]
             contraseña = request.form["password"]
             sexo = request.form["sexo"]
@@ -606,7 +622,7 @@ def editarDatos():
             session['my_var2'] = request.form['password']
             flash('Cambios guardados', 'success')
             return redirect(url_for('opciones'))
-    return render_template('editarDatos.html', data = data, sexos = sex, contra = password)
+    return render_template('editarDatos.html', data = data, sexos = sex, contra = password, carr = carrera)
 
 @app.route('/resultados/<string:puntos>/<string:total_puntos>', methods=['GET', 'POST'])
 def resultadoss(puntos, total_puntos):

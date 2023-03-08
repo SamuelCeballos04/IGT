@@ -10,6 +10,20 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
     <title>Edita tus datos</title>
+    <script type="text/javascript">
+        function EnableDisableTextBox(carrera) {
+            var selectedValue = carrera.options[carrera.selectedIndex].value;
+            var txtOther = document.getElementById("otro");
+            txtOther.disabled = selectedValue == "Otro" ? false : true;
+            if (!txtOther.disabled) {
+                txtOther.focus();
+                txtOther.value = "{{data[6]}}"
+            }
+            else{
+                txtOther.value = ""
+            }
+        }
+    </script>
 </head>
 <body>
     <h1 class="titulo">Iowa Gambling Task</h1>
@@ -42,15 +56,19 @@
                 </li>   
                 <li>
                     <label for="carrera">Carrera</label><br>
-                    <select name="carrera" class="campo">
+                    <select name="carrera" class="campo" id="carreras" onchange = "EnableDisableTextBox(this)">
                         <option value = "Inco">Inco</option>
                         <option value = "Inni">Inni</option>
                         <option value = "Inbi">Inbi</option>
                         <option value = "Info">Info</option>
                         <option value = "Into">Into</option>
                         <option value = "Lifi">Lifi</option>
+                        <option value="Otro">Otro</option>
                     </select>
-                </li>      
+                </li>     
+                <li>
+                    <input type="text" name="otracarrera" class="campo" id="otro" disabled>
+                </li>  
                 <li>
                     <label for="sexo">Sexo</label><br>
                     <label for="Hombre" class="radio">Hombre</label>
@@ -76,6 +94,7 @@
         </form>
     </section>
     <script type="text/javascript">
+        var carrera = {{carr}}
         var sex = {{sexos}}
         if (sex == 1){
             document.getElementById("hombre").checked = true;
@@ -83,6 +102,33 @@
         else{
             document.getElementById("mujer").checked = true;
         }
+        var valueToSelect = ""
+        if (carrera == 1){
+            valueToSelect = "Inco"
+        }
+        else if (carrera == 2){
+            valueToSelect = "Inni"
+        }
+        else if (carrera == 3){
+            valueToSelect = "Inbi"
+        }
+        else if (carrera == 4){
+            valueToSelect = "Info"
+        }
+        else if (carrera == 5){
+            valueToSelect = "Into"
+        }
+        else if (carrera == 6){
+            valueToSelect = "Lifi"
+        }
+        else{
+            valueToSelect = "Otro"
+            var txtOther = document.getElementById("otro");
+            txtOther.disabled = false
+            txtOther.value = "{{data[6]}}"
+        }
+        var element = document.getElementById("carreras")
+        element.value = valueToSelect
     </script>
 </body>
 </html>
