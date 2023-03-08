@@ -50,14 +50,25 @@
                 </li> 
                 <li>
                     <label for="contraseñas">Contraseña</label><br>
-                    <input type="password" name="password" class="campo" placeholder = "Contraseña" pattern = "[a-zA-Z\d\w\s\D\W]{6-15}" autocomplete="new-password"  maxlength="20" required><br>
+                    <input type="password" value="{{contra}}" name="password" class="campo" placeholder = "Contraseña" pattern = "[a-zA-Z\d\w\s\D\W]{6-15}" autocomplete="new-password"  maxlength="20" required><br>
                 </li>      
             </ul>
             <a href = "{{url_for('opciones')}}">
                 <button type="submit" class="boton">Guardar</button>
             </a>
+            <a href = "{{url_for('perfil')}}">
+                <button type="button" class="boton">Volver</button>
+            </a>
         </form>
     </section>
-    
+    <script type="text/javascript">
+        var sex = {{sexos}}
+        if (sex == 1){
+            document.getElementById("hombre").checked = true;
+        }
+        else{
+            document.getElementById("mujer").checked = true;
+        }
+    </script>
 </body>
 </html>

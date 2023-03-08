@@ -574,6 +574,10 @@ def editarDatos():
         cursor = database.cursor()
         cursor.execute("SELECT * FROM participante WHERE correo=%s AND contraseña=crypt(%s, contraseña);", (user, password))
         data = cursor.fetchone()
+        if data[10] == True:
+            sex = 1
+        else:
+            sex = 0
         print("Carrera: ", data[6])
         print(type(data[6]))
         if request.method == "POST":
@@ -600,7 +604,7 @@ def editarDatos():
             session['my_var2'] = request.form['password']
             flash('Cambios guardados', 'success')
             return redirect(url_for('opciones'))
-    return render_template('editarDatos.html', data = data)
+    return render_template('editarDatos.html', data = data, sexos = sex, contra = password)
 
 @app.route('/resultados/<string:puntos>/<string:total_puntos>', methods=['GET', 'POST'])
 def resultadoss(puntos, total_puntos):
