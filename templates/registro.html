@@ -33,11 +33,25 @@
                 </li>   
                 <li>
                     <label for="escolaridad">Escolaridad</label><br>
-                    <input type="text" name="escolaridad" class="campo" placeholder = "Secundaria"  pattern = "[a-zA-Z\s]{3-20}" maxlength="15" required>
+                        <select name="escolaridad" class="campo" placeholder = "Escolaridad">
+                        <option value = "Primaria">Primaria</option>
+                        <option value = "Secundaria">Secundaria</option>
+                        <option value = "Preparatoria">Preparatoria</option>
+                        <option value = "Licenciatura">Licenciatura</option>
+                        <option value = "Maestría">Maestría</option>
+                        <option value = "Doctorado">Doctorado</option>
+                        </select>
                 </li>   
                 <li>
-                    <label for="escolaridad">Carrera</label><br>
-                    <input type="text" name="carrera" class="campo" placeholder = "Ingeniería en computación" maxlength="40">
+                    <label for="carrera">Carrera</label><br>
+                    <select name="carrera" class="campo">
+                        <option value = "Inco">Inco</option>
+                        <option value = "Inni">Inni</option>
+                        <option value = "Inbi">Inbi</option>
+                        <option value = "Info">Info</option>
+                        <option value = "Into">Into</option>
+                        <option value = "Lifi">Lifi</option>
+                    </select>
                 </li>
                 <li>
                     <label for="sexo">Sexo</label><br>
