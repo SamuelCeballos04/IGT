@@ -26,20 +26,23 @@
     <h1 class="titulo">BIO Research
         <div class = "usuario" style = "font-size: 70%" >¡Bienvenid@, {{name}}!</div>
     </h1>
-    <div class = "perfil">
+    <!-- <div class = "perfil">
         <a href = "{{url_for('perfil')}}" id="aprofile">
             <button type="button" class = "profileButton" id="btnpr">
                 <img src="{{ url_for('static', filename='png/account-circle.png') }}" alt="Perfil" width = "65" height = "65">
             </button>
         </a>
-    </div>
+    </div> -->
     <section class="middle">
         <form action="{{url_for('pregunta')}}" method = 'get' class="formulario" autocomplete="off">
             <a href="{{url_for('pregunta')}}" id="startL">
                 <button type="button" class="boton2" action="{{url_for('pregunta')}}" id="start">Comenzar encuesta</button><br>
             </a>
         </form>
-
+        <a href = "{{url_for('perfil')}}" id="aprofile" >
+            <button class = "boton" id="btnpr" type = "submit" action = "{{url_for('perfil')}}">Perfil</button>
+        </a>
+        
         <a href="{{url_for('index')}}">
                 <button class="boton" action="{{url_for('login')}}" type="submit">Salir</button>
         </a>
