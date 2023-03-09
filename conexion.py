@@ -7,7 +7,7 @@ def conexion():
             host='localhost',
             user='postgres',
             password='admin',
-            database='IGT'
+            database='pruebaIGT9.4'
         )
     except DatabaseError as ex:
         raise ex
