@@ -73,6 +73,7 @@ async function pasar(){
         btn.innerHTML= "Aceptar";
         btn.id="resultados";
         document.getElementById("resultados").setAttribute("onclick", "enviar()")
+        
     }
     if (i==20)
     {

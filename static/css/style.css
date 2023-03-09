@@ -19,7 +19,7 @@ body {
     font-family: 'Montserrat', sans-serif;
     background-color: #2D3264;
     color: white;   
-    font-size: 1.55em;
+    font-size: max(2vw, 15px);
     text-align: center;
     margin-top: 1em;
 }
@@ -177,7 +177,7 @@ body {
     border-style: solid;
     padding: 5px 15px;
     margin-top: 15px;
-    width: 49%;
+    /* width: 49%; */
     height: 45px;
     font-size: medium;
     font-weight: bold;
@@ -199,7 +199,7 @@ body {
     border-style: solid;
     padding: 5px 15px;
     margin-top: 15px;
-    width: 35%;
+    /* width: 35%; */
     height: 45px;
     font-size: medium;
     font-weight: bold;
@@ -282,11 +282,14 @@ body {
     border-color: #D99729;
     border-style: solid;
     padding: 5px 15px;
-    margin-top: 15px;
     width: 125px;
     height: 45px;
     font-size: medium;
     font-weight: bold;
+    margin: auto;
+    display: block;
+    text-align: center;
+    margin-top: 15px;
 }
 
 .campo:disabled {
@@ -339,6 +342,7 @@ body {
     font-family: 'Montserrat', sans-serif;
     text-align: center;
     padding-top: 5px;
+    font-size: inherit;
 }
 
 .resultados .res{
@@ -537,7 +541,7 @@ body {
   color: #ffffff;
   font-size: larger;
   text-align: center;
-  width: 30%;
+  /* width: 30%; */
   margin: auto;
   background-color: #43b928;
   border-bottom-left-radius: 10px;
