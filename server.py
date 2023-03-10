@@ -70,8 +70,8 @@ class PDF(FPDF):
         self.write(h = 5, txt=footer)
 
 def enviarCorreoRegistro(destinatario):
-    sender_email = "b10.rsrch@gmail.com"
-    sender_password = "vakuyrvbyjqvwwon"
+    sender_email = "gogamblergo@gmail.com"
+    sender_password = "erzoxzrlhiaquqxj"
     recipient_email = destinatario
     subject = "Registro exitoso"
     body = """
@@ -166,21 +166,21 @@ def funcionPDF(json, nombre):
     pdf.output('horarios.pdf','F')
 
 def enviarCorreoHorarios(destinatario):
-    sender_email = "b10.rsrch@gmail.com"
-    sender_password = "vakuyrvbyjqvwwon"
+    sender_email = "gogamblergo@gmail.com"
+    sender_password = "erzoxzrlhiaquqxj"
     recipient_email = destinatario
     subject = "Encuesta respondida satisfactoriamente"
     body = """
     <html>
     <body>
         <H1 style = "color: black; text-align: center;">¡Gracias por responder la encuesta!</H1>
-        <H2 style = "color: black; text-align: center;">Tu participación es muy importante para nosotros</H2>
-        <p style = "color: black">Se adjunta un archivo confirmando los horarios que has seleccionado posteriormente a la encuesta</p>
-        <H3 style = "color: #FFCF40">Gracias por tu cooperación</H3>
+        <H2 style = "color: black; text-align: center;">Tu participación es muy importante para nosotros.</H2>
+        <p style = "color: black">Se adjunta un archivo confirmando los horarios que has seleccionado posteriormente a la encuesta.</p>
+        <H3 style = "color: #FFCF40">Gracias por tu cooperación.</H3>
         <p>--</p>
         <H2 style = "text-align: center; color: #212C4F">Bio Researchers</H2>
         <H2 style = "text-align: center; color: black">Centro Universitario de Ciencias Exactas e Ingenierías</H2>
-        <H2 style = "text-align: center; color: black">Laboratorio de Adquisición de Señales y Análisis Inteligente de Datos (LASAID)</H2>
+        <H2 style = "text-align: center; color: black">Laboratorio de Adquisición de Señales y Análisis Inteligente de Datos (http://alanturing.cucei.udg.mx/lasaid/)</H2>
         <H2 style = "text-align: center; color: black">Universidad de Guadalajara</H2>
     </body>
     </html>
