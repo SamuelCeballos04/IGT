@@ -88,7 +88,7 @@ def enviarCorreoRegistro(destinatario):
 
         <H3 style = "color: #FFCF40">Gracias por tu cooperación.</H3>
         <p>--</p>
-        <H2 style = "text-align: center; color: #212C4F">Bio Researchers</H2>
+        <H2 style = "text-align: center; color: #212C4F">GoGamblerGo</H2>
         <H2 style = "text-align: center; color: #212C4F">Laboratorio de Adquisición de Señales y Análisis Inteligente de Datos (http://alanturing.cucei.udg.mx/lasaid/)</H2>
         <H2 style = "text-align: center; color: black">Centro Universitario de Ciencias Exactas e Ingenierías</H2>
         <H2 style = "text-align: center; color: black">Universidad de Guadalajara</H2>
@@ -178,7 +178,7 @@ def enviarCorreoHorarios(destinatario):
         <p style = "color: black">Se adjunta un archivo confirmando los horarios que has seleccionado posteriormente a la encuesta.</p>
         <H3 style = "color: #FFCF40">Gracias por tu cooperación.</H3>
         <p>--</p>
-        <H2 style = "text-align: center; color: #212C4F">Bio Researchers</H2>
+        <H2 style = "text-align: center; color: #212C4F">GoGamblerGo</H2>
         <H2 style = "text-align: center; color: black">Centro Universitario de Ciencias Exactas e Ingenierías</H2>
         <H2 style = "text-align: center; color: black">Laboratorio de Adquisición de Señales y Análisis Inteligente de Datos (http://alanturing.cucei.udg.mx/lasaid/)</H2>
         <H2 style = "text-align: center; color: black">Universidad de Guadalajara</H2>
