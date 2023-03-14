@@ -292,6 +292,22 @@ body {
     margin-top: 15px;
 }
 
+.botonEnv {
+  background-color: #D99729;
+  color: white;
+  border-radius: 15px;
+  border-color: #D99729;
+  border-style: solid;
+  padding: 5px 15px;
+  width: 125px;
+  height: 45px;
+  font-size: medium;
+  font-weight: bold;
+  margin: auto;
+  text-align: center;
+  margin-top: 15px;
+}
+
 .campo:disabled {
   background-color: rgba(37, 37, 37, 0.311);
   border-radius: 5px;
@@ -303,7 +319,7 @@ body {
   color: white;
 }
 
-.boton:disabled {
+.botonEnv:disabled {
   background-color: #d99829c1;
   color: rgb(184, 180, 180);
   border-radius: 15px;
@@ -317,7 +333,7 @@ body {
   font-weight: bold;
 }
 
-.boton:hover:enabled{
+.botonEnv:hover:enabled{
     background-color: #eebb2e;
     color: #2C2C2C;
     text-decoration: none;
@@ -334,7 +350,7 @@ body {
     /*height: -webkit-fill-available;*/
     height: 85%;
     width: 85%;
-    position: absolute;   
+    position:relative;    
 }
 
 .resultados .titulo2{
