@@ -51,7 +51,7 @@ async function activar(element, val){
 
 async function enviar(){
     var a = document.getElementById("link");
-    a.href = "/igt/resultados"
+    a.href = "{{url_for('resultados')}}"
     //document.getElementById("link").setAttribute("href", "resultados")
     console.log(total_puntos)
     const request = new XMLHttpRequest()
