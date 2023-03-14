@@ -50,7 +50,9 @@ async function activar(element, val){
 }
 
 async function enviar(){
-    document.getElementById("link").setAttribute("href", "/templates/registro.html")
+    var a = document.getElementById("link");
+    a.href = "/resultados"
+    //document.getElementById("link").setAttribute("href", "resultados")
     console.log(total_puntos)
     const request = new XMLHttpRequest()
     request.open('POST', `/resultados/${JSON.stringify(puntos)}/${JSON.stringify(total_puntos)}`)
