@@ -424,6 +424,7 @@ def login():
                 session['my_var2'] = password
                 if data2 == None:
                     session['my_var3'] = data[1]
+                    session['my_var4'] = 0
                 else:
                     session['my_var4'] = 1
                     session['my_var3'] = data2[1]
@@ -544,6 +545,8 @@ def registro():
         correoE = request.form["correo"]
         contraseña = request.form["password"]
         sexo = request.form["sexo"]
+        if escolaridad == "PRIMARIA" or escolaridad == "SECUNDARIA" or escolaridad == "PREPARATORIA":
+            carrera = "NO APLICABLE"
         print("Nombre: ", nombre)
         print("Apellidos: ", apellidos)
         print("Fecha de nacimiento: ", fechaN)
@@ -612,6 +615,8 @@ def editarDatos():
             telefono = request.form["telefono"]
             contraseña = request.form["password"]
             sexo = request.form["sexo"]
+            if escolaridad == "PRIMARIA" or escolaridad == "SECUNDARIA" or escolaridad == "PREPARATORIA":
+                carrera = "NO APLICABLE"
             print("Nombre: ", nombre)
             print("Apellidos: ", apellidos)
             print("Fecha de nacimiento: ", fechaN)
