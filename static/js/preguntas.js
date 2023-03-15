@@ -51,11 +51,11 @@ async function activar(element, val){
 
 async function enviar(){
     var a = document.getElementById("link");
-    a.href = "../../templates/resultados.html"
-    //document.getElementById("link").setAttribute("href", "resultados")
+    a.href = "/igt/resultados"
+    document.getElementById("link").setAttribute("href", "resultados")
     console.log(total_puntos)
     const request = new XMLHttpRequest()
-    request.open('POST', `/resultados/${JSON.stringify(puntos)}/${JSON.stringify(total_puntos)}`)
+    request.open('POST', `/igt/resultados/${JSON.stringify(puntos)}/${JSON.stringify(total_puntos)}`)
     request.send();
 }
 
