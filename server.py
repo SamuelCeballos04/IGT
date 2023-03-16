@@ -405,8 +405,8 @@ def login():
     if request.method == 'POST':
         user = request.form['correo']
         password = request.form['password']
-        print("Usuario: ", user)
-        print("Contraseña: ", password)
+        print("Usuariologin: ", user)
+        print("Contraseñalogin: ", password)
     
         if database:
             cursor = database.cursor()
@@ -815,6 +815,38 @@ def resultados():
                 flash('Sus respuestas se han registrado correctamente', 'success')
             return redirect(url_for('opciones'))
         return render_template('resultados.html')
+    
+@app.route('/recuperacion', methods=['GET', 'POST'])
+def recuperacion():
+    if request.method == 'POST':
+        user = request.form['correo']
+        password = request.form['password']
+        telefono = request.form['telefono']
+        print("Correo: ", user)
+        print("Contraseña: ", password)
+        print("Telefono: ", telefono)
+        if database:
+            cursor = database.cursor()
+            cursor.execute("SELECT id_participante FROM participante WHERE correo=%s AND telefono = %s", (user, telefono))
+            data = cursor.fetchone()
+            print("Data: ", data)
+            band = True
+            if data == None:
+                band = False
+            if band == True and password != "":
+                cursor.execute("UPDATE participante set contraseña=crypt(%s, contraseña) where id_participante = %s", (password, data))
+                flash('Contraseña cambiada con éxito', 'success')
+                return redirect(url_for('login'))
+            if band == True and password == "":
+                flash('Ingresa una contraseña', 'error')
+                return redirect(url_for('recuperacion'))
+            elif band == False:
+                flash('Los datos ingresados son incorrectos', 'error')
+                return redirect(url_for('recuperacion'))
+                
+
+
+    return render_template('recuperacion.html')
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port='5000')

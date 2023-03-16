@@ -33,10 +33,14 @@
                     <input type="password" name="password" class="campo" placeholder = "Contraseña" required pattern = "[a-zA-Z\d\w\s\D\W]{6-15}" autocomplete="new-password"  maxlength="15"><br>
                 </li>      
             </ul>
+            <small>
+                <a href="{{url_for('recuperacion')}}" class="link" type = "submit">¿Olvidó su contraseña?</a>
+            </small>
                 <button class="boton" type="submit">Ingresar</button><br>
             <small>
                 <a href="{{url_for('registro')}}" class="link" type = "submit">Registrarse</a>
             </small>
+
         </form>
     </section>
     
