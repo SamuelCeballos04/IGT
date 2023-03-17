@@ -545,7 +545,7 @@ def registro():
         correoE = request.form["correo"]
         contraseña = request.form["password"]
         sexo = request.form["sexo"]
-        if escolaridad == "PRIMARIA" or escolaridad == "SECUNDARIA" or escolaridad == "PREPARATORIA":
+        if escolaridad == "PRIMARIA" or escolaridad == "SECUNDARIA":
             carrera = "NO APLICABLE"
         print("Nombre: ", nombre)
         print("Apellidos: ", apellidos)
@@ -615,7 +615,7 @@ def editarDatos():
             telefono = request.form["telefono"]
             contraseña = request.form["password"]
             sexo = request.form["sexo"]
-            if escolaridad == "PRIMARIA" or escolaridad == "SECUNDARIA" or escolaridad == "PREPARATORIA":
+            if escolaridad == "PRIMARIA" or escolaridad == "SECUNDARIA":
                 carrera = "NO APLICABLE"
             print("Nombre: ", nombre)
             print("Apellidos: ", apellidos)
@@ -632,20 +632,20 @@ def editarDatos():
             flash('Cambios guardados', 'success')
             return redirect(url_for('opciones'))
         if data[5] == "PRIMARIA":
-            escolaridad2 = 1
+            escolaridad = 1
         elif data[5] == "SECUNDARIA":
-            escolaridad2 = 2
+            escolaridad = 2
         elif data[5] == "PREPARATORIA":
-            escolaridad2 = 3
+            escolaridad = 3
         elif data[5] == "TÉCNICO":
-            escolaridad2 = 4
+            escolaridad = 4
         elif data[5] == "LICENCIATURA":
-            escolaridad2 = 5
+            escolaridad = 5
         elif data[5] == "MAESTRÍA":
-            escolaridad2 = 6
-        elif data[5] == "DOCTORADO":
-            escolaridad2 = 7
-    return render_template('editarDatos.html', data = data, sexos = sex, contra = password, carr = carrera, esc = escolaridad2)
+            escolaridad = 6
+        else:
+            escolaridad = 7
+    return render_template('editarDatos.html', data = data, sexos = sex, contra = password, carr = carrera, esc = escolaridad)
 
 @app.route('/resultados/<string:puntos>/<string:total_puntos>', methods=['GET', 'POST'])
 def resultadoss(puntos, total_puntos):
