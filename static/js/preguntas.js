@@ -23,7 +23,7 @@ let preguntas = ["2. Me di cuenta que tenía la boca seca",
                 "23. Eres zurdo",
                 "24. Consumes alcohol o drogas",
                 "25. Tienes un diagnóstico de enfermedades visuales",
-                "Has terminado la encuesta, haz clic en aceptar para continuar"]
+                "Has terminado la encuesta, haz clic en aceptar y posteriormente da clic en el botón Salir de la ventana emergente"]
 var i=0
 let intervalo = 100/(preguntas.length);
 let progreso = 0

@@ -45,11 +45,11 @@
                 </li>   
                 <li>
                     <label for="escolaridad">Escolaridad</label><br>
-                        <select name="escolaridad" class="campo" placeholder = "Escolaridad">
+                        <select name="escolaridad" class="campo" id="escolaridades" placeholder = "Escolaridad">
                         <option value = "Primaria">Primaria</option>
                         <option value = "Secundaria">Secundaria</option>
                         <option value = "Preparatoria">Preparatoria</option>
-                        <option value = "Tecnico">Técnico</option>
+                        <option value = "Técnico">Técnico</option>
                         <option value = "Licenciatura">Licenciatura</option>
                         <option value = "Maestría">Maestría</option>
                         <option value = "Doctorado">Doctorado</option>
@@ -95,6 +95,7 @@
         </form>
     </section>
     <script type="text/javascript">
+        var escolaridad = {{esc}}
         var carrera = {{carr}}
         var sex = {{sexos}}
         if (sex == 1){
@@ -130,6 +131,30 @@
         }
         var element = document.getElementById("carreras")
         element.value = valueToSelect
+        var seleccionado = ""
+        if (escolaridad == 1){
+            seleccionado = "Primaria"
+        }
+        else if (escolaridad == 2){
+            seleccionado = "Secundaria"
+        }
+        else if (escolaridad == 3){
+            seleccionado = "Preparatoria"
+        }
+        else if (escolaridad == 4){
+            seleccionado = "Técnico"
+        }
+        else if (escolaridad == 5){
+            seleccionado = "Licenciatura"
+        }
+        else if (escolaridad == 6){
+            seleccionado = "Maestría"
+        }
+        else if (escolaridad == 7){
+            seleccionado = "Doctorado"
+        }
+        var elemento = document.getElementById("escolaridades")
+        elemento.value = seleccionado
     </script>
 </body>
 </html>

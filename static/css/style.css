@@ -348,7 +348,7 @@ body {
     border-radius: 3.5%;
     /*width: -webkit-fill-available;*/
     /*height: -webkit-fill-available;*/
-    height: 85%;
+    /*height: 85%;*/
     width: 85%;
     position:relative;    
 }
