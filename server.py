@@ -603,20 +603,6 @@ def editarDatos():
             carrera = 6
         else:
             carrera = 7
-        if data[5] == "PRIMARIA":
-            escolaridad2 = 1
-        elif data[5] == "SECUNDARIA":
-            escolaridad2 = 2
-        elif data[5] == "PREPARATORIA":
-            escolaridad2 = 3
-        elif data[5] == "TÉCNICO":
-            escolaridad2 = 4
-        elif data[5] == "LICENCIATURA":
-            escolaridad2 = 5
-        elif data[5] == "MAESTRÍA":
-            escolaridad2 = 6
-        elif data[5] == "DOCTORADO":
-            escolaridad2 = 7
         if request.method == "POST":
             print("Sí entra al POST------------------------------------------------------------------------")
             nombre = request.form["nombre"].upper()
@@ -645,6 +631,20 @@ def editarDatos():
             session['my_var2'] = request.form['password']
             flash('Cambios guardados', 'success')
             return redirect(url_for('opciones'))
+        if data[5] == "PRIMARIA":
+            escolaridad2 = 1
+        elif data[5] == "SECUNDARIA":
+            escolaridad2 = 2
+        elif data[5] == "PREPARATORIA":
+            escolaridad2 = 3
+        elif data[5] == "TÉCNICO":
+            escolaridad2 = 4
+        elif data[5] == "LICENCIATURA":
+            escolaridad2 = 5
+        elif data[5] == "MAESTRÍA":
+            escolaridad2 = 6
+        elif data[5] == "DOCTORADO":
+            escolaridad2 = 7
     return render_template('editarDatos.html', data = data, sexos = sex, contra = password, carr = carrera, esc = escolaridad2)
 
 @app.route('/resultados/<string:puntos>/<string:total_puntos>', methods=['GET', 'POST'])
