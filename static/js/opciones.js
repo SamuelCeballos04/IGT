@@ -10,7 +10,14 @@ function onload(flag){
         document.getElementById("start").setAttribute("action", "")
         document.getElementById("startL").setAttribute("href", "exportarExcel")
         document.getElementById("start").innerHTML = "EXPORTAR"
-        document.getElementById("aprofile").disabled = true
-        document.getElementById("btnpr").disabled = true
+        document.getElementById("btnpr").setAttribute("action", "")
+        document.getElementById("aprofile").setAttribute("href", "descargarHorarios")
+        document.getElementById("btnpr").innerHTML = "Descargar Horarios"
+        document.getElementById("btnpr").setAttribute("class", "boton2")
     }
 }
+
+//StartL es el HREF de la encuesta
+//start es el boton de la encuesta
+//Aprofile es el HREF del perfil
+//btnpr es el boton del perfil 

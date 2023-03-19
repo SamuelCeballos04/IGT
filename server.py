@@ -12,6 +12,7 @@ from email.mime.base import MIMEBase
 from email import encoders
 from fpdf import FPDF
 import pandas as pd
+import pysftp
 
 database = conexion()
 
@@ -103,6 +104,21 @@ def enviarCorreoRegistro(destinatario):
     server.login(sender_email, sender_password)
     server.sendmail(sender_email, recipient_email, html_message.as_string())
     server.quit()
+
+def descargarHorariosExcel():
+    host = '148.202.152.14'
+    port = 22
+    username = 'igtuser'
+    password= 'igtuserAdmin'
+    try:
+        conn = pysftp.Connection(host=host,port=port,username=username, password=password)
+        print("connection established successfully")
+    except:
+        print('failed to establish connection to targeted server')
+
+    current_dir = conn.pwd
+    print('our current working directory is: ',current_dir)
+    conn.get('/www-html/horarios.xlsx', '/Users/margo/Downloads/horarios.xlsx')
 
 def funcionPDF(json, nombre):
     pdf = PDF(orientation='P', unit='mm', format='A4')
@@ -471,6 +487,16 @@ def exportarExcel():
         usuariosExcel()
         usuariosInfoExcel()
         return redirect(url_for('opciones'))
+    
+@app.route('/descargarHorarios')
+def descargarHorarios():
+    if session['my_var4'] != 1:
+        return redirect(url_for('opciones'))
+    else:
+        descargarHorariosExcel()
+        flash('Archivo guardado correctamente', 'success')
+        return redirect(url_for('opciones'))
+
 
 @app.route('/perfil', methods=['GET', 'POST'])
 def perfil():

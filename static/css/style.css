@@ -316,6 +316,31 @@ body {
     margin-top: 15px;
 }
 
+.boton2 {
+  background-color: #D99729;
+    color: white;
+    border-radius: 15px;
+    border-color: #D99729;
+    border-style: solid;
+    padding: 5px 15px;
+    width: 30%;
+    height: 45px;
+    font-size: medium;
+    font-weight: bold;
+    margin: auto;
+    display: block;
+    text-align: center;
+    margin-top: 15px;
+}
+
+.boton2:hover{
+  background-color: #eebb2e;
+  color: #2C2C2C;
+  text-decoration: none;
+  box-shadow: 4px 4px;
+  font-weight: bold;
+}
+
 .botonEnv {
   background-color: #D99729;
   color: white;
