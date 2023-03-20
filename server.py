@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, make_response,flash, session
+from flask import Flask, render_template, request, redirect, url_for, make_response,flash, session, abort, send_file
 from flask_session import Session
 from conexion import conexion
 from datetime import datetime, timedelta
@@ -13,6 +13,7 @@ from email import encoders
 from fpdf import FPDF
 import pandas as pd
 import pysftp
+import os
 
 database = conexion()
 
@@ -497,6 +498,28 @@ def descargarHorarios():
         flash('Archivo guardado correctamente', 'success')
         return redirect(url_for('opciones'))
 
+@app.route('/descargarArchivos', defaults={'req_path': ''})  
+@app.route('/descargarArchivos<path:req_path>')
+def descargarArchivos(req_path):
+    if session['my_var4'] != 1:
+        return redirect(url_for('opciones'))
+    else:
+        BASE_DIR = '/www-html/horarios'
+
+        # Joining the base and the requested path
+        abs_path = os.path.join(BASE_DIR, req_path)
+
+        # Return 404 if path doesn't exist
+        if not os.path.exists(abs_path):
+            return abort(404)
+
+        # Check if path is a file and serve
+        if os.path.isfile(abs_path):
+            return send_file(abs_path)
+
+        # Show directory contents
+        files = os.listdir(abs_path)
+        return render_template('descarga.html', files=files)
 
 @app.route('/perfil', methods=['GET', 'POST'])
 def perfil():
