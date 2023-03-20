@@ -268,10 +268,10 @@ def usuariosExcel():
 
             exportar = pd.DataFrame({col1:tiempo, col2:tipo, col3:gsr})
             exportar2 = pd.DataFrame({col4:tclic, col5:tretro, col6:tinter, col7:sel, col8:ganancia, col9:perdida, col10:balance})
-            with pd.ExcelWriter("Exp_"+str(i[1])+".xlsx") as writer: 
+            with pd.ExcelWriter("experimentos\Exp_"+str(i[1])+".xlsx") as writer: 
                                 #Nombre del archivo = id de experimento    
                 exportar.to_excel(writer, sheet_name="GSR", index=False)
-                exportar2.to_excel(writer, sheet_name="IGT", index=False) 
+                exportar2.to_excel(writer, sheet_name="IGT", index=False)             
 
 def usuariosInfoExcel():
     estres = 0
@@ -405,7 +405,7 @@ def horariosExcel():
     col4 = "Correo"
     col5 = "Teléfono"
     exportar2 = pd.DataFrame({col1:id,col2:nombres,col3:apellidos,col4:correo,col5:telefono})
-    with pd.ExcelWriter('horarios.xlsx') as writer:
+    with pd.ExcelWriter('/horarios/horarios.xlsx') as writer:
         exportar.to_excel(writer, sheet_name='Horarios', index=False)
         exportar2.to_excel(writer, sheet_name='Participantes', index=False)
 
