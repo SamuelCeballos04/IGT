@@ -23,7 +23,6 @@
     <div class="header">
         <h1 class="titulo">GoGamblerGo</h1>
         <h2 class="subtitulo">Selecciona los archivos que quieras descargar</h2>
-        <h2 class="subtitulo2">Ingresa tus datos para poder cambiar tu contraseña</h2>
     </div>
     <div class="container-fluid fondo">
         <ul>
@@ -35,6 +34,9 @@
             </li>
             {% endfor %}
         </ul>
+	     <a href = "{{url_for('opciones')}}">
+                <button type="button" class="boton">Volver</button>
+           </a>
     </div>
 </body>
 </html>

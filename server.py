@@ -335,7 +335,7 @@ def usuariosInfoExcel():
             tipo = cursor.fetchall()
 
             exportar = pd.DataFrame({"ID":id, "Fecha":fecha, "Escolaridad":escolaridad, "Carrera": carrera, "Genero": genero, "Correo": correo, "Telefono": telefono, "DASS21 Depression": depresionL, "DASS21 Anxiety": ansiedadL, "DASS21 Stress": estresL, "Seed": seed})
-            exportar.to_excel("sujetos.xlsx", sheet_name="sujetos", index=False)
+            exportar.to_excel("experimentos\sujetos.xlsx", sheet_name="sujetos", index=False)
 
 def horariosExcel():
     horas = ["9", "10", "11", "12", "1", "2", "3", "4", "5", "6"]
@@ -479,16 +479,31 @@ def opciones():
                     band = 0   
         return render_template('opciones.html', name=my_var3, bandera = band)
 
-@app.route('/exportarExcel')
-def exportarExcel():
+@app.route('/exportarExcel', defaults={'req_path': ''})  
+@app.route('/exportarExcel<path:req_path>')
+def exportarExcel(req_path):
     if session['my_var4'] != 1:
         return redirect(url_for('opciones'))
     else:
-        print("Exportando excel")
         usuariosExcel()
         usuariosInfoExcel()
-        return redirect(url_for('opciones'))
-    
+        BASE_DIR = '../www-html/experimentos/'
+        # Joining the base and the requested path
+        abs_path = os.path.join(BASE_DIR, req_path)
+
+        # Return 404 if path doesn't exist
+        if not os.path.exists(abs_path):
+            return abort(404)
+        
+        # Check if path is a file and serve
+        if os.path.isfile('../www-html/experimentos/' + req_path):
+            return send_file('../www-html/experimentos/' + req_path)
+
+        # Show directory contents
+        files = os.listdir(BASE_DIR)
+        return render_template('descarga.html', files=files)
+
+'''
 @app.route('/descargarHorarios')
 def descargarHorarios():
     if session['my_var4'] != 1:
@@ -497,6 +512,7 @@ def descargarHorarios():
         descargarHorariosExcel()
         flash('Archivo guardado correctamente', 'success')
         return redirect(url_for('opciones'))
+'''
 
 @app.route('/descargarArchivos', defaults={'req_path': ''})  
 @app.route('/descargarArchivos<path:req_path>')
@@ -504,22 +520,22 @@ def descargarArchivos(req_path):
     if session['my_var4'] != 1:
         return redirect(url_for('opciones'))
     else:
-        BASE_DIR = '/horarios'
+        abs_path = '../www-html/horarios/horarios.xlsx'
+        return send_file(abs_path)
+        '''
+        BASE_DIR = '../www-html/horarios/'
 
-        # Joining the base and the requested path
         abs_path = os.path.join(BASE_DIR, req_path)
 
-        # Return 404 if path doesn't exist
         if not os.path.exists(abs_path):
-            return abort(404)
+            return redirect(url_for('opciones'))
 
-        # Check if path is a file and serve
-        if os.path.isfile(abs_path):
+        if os.path.isfile('../www-html/horarios/horarios.xlsx'):
+            abs_path = '../www-html/horarios/horarios.xlsx'
             return send_file(abs_path)
-
-        # Show directory contents
+        
         files = os.listdir(abs_path)
-        return render_template('descarga.html', files=files)
+        return render_template('descarga.html', files=files)'''
 
 @app.route('/perfil', methods=['GET', 'POST'])
 def perfil():

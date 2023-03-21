@@ -11,7 +11,7 @@ function onload(flag){
         document.getElementById("startL").setAttribute("href", "exportarExcel")
         document.getElementById("start").innerHTML = "EXPORTAR"
         document.getElementById("btnpr").setAttribute("action", "")
-        document.getElementById("aprofile").setAttribute("href", "igt/descargarArchivos")
+        document.getElementById("aprofile").setAttribute("href", "descargarArchivos")
         document.getElementById("btnpr").innerHTML = "Descargar Horarios"
         document.getElementById("btnpr").setAttribute("class", "boton2")
     }
