@@ -504,7 +504,7 @@ def descargarArchivos(req_path):
     if session['my_var4'] != 1:
         return redirect(url_for('opciones'))
     else:
-        BASE_DIR = '/www-html/horarios'
+        BASE_DIR = '/horarios'
 
         # Joining the base and the requested path
         abs_path = os.path.join(BASE_DIR, req_path)
