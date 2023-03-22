@@ -321,9 +321,12 @@ def usuariosInfoExcel():
                 correo.append(i[5])
                 telefono.append(i[6])
                 seed.append(i[7])
-            cursor.execute("SELECT respuesta#>'{Enunciado %s}' FROM encuesta WHERE id_participante = %s ", (int(i[8][0]), i[0] ))
-            print(i)
-            if (int(i[8][0])< 22):
+                exportar = pd.DataFrame({"ID":id, "Fecha":fecha, "Escolaridad":escolaridad, "Carrera": carrera, "Genero": genero, "Correo": correo, "Telefono": telefono, "DASS21 Depression": depresionL, "DASS21 Anxiety": ansiedadL, "DASS21 Stress": estresL, "Seed": seed})
+                exportar.to_csv("experimentos\sujetos.csv")
+                continue
+            #cursor.execute("SELECT respuesta#>'{Enunciado %s}' FROM encuesta WHERE id_participante = %s ", (c, i[0] ))
+            if (int(i[8][0]) < 22):
+                cursor.execute("SELECT respuesta#>'{Enunciado %s}' FROM encuesta WHERE id_participante = %s ", (int(i[8][0]), i[0] ))
                 if (i[8][3]) == 'Estres':
                     # print(i)
                     # print(estres)
@@ -334,8 +337,8 @@ def usuariosInfoExcel():
                     ansiedad += i[8][2]
             tipo = cursor.fetchall()
 
-            exportar = pd.DataFrame({"ID":id, "Fecha":fecha, "Escolaridad":escolaridad, "Carrera": carrera, "Genero": genero, "Correo": correo, "Telefono": telefono, "DASS21 Depression": depresionL, "DASS21 Anxiety": ansiedadL, "DASS21 Stress": estresL, "Seed": seed})
-            exportar.to_excel("experimentos/sujetos.xlsx", sheet_name="sujetos", index=False)
+        '''exportar = pd.DataFrame({"ID":id, "Fecha":fecha, "Escolaridad":escolaridad, "Carrera": carrera, "Genero": genero, "Correo": correo, "Telefono": telefono, "DASS21 Depression": depresionL, "DASS21 Anxiety": ansiedadL, "DASS21 Stress": estresL, "Seed": seed})
+        exportar.to_excel("experimentos\sujetos.xlsx", sheet_name="sujetos", index=False)'''
 
 def horariosExcel():
     horas = ["9", "10", "11", "12", "1", "2", "3", "4", "5", "6"]
