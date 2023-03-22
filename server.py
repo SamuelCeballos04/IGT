@@ -269,7 +269,7 @@ def usuariosExcel():
 
             exportar = pd.DataFrame({col1:tiempo, col2:tipo, col3:gsr})
             exportar2 = pd.DataFrame({col4:tclic, col5:tretro, col6:tinter, col7:sel, col8:ganancia, col9:perdida, col10:balance})
-            with pd.ExcelWriter("experimentos\Exp_"+str(i[1])+".xlsx") as writer: 
+            with pd.ExcelWriter("experimentos/Exp_"+str(i[1])+".xlsx") as writer: 
                                 #Nombre del archivo = id de experimento    
                 exportar.to_excel(writer, sheet_name="GSR", index=False)
                 exportar2.to_excel(writer, sheet_name="IGT", index=False)             
@@ -335,7 +335,7 @@ def usuariosInfoExcel():
             tipo = cursor.fetchall()
 
             exportar = pd.DataFrame({"ID":id, "Fecha":fecha, "Escolaridad":escolaridad, "Carrera": carrera, "Genero": genero, "Correo": correo, "Telefono": telefono, "DASS21 Depression": depresionL, "DASS21 Anxiety": ansiedadL, "DASS21 Stress": estresL, "Seed": seed})
-            exportar.to_excel("experimentos\sujetos.xlsx", sheet_name="sujetos", index=False)
+            exportar.to_excel("experimentos/sujetos.xlsx", sheet_name="sujetos", index=False)
 
 def horariosExcel():
     horas = ["9", "10", "11", "12", "1", "2", "3", "4", "5", "6"]
@@ -406,9 +406,9 @@ def horariosExcel():
     col4 = "Correo"
     col5 = "Teléfono"
     exportar2 = pd.DataFrame({col1:id,col2:nombres,col3:apellidos,col4:correo,col5:telefono})
-    with pd.ExcelWriter('/horarios/horarios.xlsx') as writer:
-        exportar.to_excel(writer, sheet_name='Horarios', index=False)
-        exportar2.to_excel(writer, sheet_name='Participantes', index=False)
+
+    exportar.to_csv("horarios/horarios.csv", encoding='utf-8-sig')
+    exportar2.to_csv("horarios/participantes.csv", encoding='utf-8-sig')
 
 @app.route('/')
 def index():
@@ -480,7 +480,7 @@ def opciones():
         return render_template('opciones.html', name=my_var3, bandera = band)
 
 @app.route('/exportarExcel', defaults={'req_path': ''})  
-@app.route('/exportarExcel<path:req_path>')
+@app.route('/exportarExcel/<path:req_path>')
 def exportarExcel(req_path):
     if session['my_var4'] != 1:
         return redirect(url_for('opciones'))
@@ -515,13 +515,31 @@ def descargarHorarios():
 '''
 
 @app.route('/descargarArchivos', defaults={'req_path': ''})  
-@app.route('/descargarArchivos<path:req_path>')
+@app.route('/descargarArchivos/<path:req_path>')
 def descargarArchivos(req_path):
     if session['my_var4'] != 1:
         return redirect(url_for('opciones'))
     else:
-        abs_path = '../www-html/horarios/horarios.xlsx'
+        BASE_DIR = '../www-html/horarios/'
+        # Joining the base and the requested path
+        abs_path = os.path.join(BASE_DIR, req_path)
+
+        # Return 404 if path doesn't exist
+        if not os.path.exists(abs_path):
+            return abort(404)
+        
+        # Check if path is a file and serve
+        if os.path.isfile('../www-html/horarios/' + req_path):
+            return send_file('../www-html/horarios/' + req_path)
+
+        # Show directory contents
+        files = os.listdir(BASE_DIR)
+        return render_template('descarga.html', files=files)
+        '''
+        abs_path = '../www-html/horarios/horarios.csv'
+        abs_path2 = '../www-html/horarios/participantes.csv'    
         return send_file(abs_path)
+        '''
         '''
         BASE_DIR = '../www-html/horarios/'
 
