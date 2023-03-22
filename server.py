@@ -269,10 +269,8 @@ def usuariosExcel():
 
             exportar = pd.DataFrame({col1:tiempo, col2:tipo, col3:gsr})
             exportar2 = pd.DataFrame({col4:tclic, col5:tretro, col6:tinter, col7:sel, col8:ganancia, col9:perdida, col10:balance})
-            with pd.ExcelWriter("experimentos/Exp_"+str(i[1])+".xlsx") as writer: 
-                                #Nombre del archivo = id de experimento    
-                exportar.to_excel(writer, sheet_name="GSR", index=False)
-                exportar2.to_excel(writer, sheet_name="IGT", index=False)             
+            exportar.to_csv("experimentos/Exp_"+str(i[1])+"_GSR.csv", encoding='utf-8-sig')
+            exportar2.to_csv("experimentos/Exp_"+str(i[1])+"_IGT.csv", encoding='utf-8-sig')    
 
 def usuariosInfoExcel():
     estres = 0
@@ -290,13 +288,14 @@ def usuariosInfoExcel():
     correo = list()
     telefono = list()
     seed = list()
+    fExp = list()
 
     if database:
         cursor = database.cursor()
 
         cursor.execute("SELECT * FROM participante WHERE expterminado = true")
         n = cursor.fetchall()
-        cursor.execute("SELECT participante.id_participante, fechanac, escolaridad, carrera, case when sexo = false then 'Mujer' when sexo = true then 'Hombre' end as sexo, correo, telefono, nombreconf, value FROM encuesta, json_each(encuesta.respuesta), participante, experimento WHERE encuesta.id_participante = participante.id_participante AND encuesta.id_participante = experimento.id_participante")
+        cursor.execute("SELECT participante.id_participante, fechanac, escolaridad, carrera, case when sexo = false then 'Mujer' when sexo = true then 'Hombre' end as sexo, correo, telefono, nombreconf, value, experimento.fecha FROM encuesta, json_each(encuesta.respuesta), participante, experimento WHERE encuesta.id_participante = participante.id_participante AND encuesta.id_participante = experimento.id_participante")
         data = cursor.fetchall()
         print(len(data))
         print(len(data)/len(n))
@@ -321,8 +320,9 @@ def usuariosInfoExcel():
                 correo.append(i[5])
                 telefono.append(i[6])
                 seed.append(i[7])
-                exportar = pd.DataFrame({"ID":id, "Fecha":fecha, "Escolaridad":escolaridad, "Carrera": carrera, "Genero": genero, "Correo": correo, "Telefono": telefono, "DASS21 Depression": depresionL, "DASS21 Anxiety": ansiedadL, "DASS21 Stress": estresL, "Seed": seed})
-                exportar.to_csv("experimentos\sujetos.csv")
+                fExp.append(i[9])
+                exportar = pd.DataFrame({"ID":id, "Fecha":fecha, "Escolaridad":escolaridad, "Carrera": carrera, "Genero": genero, "Correo": correo, "Telefono": telefono, "DASS21 Depression": depresionL, "DASS21 Anxiety": ansiedadL, "DASS21 Stress": estresL, "Seed": seed, "Fecha Exp": fExp})
+                exportar.to_csv("experimentos/sujetos.csv", encoding='utf-8-sig')
                 continue
             #cursor.execute("SELECT respuesta#>'{Enunciado %s}' FROM encuesta WHERE id_participante = %s ", (c, i[0] ))
             if (int(i[8][0]) < 22):
