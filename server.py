@@ -480,7 +480,7 @@ def opciones():
         return render_template('opciones.html', name=my_var3, bandera = band)
 
 @app.route('/exportarExcel', defaults={'req_path': ''})  
-@app.route('/exportarExcel<path:req_path>')
+@app.route('/exportarExcel/<path:req_path>')
 def exportarExcel(req_path):
     if session['my_var4'] != 1:
         return redirect(url_for('opciones'))
