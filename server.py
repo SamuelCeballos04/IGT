@@ -267,12 +267,11 @@ def usuariosExcel():
             cursor.execute("SELECT total FROM resultado WHERE id_participante = %s AND id_exp = %s;", (i[0], i[1]))
             balance = cursor.fetchall()
 
-            exportar = pd.DataFrame({col1:tiempo, col2:tipo, col3:gsr})
+            #exportar = pd.DataFrame({col1:tiempo, col2:tipo, col3:gsr})
+            exportar = pd.DataFrame({col1:tiempo, col2:tipo})
             exportar2 = pd.DataFrame({col4:tclic, col5:tretro, col6:tinter, col7:sel, col8:ganancia, col9:perdida, col10:balance})
-            with pd.ExcelWriter("experimentos/Exp_"+str(i[1])+".xlsx") as writer: 
-                                #Nombre del archivo = id de experimento    
-                exportar.to_excel(writer, sheet_name="GSR", index=False)
-                exportar2.to_excel(writer, sheet_name="IGT", index=False)             
+            exportar.to_csv("experimentos/Exp_"+str(i[1])+"_GSR.csv", encoding='utf-8-sig')
+            exportar2.to_csv("experimentos/Exp_"+str(i[1])+"_IGT.csv", encoding='utf-8-sig')         
 
 def usuariosInfoExcel():
     estres = 0
@@ -290,13 +289,15 @@ def usuariosInfoExcel():
     correo = list()
     telefono = list()
     seed = list()
+    fExp = list()
+    idExp = list()
 
     if database:
         cursor = database.cursor()
 
         cursor.execute("SELECT * FROM participante WHERE expterminado = true")
         n = cursor.fetchall()
-        cursor.execute("SELECT participante.id_participante, fechanac, escolaridad, carrera, case when sexo = false then 'Mujer' when sexo = true then 'Hombre' end as sexo, correo, telefono, nombreconf, value FROM encuesta, json_each(encuesta.respuesta), participante, experimento WHERE encuesta.id_participante = participante.id_participante AND encuesta.id_participante = experimento.id_participante")
+        cursor.execute("SELECT participante.id_participante, fechanac, escolaridad, carrera, case when sexo = false then 'Mujer' when sexo = true then 'Hombre' end as sexo, correo, telefono, nombreconf, value, experimento.fecha, experimento.id_exp FROM encuesta, json_each(encuesta.respuesta), participante, experimento WHERE encuesta.id_participante = participante.id_participante AND encuesta.id_participante = experimento.id_participante")
         data = cursor.fetchall()
         print(len(data))
         print(len(data)/len(n))
@@ -321,9 +322,14 @@ def usuariosInfoExcel():
                 correo.append(i[5])
                 telefono.append(i[6])
                 seed.append(i[7])
-            cursor.execute("SELECT respuesta#>'{Enunciado %s}' FROM encuesta WHERE id_participante = %s ", (int(i[8][0]), i[0] ))
-            print(i)
-            if (int(i[8][0])< 22):
+                fExp.append(i[9])
+                idExp.append(i[10])
+                exportar = pd.DataFrame({"ID":id, "Fecha":fecha, "Escolaridad":escolaridad, "Carrera": carrera, "Genero": genero, "Correo": correo, "Telefono": telefono, "DASS21 Depression": depresionL, "DASS21 Anxiety": ansiedadL, "DASS21 Stress": estresL, "Seed": seed, "Fecha Exp":fExp, "ID Exp":idExp})
+                exportar.to_csv("experimentos/sujetos.csv", encoding='utf-8-sig')
+                continue
+            #cursor.execute("SELECT respuesta#>'{Enunciado %s}' FROM encuesta WHERE id_participante = %s ", (c, i[0] ))
+            if (int(i[8][0]) < 22):
+                cursor.execute("SELECT respuesta#>'{Enunciado %s}' FROM encuesta WHERE id_participante = %s ", (int(i[8][0]), i[0] ))
                 if (i[8][3]) == 'Estres':
                     # print(i)
                     # print(estres)
@@ -334,8 +340,8 @@ def usuariosInfoExcel():
                     ansiedad += i[8][2]
             tipo = cursor.fetchall()
 
-            exportar = pd.DataFrame({"ID":id, "Fecha":fecha, "Escolaridad":escolaridad, "Carrera": carrera, "Genero": genero, "Correo": correo, "Telefono": telefono, "DASS21 Depression": depresionL, "DASS21 Anxiety": ansiedadL, "DASS21 Stress": estresL, "Seed": seed})
-            exportar.to_excel("experimentos/sujetos.xlsx", sheet_name="sujetos", index=False)
+        '''exportar = pd.DataFrame({"ID":id, "Fecha":fecha, "Escolaridad":escolaridad, "Carrera": carrera, "Genero": genero, "Correo": correo, "Telefono": telefono, "DASS21 Depression": depresionL, "DASS21 Anxiety": ansiedadL, "DASS21 Stress": estresL, "Seed": seed})
+        exportar.to_excel("experimentos\sujetos.xlsx", sheet_name="sujetos", index=False)'''
 
 def horariosExcel():
     horas = ["9", "10", "11", "12", "1", "2", "3", "4", "5", "6"]
@@ -455,12 +461,12 @@ def login():
 
 @app.route('/opciones', methods=["GET", "POST"])
 def opciones():
-    user = session.get('my_var', None)
-    password = session.get('my_var2', None)
+    user = session.get('my_var', "")
+    password = session.get('my_var2', "")
     if user == '' and password == "":
         return redirect(url_for('login'))
     else:
-        my_var3 = session.get('my_var3', None)  
+        my_var3 = session.get('my_var3', "")  
         if database:
             band = 1
             cursor = database.cursor()
@@ -520,6 +526,7 @@ def descargarArchivos(req_path):
     if session['my_var4'] != 1:
         return redirect(url_for('opciones'))
     else:
+        horariosExcel()
         BASE_DIR = '../www-html/horarios/'
         # Joining the base and the requested path
         abs_path = os.path.join(BASE_DIR, req_path)
@@ -557,8 +564,8 @@ def descargarArchivos(req_path):
 
 @app.route('/perfil', methods=['GET', 'POST'])
 def perfil():
-    user = session.get('my_var', None)
-    password = session.get('my_var2', None)
+    user = session.get('my_var', "")
+    password = session.get('my_var2', "")
     if user == '' and password == "":
         return redirect(url_for('login'))
     elif session['my_var4'] == 1:
@@ -592,8 +599,8 @@ def perfil():
 
 @app.route('/pregunta')
 def pregunta():
-    user = session.get('my_var', None)
-    password = session.get('my_var2', None)
+    user = session.get('my_var', "")
+    password = session.get('my_var2', "")
     if user == '' and password == "":
         return redirect(url_for('login'))
     elif session['my_var4'] == 1:
@@ -655,8 +662,8 @@ def registro():
 
 @app.route('/editarDatos', methods=['GET', 'POST'])
 def editarDatos():
-    user = session.get('my_var', None)
-    password = session.get('my_var2', None)
+    user = session.get('my_var', "")
+    password = session.get('my_var2', "")
         
     if user == '' and password == "":
         return redirect(url_for('login'))
@@ -732,8 +739,8 @@ def editarDatos():
 
 @app.route('/resultados/<string:puntos>/<string:total_puntos>', methods=['GET', 'POST'])
 def resultadoss(puntos, total_puntos):
-    user = session.get('my_var', None)
-    password = session.get('my_var2', None)
+    user = session.get('my_var', "")
+    password = session.get('my_var2', "")
     if user == '' and password == "":
         return redirect(url_for('login'))
     elif session['my_var4'] == 1:
@@ -812,16 +819,19 @@ def resultadoss(puntos, total_puntos):
             cursor = database.cursor()
             cursor.execute("SELECT id_participante FROM participante WHERE correo=%s AND contraseña=crypt(%s, contraseña);", (user, password))
             data = cursor.fetchone()
-            cursor.execute("INSERT INTO encuesta (id_participante, pregunta, respuesta) VALUES (%s, %s, %s)", (data, preguntasJson, respuestasJson))
-            cursor.execute("UPDATE participante set aptitud = %s where id_participante = %s;", (aptitud, data))
-            database.commit()
+            cursor.execute("SELECT * FROM ENCUESTA Where id_participante = %s", (data,))
+            data2 = cursor.fetchone()
+            if data2 == None:
+                cursor.execute("INSERT INTO encuesta (id_participante, pregunta, respuesta) VALUES (%s, %s, %s)", (data, preguntasJson, respuestasJson))
+                cursor.execute("UPDATE participante set aptitud = %s where id_participante = %s;", (aptitud, data))
+                database.commit()
  
         return render_template('resultados.html')
 
 @app.route('/resultados', methods=['GET', 'POST'])
 def resultados():
-    user = session.get('my_var', None)
-    password = session.get('my_var2', None)
+    user = session.get('my_var', "")
+    password = session.get('my_var2', "")
     nombreUsuario = session.get('my_var3', None)
     if user == '' and password == "":
         return redirect(url_for('login'))
@@ -909,7 +919,7 @@ def resultados():
                 cursor.execute("UPDATE encuesta set cita = %s where id_participante=%s", (diasJson, data))
                 database.commit()
                 horariosExcel()
-                flash('Sus respuestas se han registrado correctamente', 'success')
+                flash('Sus respuestas se han registrado correctamente, por favor recarga esta página', 'success')
             return redirect(url_for('opciones'))
         return render_template('resultados.html')
     
