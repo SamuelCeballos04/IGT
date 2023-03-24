@@ -289,15 +289,13 @@ def usuariosInfoExcel():
     correo = list()
     telefono = list()
     seed = list()
-    fExp = list()
-    idExp = list()
 
     if database:
         cursor = database.cursor()
 
         cursor.execute("SELECT * FROM participante WHERE expterminado = true")
         n = cursor.fetchall()
-        cursor.execute("SELECT participante.id_participante, fechanac, escolaridad, carrera, case when sexo = false then 'Mujer' when sexo = true then 'Hombre' end as sexo, correo, telefono, nombreconf, value, experimento.fecha, experimento.id_exp FROM encuesta, json_each(encuesta.respuesta), participante, experimento WHERE encuesta.id_participante = participante.id_participante AND encuesta.id_participante = experimento.id_participante")
+        cursor.execute("SELECT participante.id_participante, fechanac, escolaridad, carrera, case when sexo = false then 'Mujer' when sexo = true then 'Hombre' end as sexo, correo, telefono, nombreconf, value FROM encuesta, json_each(encuesta.respuesta), participante, experimento WHERE encuesta.id_participante = participante.id_participante AND encuesta.id_participante = experimento.id_participante")
         data = cursor.fetchall()
         print(len(data))
         print(len(data)/len(n))
@@ -322,14 +320,9 @@ def usuariosInfoExcel():
                 correo.append(i[5])
                 telefono.append(i[6])
                 seed.append(i[7])
-                fExp.append(i[9])
-                idExp.append(i[10])
-                exportar = pd.DataFrame({"ID":id, "Fecha":fecha, "Escolaridad":escolaridad, "Carrera": carrera, "Genero": genero, "Correo": correo, "Telefono": telefono, "DASS21 Depression": depresionL, "DASS21 Anxiety": ansiedadL, "DASS21 Stress": estresL, "Seed": seed, "Fecha Exp":fExp, "ID Exp":idExp})
-                exportar.to_csv("experimentos/sujetos.csv", encoding='utf-8-sig')
-                continue
-            #cursor.execute("SELECT respuesta#>'{Enunciado %s}' FROM encuesta WHERE id_participante = %s ", (c, i[0] ))
-            if (int(i[8][0]) < 22):
-                cursor.execute("SELECT respuesta#>'{Enunciado %s}' FROM encuesta WHERE id_participante = %s ", (int(i[8][0]), i[0] ))
+            cursor.execute("SELECT respuesta#>'{Enunciado %s}' FROM encuesta WHERE id_participante = %s ", (int(i[8][0]), i[0] ))
+            print(i)
+            if (int(i[8][0])< 22):
                 if (i[8][3]) == 'Estres':
                     # print(i)
                     # print(estres)
