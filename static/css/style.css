@@ -108,6 +108,28 @@ body {
 
 }
 
+.middle3 {
+  position: absolute;
+  width: 100%;
+  display: contents;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.middle3 ul li{
+  width: 60%;
+  display: inline-block;
+  margin: 0em 2em 0em 2em;
+}
+
+.middle3 li{
+  width: 60%;
+  display: inline-block;
+  margin: 0em 2em 0em 2em;
+}
+
 .formulario {
     margin: auto;
     display: block;

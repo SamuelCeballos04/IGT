@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"><!-- Aqui se agrega el bootstrap de las tablas-->
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> -->
+    <link rel="stylesheet" href="../static/css/style.css">
+    <title>Instrucciones</title>
+</head>
+<body>
+    <div class="header">
+        <h1 class="titulo">GoGamblerGo</h1>
+        <h2 class="subtitulo">Instrucciones</h2>
+    </div>
+    <section class="middle3">
+        <ul style="padding: 0;">
+            <li>
+                <p class="texto2" style="text-align: center; font-weight: bold;">
+                    El siguiente cuestionario sirve para recolectar información relativa a tu salud mental actual, por lo que:
+                </p>
+                    <ul style="list-style-type: square; text-align: center; padding: 0;" class="texto2">
+                        <li class="texto2">
+                            • Debes contestar las preguntas de la forma más honesta y sincera, teniendo en cuenta que el experimento comenzará desde el momento en que des click en el botón "COMENZAR". 
+                        </li>
+                        <li class="texto2">
+                            • De preferencia, hazlo en un lugar tranquilo y en calma, cuidando que el cuestionario contenga la información que mejor te describe actualmente. 
+
+                        </li>
+                        <li class="texto2">
+                            • Toma alrededor de 10 minutos llenar el cuestionario completo.    
+                        </li>
+                        <li class="texto2">
+                            • Cualquier anomalía detectada que creamos pueda ser de importancia médica te será mencionada.       
+                        </li>
+                        <li class="texto2">
+                            • No te preocupes, tus resultados serán registrados de forma anónima y se utilizarán sólo con fines de investigación.         
+                        </li>
+                    </ul>
+                <p class="texto2" style="text-align: center; font-weight: bold;">
+                ¡Muchas gracias por tu participación!
+                </p>
+                <p class="texto2" style="text-align: center; font-weight: bold;">
+                    Al dar clic en aceptar, aceptas lo anterior
+                    </p>
+            </li>
+        </ul>
+        <div class="row justify-content-center align-items-center" style="text-align: center;">
+            <div class="col-2">
+                <button type="submit" class="boton" style="width: 100%;">Atras</button>  
+            </div>
+            <div class="col-2">
+                <form action="/instrucciones" method="POST">
+                    <button type="submit" class="boton" style="width: 100%;">Aceptar</button>
+                </form>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

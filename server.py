@@ -560,6 +560,21 @@ def descargarArchivos(req_path):
         files = os.listdir(abs_path)
         return render_template('descarga.html', files=files)'''
 
+@app.route('/instrucciones', methods=['GET', 'POST'])
+def instrucciones():
+    user = session.get('my_var', "")
+    password = session.get('my_var2', "")
+    if user == '' and password == "":
+        return redirect(url_for('login'))
+    elif session['my_var4'] == 1:
+        return redirect(url_for('opciones'))
+    else:
+        if request.method == 'POST':
+            print("POSSSTTTT MALONE")
+            return redirect(url_for('pregunta'))
+        return render_template('instrucciones.html')
+
+
 @app.route('/perfil', methods=['GET', 'POST'])
 def perfil():
     user = session.get('my_var', "")
