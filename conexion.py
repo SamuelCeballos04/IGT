@@ -5,10 +5,10 @@ def conexion():
     try:
         return psycopg2.connect(
             host='localhost',
-            user='igtuser',
-            password='igtAdmin',
-            database='igt_db',
-            port = '5433'
+            user='postgres',
+            password='admin',
+            database='igtManuel',
+            port = '5432'
         )
     except DatabaseError as ex:
         raise ex
