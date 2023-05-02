@@ -220,6 +220,7 @@ def enviarCorreoHorarios(destinatario):
     server.sendmail(sender_email, recipient_email, message.as_string())
     server.quit()
 
+#Datos después de la prueba IGT
 def usuariosExcel():
     if database: 
         cursor = database.cursor()
@@ -290,13 +291,14 @@ def usuariosInfoExcel():
     telefono = list()
     seed = list()
     fExp = list()
+    idExp = list()
 
     if database:
         cursor = database.cursor()
 
         cursor.execute("SELECT * FROM participante WHERE expterminado = true")
         n = cursor.fetchall()
-        cursor.execute("SELECT participante.id_participante, fechanac, escolaridad, carrera, case when sexo = false then 'Mujer' when sexo = true then 'Hombre' end as sexo, correo, telefono, nombreconf, value, experimento.fecha FROM encuesta, json_each(encuesta.respuesta), participante, experimento WHERE encuesta.id_participante = participante.id_participante AND encuesta.id_participante = experimento.id_participante")
+        cursor.execute("SELECT participante.id_participante, fechanac, escolaridad, carrera, case when sexo = false then 'Mujer' when sexo = true then 'Hombre' end as sexo, correo, telefono, nombreconf, value, experimento.fecha, experimento.id_exp FROM encuesta, json_each(encuesta.respuesta), participante, experimento WHERE encuesta.id_participante = participante.id_participante AND encuesta.id_participante = experimento.id_participante")
         data = cursor.fetchall()
         print(len(data))
         print(len(data)/len(n))
@@ -305,7 +307,7 @@ def usuariosInfoExcel():
 
         for i in data:
             c +=1
-            if(c==num):
+            if(c==25):
                 c=0
                 estresL.append(estres)
                 depresionL.append(depresion)
@@ -322,8 +324,11 @@ def usuariosInfoExcel():
                 telefono.append(i[6])
                 seed.append(i[7])
                 fExp.append(i[9])
-                exportar = pd.DataFrame({"ID":id, "Fecha":fecha, "Escolaridad":escolaridad, "Carrera": carrera, "Genero": genero, "Correo": correo, "Telefono": telefono, "DASS21 Depression": depresionL, "DASS21 Anxiety": ansiedadL, "DASS21 Stress": estresL, "Seed": seed, "Fecha Exp": fExp})
+                idExp.append(i[10])
+                exportar = pd.DataFrame({"ID":id, "Fecha nac":fecha, "Escolaridad":escolaridad, "Carrera": carrera, "Genero": genero, "Correo": correo, "Telefono": telefono, "DASS21 Depression": depresionL, "DASS21 Anxiety": ansiedadL, "DASS21 Stress": estresL, "Seed": seed, "Fecha Exp":fExp, "ID Exp":idExp})
+                #exportar = pd.DataFrame({"ID":id, "Fecha":fecha, "Escolaridad":escolaridad, "Carrera": carrera, "Genero": genero, "Correo": correo, "Telefono": telefono, "DASS21 Depression": depresionL, "DASS21 Anxiety": ansiedadL, "DASS21 Stress": estresL, "Seed": seed, "Fecha Exp":fExp})
                 exportar.to_csv("experimentos/sujetos.csv", encoding='utf-8-sig')
+
                 continue
             #cursor.execute("SELECT respuesta#>'{Enunciado %s}' FROM encuesta WHERE id_participante = %s ", (c, i[0] ))
             if (int(i[8][0]) < 22):
@@ -560,21 +565,6 @@ def descargarArchivos(req_path):
         files = os.listdir(abs_path)
         return render_template('descarga.html', files=files)'''
 
-@app.route('/instrucciones', methods=['GET', 'POST'])
-def instrucciones():
-    user = session.get('my_var', "")
-    password = session.get('my_var2', "")
-    if user == '' and password == "":
-        return redirect(url_for('login'))
-    elif session['my_var4'] == 1:
-        return redirect(url_for('opciones'))
-    else:
-        if request.method == 'POST':
-            print("POSSSTTTT MALONE")
-            return redirect(url_for('pregunta'))
-        return render_template('instrucciones.html')
-
-
 @app.route('/perfil', methods=['GET', 'POST'])
 def perfil():
     user = session.get('my_var', "")
@@ -664,7 +654,7 @@ def registro():
             cursor.execute("SELECT * FROM participante WHERE correo=%s AND contraseña=crypt(%s, contraseña);", (correoE, contraseña))
             data = cursor.fetchone()
             if data == None:
-                cursor.execute("INSERT INTO participante (nombre, apellidos, fechanac, telefono, escolaridad, carrera, correo, contraseña, sexo)VALUES(%s, %s, %s, %s, %s, %s, %s, crypt(%s, gen_salt('bf')), %s)", (nombre, apellidos, fechaN, telefono, escolaridad, carrera, correoE, contraseña, sexo))
+                cursor.execute("INSERT INTO participante (nombre, apellidos, fechanac, telefono, escolaridad, carrera, correo, contraseña, sexo, confirmudg)VALUES(%s, %s, %s, %s, %s, %s, %s, crypt(%s, gen_salt('bf')), %s, true)", (nombre, apellidos, fechaN, telefono, escolaridad, carrera, correoE, contraseña, sexo))
                 database.commit()
                 flash('Se ha registrado correctamente', 'success')
                 enviarCorreoRegistro(correoE)
@@ -840,6 +830,38 @@ def resultadoss(puntos, total_puntos):
                 database.commit()
  
         return render_template('resultados.html')
+
+@app.route('/instrucciones', methods=['GET', 'POST']) 
+def instrucciones(): 
+    user = session.get('my_var', "") 
+    password = session.get('my_var2', "") 
+    if user == '' and password == "": 
+        return redirect(url_for('login')) 
+    elif session['my_var4'] == 1: 
+        return redirect(url_for('opciones')) 
+    else: 
+        if request.method == 'POST': 
+            print("POSSSTTTT MALONE") 
+            if database:
+                cursor = database.cursor()
+                cursor.execute("UPDATE PARTICIPANTE SET CONFIRMENCUESTA = True WHERE correo=%s AND contraseña=crypt(%s, contraseña);", (user, password))
+                database.commit()
+                
+            return redirect(url_for('pregunta')) 
+        if database: 
+            cursor = database.cursor()
+            cursor.execute("SELECT id_participante FROM participante WHERE correo=%s AND contraseña=crypt(%s, contraseña);", (user, password))
+            data = cursor.fetchone()
+            cursor = database.cursor()
+            cursor.execute("SELECT * FROM encuesta WHERE id_participante=%s;", (data))
+            data_2 = cursor.fetchone()
+            band = True
+            if data_2 == None:
+                band = False
+            if band == True:
+                flash('Ya has respondido la encuesta anteriormente, favor de recargar la página', 'error')
+                return redirect(url_for('opciones'))
+        return render_template('instrucciones.html')
 
 @app.route('/resultados', methods=['GET', 'POST'])
 def resultados():
