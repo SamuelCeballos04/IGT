@@ -6,6 +6,10 @@ flag1 = 0
 flag2 = 0
 flag3 = 0
 var form = document.getElementById("form");
+function onload(flag){
+    console.log("FLAG", flag)
+}
+var form = document.getElementById("form");
 function handleForm(event) { event.preventDefault(); } 
 form.addEventListener('submit', handleForm);
 async function activar(pregunta, valor){
@@ -104,23 +108,6 @@ async function activar(pregunta, valor){
     if (sec == 2){
 
     }
-    if (sec == 3){
-        if (pregunta == "1"){
-            flag1 = 1
-        }
-        if (pregunta == "2"){
-            flag2 = 1
-        }
-        if (pregunta == "3"){
-            flag3 = 1
-        }
-        if (flag1==1 && flag2==1 && flag3==1){
-            document.getElementById("resultados").disabled = false
-            var a = document.getElementById("link");
-            a.href = "/resultados"
-            document.getElementById("link").setAttribute("href", "resultados")
-        }
-    }
 }
 async function pasar(){
     // document.getElementById("texto").innerHTML = preguntas[i]
@@ -201,6 +188,50 @@ async function pasar(){
         seccion2.push(farm)
         seccion2.push(farmE)
         sec += 1
+        if (flag == 0 && sec == 1){
+            sec += 2
+            document.getElementById("instruccion").innerHTML = "Antecedentes personal Patológicos"
+            document.getElementById("form").innerHTML = `
+            <div class="container mt-0 mb-5" style="padding: 0;">
+                <h2 class="texto" id="texto">Enfermedades Psicológicas</h2>
+                <div class="btn-group d-flex align-items-center m-5" style="margin-bottom: 1.5rem!important;" role="group" aria-label="Basic radio toggle button group">
+                    <input type="radio" class="btn-check" name="Epsbtnradio" id="Epsbtnradio1" autocomplete="off" onclick="activar('1', '1')" required value="1">
+                    <label class="btn btn-warning" for="Epsbtnradio1" id="Epsbtn1">Si</label>
+                
+                    <input type="radio" class="btn-check" name="Epsbtnradio" id="Epsbtnradio2" autocomplete="off" onclick="activar('1', '0')" value="0">
+                    <label class="btn btn-warning" for="Epsbtnradio2" id="Epsbtn2">No</label>
+                </div>
+                <h2 class="texto" id="texto">Enfermedades Psiquiátricas</h2>
+                <div class="btn-group d-flex align-items-center m-5" style="margin-bottom: 1.5rem!important;" role="group" aria-label="Basic radio toggle button group">
+                    <input type="radio" class="btn-check" name="Epsqbtnradio" id="Epsqbtnradio1" autocomplete="off" onclick="activar('2', '1')" required value="1">
+                    <label class="btn btn-warning" for="Epsqbtnradio1" id="Eppsbtn1">Si</label>
+                
+                    <input type="radio" class="btn-check" name="Epsqbtnradio" id="Epsqbtnradio2" autocomplete="off" onclick="activar('2', '0')" value="0">
+                    <label class="btn btn-warning" for="Epsqbtnradio2" id="Epsqbtn2">No</label>
+                </div>
+                <h2 class="texto" id="texto">Enfermedades Neurológicas</h2>
+                <div class="btn-group d-flex align-items-center m-5" style="margin-bottom: 1.5rem!important;" role="group" aria-label="Basic radio toggle button group">
+                    <input type="radio" class="btn-check" name="Enbtnradio" id="Enbtnradio1" autocomplete="off" onclick="activar('3', '1')" required value="1">
+                    <label class="btn btn-warning" for="Enbtnradio1" id="Enbtn1">Si</label>
+                
+                    <input type="radio" class="btn-check" name="Enbtnradio" id="Enbtnradio2" autocomplete="off" onclick="activar('3', '0')" value="0">
+                    <label class="btn btn-warning" for="Enbtnradio2" id="Enbtn2">No</label>
+                </div>
+                <a id="link">
+                    <button type="submit" class="btn btn-light enviar" id="siguiente">Siguiente</button>
+                </a>
+                <div class="progress">
+                    <div id="barra" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+                </div>
+            </div>`
+            btn = document.getElementById("siguiente");
+            btn.innerHTML= "Aceptar";
+            btn.id="resultados";
+            return
+        }
+        else{
+            sec += 1 
+        }
 
         document.getElementById("instruccion").innerHTML = "Antecedentes Gineco-obstétricos"
         document.getElementById("form").innerHTML = `
@@ -223,7 +254,7 @@ async function pasar(){
             <h2 class="texto" id="texto">Fecha de última menstruación</h2>
             <div class="row align-items-center m-5 justify-content-center" style="margin-top: 0!important;">
                 <div class="col-5">
-                    <input type="date" name="Fechaum" class="form-control" style="height: 4vh; margin-bottom: 0;" id="Fechaum" required>
+                    <input type="date" name="Fechaum" class="form-control" style="height: 4vh; margin-bottom: 0;" id="Fechaum">
                 </div>
             </div>
             <a id="link">
@@ -317,8 +348,7 @@ async function pasar(){
         console.log(fechaUM)
         sec += 1
         document.getElementById("instruccion").innerHTML = "Antecedentes personal Patológicos"
-        document.getElementById("formulario").innerHTML = `
-        <form onsubmit="enviar(); return false;" id="form">
+        document.getElementById("form").innerHTML = `
         <div class="container mt-0 mb-5" style="padding: 0;">
             <h2 class="texto" id="texto">Enfermedades Psicológicas</h2>
             <div class="btn-group d-flex align-items-center m-5" style="margin-bottom: 1.5rem!important;" role="group" aria-label="Basic radio toggle button group">
@@ -345,20 +375,21 @@ async function pasar(){
                 <label class="btn btn-warning" for="Enbtnradio2" id="Enbtn2">No</label>
             </div>
             <a id="link">
-                <button type="button" class="btn btn-light enviar" id="siguiente" disabled>Siguiente</button>
+                <button type="submit" class="btn btn-light enviar" id="siguiente">Siguiente</button>
             </a>
             <div class="progress">
                 <div id="barra" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
             </div>
-        </div>
-        </form>`
-        // var form = document.getElementById("form");
-        // function handleForm(event) { event.preventDefault(); } 
-        // form.addEventListener('submit', handleForm);
+        </div>`
         btn = document.getElementById("siguiente");
         btn.innerHTML= "Aceptar";
         btn.id="resultados";
-        document.getElementById("resultados").setAttribute("onclick", "enviar()")
+        // document.getElementById("formulario").setAttribute("onsubmit", "enviar()")
+        // //document.getElementById("resultados").setAttribute("onclick", "enviar()")
+        // document.getElementById("resultados").removeAttribute("action")
+        // var a = document.getElementById("link");
+        // a.href = "/resultados"
+        // document.getElementById("link").setAttribute("href", "resultados")
         return
     }
     // if (sec == 3){ //Numero de secciones -1
@@ -402,6 +433,11 @@ async function enviar(){
             enfne = enfne[i].value
     }
     seccion4.push(enfne)
+    // var a = document.getElementById("link");
+    // a.href = "/resultados"
+    // document.getElementById("link").setAttribute("href", "resultados")
+    document.getElementById("formulario").setAttribute("onsubmit", "enviar()")
+    document.getElementById("resultados").removeAttribute("action")
     var a = document.getElementById("link");
     a.href = "/resultados"
     document.getElementById("link").setAttribute("href", "resultados")

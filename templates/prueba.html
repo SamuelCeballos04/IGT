@@ -9,9 +9,12 @@
     <link rel="stylesheet" href="../static/css/Lstyle.css" type="text/css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var flag = {{band}}
+    </script>
 </head>
 
-<body style="background-color: #2D3264;">
+<body style="background-color: #2D3264;" onload="onload({{band}})">
     <h1 class="titulo" style="text-align: center;">GoGamblerGo</h1>
     <h2 class="subtitulo" id="instruccion">II. Antecedentes Personales no Patológicos</h2>
     <section style="margin: 0 20% 0 20%;" id="formulario">

@@ -617,12 +617,19 @@ def pregunta():
             cursor.execute("SELECT * FROM encuesta WHERE id_participante=%s;", (data))
             data_2 = cursor.fetchone()
             band = True
+            bandsexo = 0
+            cursor.execute("SELECT sexo FROM participante WHERE correo=%s AND contraseña=crypt(%s, contraseña);", (user, password))
+            boolsexo = cursor.fetchone()
+            print(boolsexo)
+            print(type(boolsexo[0]))
+            if boolsexo[0] == False:
+                bandsexo = 1
             if data_2 == None:
                 band = False
             if band == True:
                 flash('Sus respuestas se registraron correctamente', 'success')
                 return redirect(url_for('opciones'))
-        return render_template('prueba.html')
+        return render_template('prueba.html', band = bandsexo)
 
 @app.route('/registro', methods=['GET', 'POST'])
 def registro():
@@ -742,13 +749,6 @@ def editarDatos():
 
 @app.route('/resultados/<string:seccion2>/<string:seccion3>/<string:seccion4>', methods=['GET', 'POST'])
 def resultadoss(seccion2, seccion3, seccion4):
-    # if request.method == 'POST':
-    #     formsec2 = json.loads(request.form.get("sec2"))
-    #     formsec3 = json.loads(request.form.get("sec3"))
-    #     formsec4 = json.loads(request.form.get("sec4"))
-    #     print(formsec2)
-    #     print(formsec3)
-    #     print(formsec4)
     user = session.get('my_var', "")
     password = session.get('my_var2', "")
     if user == '' and password == "":
@@ -821,99 +821,6 @@ def resultadoss(seccion2, seccion3, seccion4):
 
 
     return render_template('resultados.html')
-    # user = session.get('my_var', "")
-    # password = session.get('my_var2', "")
-    # if user == '' and password == "":
-    #     return redirect(url_for('login'))
-    # elif session['my_var4'] == 1:
-    #     return redirect(url_for('opciones'))
-    # else:
-    #     formsec2 = json.loads(seccion2)
-    #     formsec3 = json.loads(seccion3)
-    #     formsec4 = json.loads(seccion4)
-    #     dicc = dict()
-    #     dicc2 = dict()
-    #     print(formsec2)
-    #     print(formsec3)
-    #     print(formsec4)
-        #enunciado = ["1.- Busco actividades en las que obtengo un placer rápido, aunque sean perjudiciales", "2.- Suelo caer en tentaciones que me dificultan cumplir con un compromiso", "3.- Busco conseguir beneficios inmediatos, en vez de esperar algo mejor más tarde", "4.- Continúo haciendo determinadas actividades placenteras a pesar de que los demás me advierten que me perjudican", "5.- Cuando algo se me antoja voy a por ello de forma inmediata, sin poder esperar"]
-        # enunciado = ["Me ha costado mucho descargar la tension", 
-        #             "Me di cuenta que tenia la boca seca", 
-        #             "No podia sentir ningun sentimiento positivo", 
-        #             "Se me hizo dificil respirar", 
-        #             "Se me hizo dificil tomar la iniciativa para hacer cosas", 
-        #             "Reaccione exageradamente en ciertas situaciones", 
-        #             "Senti que mis manos temblaban", 
-        #             "He sentido que estaba gastando una gran cantidad de energia", 
-        #             "Estaba preocupado por situaciones en las cuales podia tener panico o en las que podria hacer el ridiculo", 
-        #             "He sentido que no habia nada que me ilusionara", 
-        #             "Me he sentido inquieto", 
-        #             "Se me hizo dificil relajarme", 
-        #             "Me senti triste y deprimido", 
-        #             "No tolere nada que no me permitiera continuar con lo que estaba haciendo", 
-        #             "Senti que estaba al punto de panico", 
-        #             "No me pude entusiasmar por nada", 
-        #             "Senti que valia muy poco como persona", 
-        #             "He tendido a sentirme enfadado con facilidad", 
-        #             "Senti los latidos de mi corazon a pesar de no haber hecho ningun esfuerzo fisico", 
-        #             "Tuve miedo sin razon", 
-        #             "Senti que la vida no tenia ningún sentido",
-        #             "Tienes un diagnostico previo de enfermedades psicologicas, neurologicas o psiquiatricas",
-        #             "Eres zurdo",
-        #             "Consumes alcohol o drogas",
-        #             "Tienes un diagnostico de enfermedades visuales"]
-        # i = 1
-        # while (i<26):
-        #     num = str(i)
-        #     clave = "Enunciado " + num
-        #     dicc[clave] = [enunciado[i-1]]
-        #     if (i == 1 or i == 6 or i == 8 or i == 11 or i == 12 or i == 14 or i == 18):
-        #         tipo = "Estres"
-        #     elif (i == 3 or i == 5 or i == 10 or i == 13 or i == 16 or i == 17 or i == 21):
-        #         tipo = "Depresion"
-        #     elif (i == 2 or i == 4 or i == 7 or i == 9 or i == 15 or i == 19 or i == 20):
-        #         tipo = "Ansiedad"
-        #     if i <= 21:
-        #         if(valores[i-1] == 0):
-        #             dicc2[clave] = [num, "Nunca", valores[i-1], tipo]
-        #         elif(valores[i-1] == 1):
-        #             dicc2[clave] = [num, "Rara vez", valores[i-1], tipo]
-        #         elif(valores[i-1] == 2):
-        #             dicc2[clave] = [num, "Algunas veces", valores[i-1], tipo]
-        #         elif(valores[i-1] == 3):
-        #             dicc2[clave] = [num, "Con frecuencia", valores[i-1], tipo]
-        #     else: 
-        #         if(valores[i-1] == 0):
-        #             dicc2[clave] = [num, "Cierto"]
-        #         elif(valores[i-1] == 1):
-        #             dicc2[clave] = [num, "Falso"]
-        #     i+=1
-        
-        # preguntasJson = json.dumps(dicc)
-        # respuestasJson = json.dumps(dicc2)
-        # print("Preguntas Json: ", preguntasJson)
-        # print("\nRespuestas Json: ", respuestasJson)
-        # aptitud = True
-        # #print(valor[21])
-        # #print("Tipo de dato de valor: ", type(valor[21]))
-        # if (valores[21] == 0 or valores[22] == 0 or valores[23] == 0 or valores[24] == 0):
-        #     aptitud = False
-        # print("Aptitud: ", aptitud)
-        # total = json.loads(total_puntos)
-        # puntos_totales = total
-        # print("Los puntos obtenidos son: %s" % (puntos_totales))
-        # if database:
-        #     cursor = database.cursor()
-        #     cursor.execute("SELECT id_participante FROM participante WHERE correo=%s AND contraseña=crypt(%s, contraseña);", (user, password))
-        #     data = cursor.fetchone()
-        #     cursor.execute("SELECT * FROM ENCUESTA Where id_participante = %s", (data,))
-        #     data2 = cursor.fetchone()
-        #     if data2 == None:
-        #         cursor.execute("INSERT INTO encuesta (id_participante, pregunta, respuesta) VALUES (%s, %s, %s)", (data, preguntasJson, respuestasJson))
-        #         cursor.execute("UPDATE participante set aptitud = %s where id_participante = %s;", (aptitud, data))
-        #         database.commit()
- 
-    return render_template('resultados.html')
 
 @app.route('/instrucciones', methods=['GET', 'POST']) 
 def instrucciones(): 
@@ -969,7 +876,7 @@ def resultados():
                 band = False
                 if data_2[3] != None:
                     band = True
-            if band == True:#VA EN TRUE
+            if band == True:
                 return redirect(url_for('opciones'))
         print("Entra al else")
         if request.method == "POST":
