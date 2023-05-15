@@ -2,6 +2,9 @@ sec = 1
 let seccion2 = []
 let seccion3 = []
 let seccion4 = []
+flag1 = 0
+flag2 = 0
+flag3 = 0
 var form = document.getElementById("form");
 function handleForm(event) { event.preventDefault(); } 
 form.addEventListener('submit', handleForm);
@@ -100,6 +103,23 @@ async function activar(pregunta, valor){
     }
     if (sec == 2){
 
+    }
+    if (sec == 3){
+        if (pregunta == "1"){
+            flag1 = 1
+        }
+        if (pregunta == "2"){
+            flag2 = 1
+        }
+        if (pregunta == "3"){
+            flag3 = 1
+        }
+        if (flag1==1 && flag2==1 && flag3==1){
+            document.getElementById("resultados").disabled = false
+            var a = document.getElementById("link");
+            a.href = "/resultados"
+            document.getElementById("link").setAttribute("href", "resultados")
+        }
     }
 }
 async function pasar(){
@@ -203,7 +223,7 @@ async function pasar(){
             <h2 class="texto" id="texto">Fecha de última menstruación</h2>
             <div class="row align-items-center m-5 justify-content-center" style="margin-top: 0!important;">
                 <div class="col-5">
-                    <input type="date" name="Fechaum" class="form-control" style="height: 4vh; margin-bottom: 0;" id="Fechaum">
+                    <input type="date" name="Fechaum" class="form-control" style="height: 4vh; margin-bottom: 0;" id="Fechaum" required>
                 </div>
             </div>
             <a id="link">
@@ -297,7 +317,8 @@ async function pasar(){
         console.log(fechaUM)
         sec += 1
         document.getElementById("instruccion").innerHTML = "Antecedentes personal Patológicos"
-        document.getElementById("form").innerHTML = `
+        document.getElementById("formulario").innerHTML = `
+        <form onsubmit="enviar(); return false;" id="form">
         <div class="container mt-0 mb-5" style="padding: 0;">
             <h2 class="texto" id="texto">Enfermedades Psicológicas</h2>
             <div class="btn-group d-flex align-items-center m-5" style="margin-bottom: 1.5rem!important;" role="group" aria-label="Basic radio toggle button group">
@@ -324,19 +345,20 @@ async function pasar(){
                 <label class="btn btn-warning" for="Enbtnradio2" id="Enbtn2">No</label>
             </div>
             <a id="link">
-                <button type="submit" class="btn btn-light enviar" id="siguiente">Siguiente</button>
+                <button type="button" class="btn btn-light enviar" id="siguiente" disabled>Siguiente</button>
             </a>
             <div class="progress">
                 <div id="barra" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
             </div>
-        </div>`
+        </div>
+        </form>`
+        // var form = document.getElementById("form");
+        // function handleForm(event) { event.preventDefault(); } 
+        // form.addEventListener('submit', handleForm);
         btn = document.getElementById("siguiente");
         btn.innerHTML= "Aceptar";
         btn.id="resultados";
         document.getElementById("resultados").setAttribute("onclick", "enviar()")
-        var a = document.getElementById("link");
-        a.href = "/resultados"
-        document.getElementById("link").setAttribute("href", "resultados")
         return
     }
     // if (sec == 3){ //Numero de secciones -1
@@ -384,7 +406,7 @@ async function enviar(){
     a.href = "/resultados"
     document.getElementById("link").setAttribute("href", "resultados")
     const request = new XMLHttpRequest()
-    request.open('POST', `/resultados/${JSON.stringify(seccion2)}/${JSON.stringify(seccion3)}//${JSON.stringify(seccion4)}`)
+    request.open('POST', `/resultados/${JSON.stringify(seccion2)}/${JSON.stringify(seccion3)}/${JSON.stringify(seccion4)}`)
     request.send();
     // $.ajax({
     //     type:'POST',

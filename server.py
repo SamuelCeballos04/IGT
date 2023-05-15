@@ -749,12 +749,77 @@ def resultadoss(seccion2, seccion3, seccion4):
     #     print(formsec2)
     #     print(formsec3)
     #     print(formsec4)
-    valores2 = json.loads(seccion2)
-    valores3 = json.loads(seccion3)
-    valores4 = json.loads(seccion4)
-    print(valores2)
-    print(valores3)
-    print(valores4)
+    user = session.get('my_var', "")
+    password = session.get('my_var2', "")
+    if user == '' and password == "":
+        return redirect(url_for('login'))
+    elif session['my_var4'] == 1:
+        return redirect(url_for('opciones'))
+    else:
+        valores2 = json.loads(seccion2)
+        valores3 = json.loads(seccion3)
+        valores4 = json.loads(seccion4)
+        print(valores2)
+        print(valores3)
+        print(valores4)
+        dicc = dict()
+        dicc2 = dict()
+        enunciado = ["Tabaquismo", "Fumador Pasivo", "Alcoholismo", "Consumo de sustancias psicotropicas", "Alergias", "Farmacodependencia", "Menarquia", "Fecha Ultima Menstruacion", "Enfermedades Psicologicas", "Enfermedades Psiquiatricas", "Enfermedades Neurologicas"]
+        i = 1
+        j = 0
+        y = 0
+        while(i<12):
+            num = str(i)
+            clave = "Enunciado" + num
+            dicc[clave] = [enunciado[i-1]]
+            if i <= 6:
+                if i == 1:
+                    dicc2[clave] = [num, valores2[0], valores2[1]]
+                if i == 2:
+                    dicc2[clave] = [num, valores2[2]]
+                if i == 3:
+                    dicc2[clave] = [num, valores2[3], valores2[4], valores2[5]]
+                if i == 4:
+                    dicc2[clave] = [num, valores2[6], valores2[7]]
+                if i == 5:
+                    dicc2[clave] = [num, valores2[8], valores2[9]]
+                if i == 6:
+                    print("RANGOOO", len(valores2))
+                    dicc2[clave] = [num, valores2[10], valores2[11]]
+                    j = 1
+            if j == 1:
+                if i == 7:
+                    dicc2[clave] = [num, valores3[0], valores3[1]]
+                if i == 8:
+                    dicc2[clave] = [num, valores3[2]]
+                    y = 1
+            if y == 1:
+                if i == 9:
+                    dicc2[clave] = [num, valores4[0]]
+                if i == 10:
+                    dicc2[clave] = [num, valores4[1]]
+                if i == 11:
+                    dicc2[clave] = [num, valores4[2]]
+            i+=1
+        aptitud = True
+        if valores4[0] == '1' or valores4[1] == '1' or valores4[2] == '1':
+            aptitud = False
+        preguntasJson = json.dumps(dicc)
+        respuestasJson = json.dumps(dicc2)
+        if database:
+            cursor = database.cursor()
+            cursor.execute("SELECT id_participante FROM participante WHERE correo=%s AND contraseña=crypt(%s, contraseña);", (user, password))
+            data = cursor.fetchone()
+            cursor.execute("SELECT * FROM ENCUESTA Where id_participante = %s", (data,))
+            data2 = cursor.fetchone()
+            if data2 == None:
+                cursor.execute("INSERT INTO encuesta (id_participante, pregunta, respuesta) VALUES (%s, %s, %s)", (data, preguntasJson, respuestasJson))
+                cursor.execute("UPDATE participante set aptitud = %s where id_participante = %s;", (aptitud, data))
+                database.commit()
+
+
+
+
     return render_template('resultados.html')
     # user = session.get('my_var', "")
     # password = session.get('my_var2', "")
@@ -904,7 +969,7 @@ def resultados():
                 band = False
                 if data_2[3] != None:
                     band = True
-            if band == True:
+            if band == True:#VA EN TRUE
                 return redirect(url_for('opciones'))
         print("Entra al else")
         if request.method == "POST":
