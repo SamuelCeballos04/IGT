@@ -244,6 +244,9 @@ async function pasar(){
             btn.innerHTML= "Aceptar";
             btn.id="resultados";
             document.getElementById("resultados").setAttribute("onclick", "enviar()")
+            seccion3.push("NO APLICA")
+            seccion3.push("NO APLICA")
+            seccion3.push("NO APLICA")
             return
         }
         else{
