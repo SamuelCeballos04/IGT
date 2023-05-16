@@ -787,22 +787,22 @@ def resultadoss(seccion2, seccion3, seccion4):
             dicc[clave] = [enunciado[i-1]]
             if i <= 6:
                 if i == 1:
-                    dicc2[clave] = [num, valores2[0], "Años de consumo: "+valores2[1]]
+                    dicc2[clave] = [num, valores2[0], valores2[1]]
                 if i == 2:
                     dicc2[clave] = [num, valores2[2]]
                 if i == 3:
-                    dicc2[clave] = [num, valores2[3], valores2[4] + "ml. x semana", "Años de consumo: "+valores2[5]]
+                    dicc2[clave] = [num, valores2[3], valores2[4], valores2[5]]
                 if i == 4:
-                    dicc2[clave] = [num, valores2[6], "Años de consumo: "+valores2[7]]
+                    dicc2[clave] = [num, valores2[6], valores2[7]]
                 if i == 5:
-                    dicc2[clave] = [num, valores2[8], "Especificar: "+valores2[9]]
+                    dicc2[clave] = [num, valores2[8], valores2[9]]
                 if i == 6:
                     print("RANGOOO", len(valores2))
-                    dicc2[clave] = [num, valores2[10],"¿Que medicamentos? " + valores2[11]]
+                    dicc2[clave] = [num, valores2[10], valores2[11]]
                     j = 1
             if j == 1:
                 if i == 7:
-                    dicc2[clave] = [num, valores3[0]+ "Años", valores3[1]]
+                    dicc2[clave] = [num, valores3[0]+ valores3[1]]
                 if i == 8:
                     dicc2[clave] = [num, valores3[2]]
                     y = 1
