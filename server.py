@@ -15,6 +15,7 @@ import pandas as pd
 import pysftp
 import os
 
+
 database = conexion()
 
 app = Flask("__name__")
@@ -297,12 +298,13 @@ def usuariosInfoExcel():
         cursor = database.cursor()
 
         cursor.execute("SELECT * FROM participante WHERE expterminado = true")
-        n = cursor.fetchall()
+        n = cursor.fetchall() #Consulta de abajo: Sacaba 25 registros por participante con encuesta y experimento, cada registro correspondia a una pregunta de la encuesta anterior, buscar forma nueva 
         cursor.execute("SELECT participante.id_participante, fechanac, escolaridad, carrera, case when sexo = false then 'Mujer' when sexo = true then 'Hombre' end as sexo, correo, telefono, nombreconf, value, experimento.fecha, experimento.id_exp FROM encuesta, json_each(encuesta.respuesta), participante, experimento WHERE encuesta.id_participante = participante.id_participante AND encuesta.id_participante = experimento.id_participante")
         data = cursor.fetchall()
         print(len(data))
-        print(len(data)/len(n))
-        num = len(data)/len(n)
+        if len(n) != 0:
+            print(len(data)/len(n))
+            num = len(data)/len(n)
         c = 0
 
         for i in data:
@@ -629,7 +631,7 @@ def pregunta():
             if band == True:
                 flash('Sus respuestas se registraron correctamente', 'success')
                 return redirect(url_for('opciones'))
-        return render_template('prueba.html', band = bandsexo)
+        return render_template('prueba.html', band = bandera)
 
 @app.route('/registro', methods=['GET', 'POST'])
 def registro():
@@ -645,6 +647,8 @@ def registro():
         correoE = request.form["correo"]
         contraseña = request.form["password"]
         sexo = request.form["sexo"]
+        nacionalidad = request.form["nacionalidad"].upper()
+        semestre = request.form["semestre"].upper()
         if escolaridad == "PRIMARIA" or escolaridad == "SECUNDARIA":
             carrera = "NO APLICABLE"
         print("Nombre: ", nombre)
@@ -660,8 +664,9 @@ def registro():
             cursor = database.cursor()
             cursor.execute("SELECT * FROM participante WHERE correo=%s AND contraseña=crypt(%s, contraseña);", (correoE, contraseña))
             data = cursor.fetchone()
+            cursor.execute("SELECT * FROM aplicador WHERE correo=%s")
             if data == None:
-                cursor.execute("INSERT INTO participante (nombre, apellidos, fechanac, telefono, escolaridad, carrera, correo, contraseña, sexo, confirmudg)VALUES(%s, %s, %s, %s, %s, %s, %s, crypt(%s, gen_salt('bf')), %s, true)", (nombre, apellidos, fechaN, telefono, escolaridad, carrera, correoE, contraseña, sexo))
+                cursor.execute("INSERT INTO participante (nombre, apellidos, fechanac, telefono, escolaridad, carrera, correo, contraseña, sexo, confirmudg, semestre, nacionalidad)VALUES(%s, %s, %s, %s, %s, %s, %s, crypt(%s, gen_salt('bf')), %s, true, %s, %s)", (nombre, apellidos, fechaN, telefono, escolaridad, carrera, correoE, contraseña, sexo, semestre, nacionalidad))
                 database.commit()
                 flash('Se ha registrado correctamente', 'success')
                 enviarCorreoRegistro(correoE)
@@ -703,6 +708,26 @@ def editarDatos():
             carrera = 6
         else:
             carrera = 7
+        if data[14] == "PRIMERO":
+            semestreEditar = 1 
+        elif data[14] == "SEGUNDO":
+            semestreEditar = 1
+        elif data[14] == "TERCERO":
+            semestreEditar = 3
+        elif data[14] == "CUARTO":
+            semestreEditar = 4
+        elif data[14] == "QUINTO":
+            semestreEditar = 5
+        elif data[14] == "SEXTO":
+            semestreEditar = 6
+        elif data[14] == "SEPTIMO":
+            semestreEditar = 7
+        elif data[14] == "OCTAVO":
+            semestreEditar = 8
+        elif data[14] == "NOVENO":
+            semestreEditar = 9
+        elif data[14] == "DECIMO":
+            semestreEditar = 10
         if request.method == "POST":
             print("Sí entra al POST------------------------------------------------------------------------")
             nombre = request.form["nombre"].upper()
@@ -717,6 +742,8 @@ def editarDatos():
             sexo = request.form["sexo"]
             if escolaridad == "PRIMARIA" or escolaridad == "SECUNDARIA":
                 carrera = "NO APLICABLE"
+            nacionalidad = request.form["nacionalidad"].upper()
+            semestre = request.form["semestre"].upper()
             print("Nombre: ", nombre)
             print("Apellidos: ", apellidos)
             print("Fecha de nacimiento: ", fechaN)
@@ -725,7 +752,7 @@ def editarDatos():
             print("Telefono: ", telefono)
             print("Contraseña: ", contraseña)
             print("Sexo: ", sexo)
-            cursor.execute("UPDATE participante SET nombre=%s, apellidos=%s, fechanac=%s, telefono=%s, escolaridad=%s, carrera=%s, contraseña=crypt(%s, gen_salt('bf')), sexo=%s WHERE correo=%s", (nombre, apellidos, fechaN, telefono, escolaridad, carrera, contraseña, sexo, user))
+            cursor.execute("UPDATE participante SET nombre=%s, apellidos=%s, fechanac=%s, telefono=%s, escolaridad=%s, carrera=%s, contraseña=crypt(%s, gen_salt('bf')), sexo=%s, semestre = %s, nacionalidad = %s WHERE correo=%s", (nombre, apellidos, fechaN, telefono, escolaridad, carrera, contraseña, sexo, semestre, nacionalidad,  user))
             database.commit()
             session['my_var3'] = nombre
             session['my_var2'] = request.form['password']
@@ -745,18 +772,10 @@ def editarDatos():
             escolaridad = 6
         else:
             escolaridad = 7
-    return render_template('editarDatos.html', data = data, sexos = sex, contra = password, carr = carrera, esc = escolaridad)
+    return render_template('editarDatos.html', data = data, sexos = sex, contra = password, carr = carrera, esc = escolaridad, sem = semestreEditar)
 
 @app.route('/resultados/<string:seccion2>/<string:seccion3>/<string:seccion4>', methods=['GET', 'POST'])
 def resultadoss(seccion2, seccion3, seccion4):
-    print("RESULTADOSSSSS")
-    # if request.method == 'POST':
-    #     formsec2 = json.loads(request.form.get("sec2"))
-    #     formsec3 = json.loads(request.form.get("sec3"))
-    #     formsec4 = json.loads(request.form.get("sec4"))
-    #     print(formsec2)
-    #     print(formsec3)
-    #     print(formsec4)
     user = session.get('my_var', "")
     password = session.get('my_var2', "")
     if user == '' and password == "":
@@ -764,6 +783,7 @@ def resultadoss(seccion2, seccion3, seccion4):
     elif session['my_var4'] == 1:
         return redirect(url_for('opciones'))
     else:
+
         if database:
             cursor = database.cursor()
             cursor.execute("SELECT sexo FROM participante WHERE correo=%s AND contraseña=crypt(%s, contraseña);", (user, password)) 
@@ -829,103 +849,6 @@ def resultadoss(seccion2, seccion3, seccion4):
                 cursor.execute("INSERT INTO encuesta (id_participante, pregunta, respuesta) VALUES (%s, %s, %s)", (data, preguntasJson, respuestasJson))
                 cursor.execute("UPDATE participante set aptitud = %s where id_participante = %s;", (aptitud, data))
                 database.commit()
-
-
-
-
-    return render_template('resultados.html')
-    # user = session.get('my_var', "")
-    # password = session.get('my_var2', "")
-    # if user == '' and password == "":
-    #     return redirect(url_for('login'))
-    # elif session['my_var4'] == 1:
-    #     return redirect(url_for('opciones'))
-    # else:
-    #     formsec2 = json.loads(seccion2)
-    #     formsec3 = json.loads(seccion3)
-    #     formsec4 = json.loads(seccion4)
-    #     dicc = dict()
-    #     dicc2 = dict()
-    #     print(formsec2)
-    #     print(formsec3)
-    #     print(formsec4)
-        #enunciado = ["1.- Busco actividades en las que obtengo un placer rápido, aunque sean perjudiciales", "2.- Suelo caer en tentaciones que me dificultan cumplir con un compromiso", "3.- Busco conseguir beneficios inmediatos, en vez de esperar algo mejor más tarde", "4.- Continúo haciendo determinadas actividades placenteras a pesar de que los demás me advierten que me perjudican", "5.- Cuando algo se me antoja voy a por ello de forma inmediata, sin poder esperar"]
-        # enunciado = ["Me ha costado mucho descargar la tension", 
-        #             "Me di cuenta que tenia la boca seca", 
-        #             "No podia sentir ningun sentimiento positivo", 
-        #             "Se me hizo dificil respirar", 
-        #             "Se me hizo dificil tomar la iniciativa para hacer cosas", 
-        #             "Reaccione exageradamente en ciertas situaciones", 
-        #             "Senti que mis manos temblaban", 
-        #             "He sentido que estaba gastando una gran cantidad de energia", 
-        #             "Estaba preocupado por situaciones en las cuales podia tener panico o en las que podria hacer el ridiculo", 
-        #             "He sentido que no habia nada que me ilusionara", 
-        #             "Me he sentido inquieto", 
-        #             "Se me hizo dificil relajarme", 
-        #             "Me senti triste y deprimido", 
-        #             "No tolere nada que no me permitiera continuar con lo que estaba haciendo", 
-        #             "Senti que estaba al punto de panico", 
-        #             "No me pude entusiasmar por nada", 
-        #             "Senti que valia muy poco como persona", 
-        #             "He tendido a sentirme enfadado con facilidad", 
-        #             "Senti los latidos de mi corazon a pesar de no haber hecho ningun esfuerzo fisico", 
-        #             "Tuve miedo sin razon", 
-        #             "Senti que la vida no tenia ningún sentido",
-        #             "Tienes un diagnostico previo de enfermedades psicologicas, neurologicas o psiquiatricas",
-        #             "Eres zurdo",
-        #             "Consumes alcohol o drogas",
-        #             "Tienes un diagnostico de enfermedades visuales"]
-        # i = 1
-        # while (i<26):
-        #     num = str(i)
-        #     clave = "Enunciado " + num
-        #     dicc[clave] = [enunciado[i-1]]
-        #     if (i == 1 or i == 6 or i == 8 or i == 11 or i == 12 or i == 14 or i == 18):
-        #         tipo = "Estres"
-        #     elif (i == 3 or i == 5 or i == 10 or i == 13 or i == 16 or i == 17 or i == 21):
-        #         tipo = "Depresion"
-        #     elif (i == 2 or i == 4 or i == 7 or i == 9 or i == 15 or i == 19 or i == 20):
-        #         tipo = "Ansiedad"
-        #     if i <= 21:
-        #         if(valores[i-1] == 0):
-        #             dicc2[clave] = [num, "Nunca", valores[i-1], tipo]
-        #         elif(valores[i-1] == 1):
-        #             dicc2[clave] = [num, "Rara vez", valores[i-1], tipo]
-        #         elif(valores[i-1] == 2):
-        #             dicc2[clave] = [num, "Algunas veces", valores[i-1], tipo]
-        #         elif(valores[i-1] == 3):
-        #             dicc2[clave] = [num, "Con frecuencia", valores[i-1], tipo]
-        #     else: 
-        #         if(valores[i-1] == 0):
-        #             dicc2[clave] = [num, "Cierto"]
-        #         elif(valores[i-1] == 1):
-        #             dicc2[clave] = [num, "Falso"]
-        #     i+=1
-        
-        # preguntasJson = json.dumps(dicc)
-        # respuestasJson = json.dumps(dicc2)
-        # print("Preguntas Json: ", preguntasJson)
-        # print("\nRespuestas Json: ", respuestasJson)
-        # aptitud = True
-        # #print(valor[21])
-        # #print("Tipo de dato de valor: ", type(valor[21]))
-        # if (valores[21] == 0 or valores[22] == 0 or valores[23] == 0 or valores[24] == 0):
-        #     aptitud = False
-        # print("Aptitud: ", aptitud)
-        # total = json.loads(total_puntos)
-        # puntos_totales = total
-        # print("Los puntos obtenidos son: %s" % (puntos_totales))
-        # if database:
-        #     cursor = database.cursor()
-        #     cursor.execute("SELECT id_participante FROM participante WHERE correo=%s AND contraseña=crypt(%s, contraseña);", (user, password))
-        #     data = cursor.fetchone()
-        #     cursor.execute("SELECT * FROM ENCUESTA Where id_participante = %s", (data,))
-        #     data2 = cursor.fetchone()
-        #     if data2 == None:
-        #         cursor.execute("INSERT INTO encuesta (id_participante, pregunta, respuesta) VALUES (%s, %s, %s)", (data, preguntasJson, respuestasJson))
-        #         cursor.execute("UPDATE participante set aptitud = %s where id_participante = %s;", (aptitud, data))
-        #         database.commit()
- 
     return render_template('resultados.html')
 
 @app.route('/instrucciones', methods=['GET', 'POST']) 
@@ -939,10 +862,10 @@ def instrucciones():
     else: 
         if request.method == 'POST': 
             print("POSSSTTTT MALONE") 
-            # if database:
-            #     cursor = database.cursor()
-            #     cursor.execute("UPDATE PARTICIPANTE SET CONFIRMENCUESTA = True WHERE correo=%s AND contraseña=crypt(%s, contraseña);", (user, password))
-            #     database.commit()
+            if database:
+                cursor = database.cursor()
+                cursor.execute("UPDATE PARTICIPANTE SET CONFIRMENCUESTA = True WHERE correo=%s AND contraseña=crypt(%s, contraseña);", (user, password))
+                database.commit()
                 
             return redirect(url_for('pregunta')) 
         if database: 
@@ -982,7 +905,7 @@ def resultados():
                 band = False
                 if data_2[3] != None:
                     band = True
-            if band == True:#VA EN TRUE
+            if band == True:
                 return redirect(url_for('opciones'))
         print("Entra al else")
         if request.method == "POST":

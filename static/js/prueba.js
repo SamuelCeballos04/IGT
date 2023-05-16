@@ -120,7 +120,8 @@ async function activar(pregunta, valor){
         if (flag1==1 && flag2==1 && flag3==1){
             document.getElementById("resultados").disabled = false
             var a = document.getElementById("link");
-            a.href = "/resultados"
+            //a.href = "/resultados" //Version Local
+            a.href = "/igt/resultados" //Version En linea
             document.getElementById("link").setAttribute("href", "resultados")
         }
     }
@@ -456,7 +457,8 @@ async function enviar(){
     a.href = "/resultados"
     document.getElementById("link").setAttribute("href", "resultados")
     const request = new XMLHttpRequest()
-    request.open('POST', `/resultados/${JSON.stringify(seccion2)}/${JSON.stringify(seccion3)}/${JSON.stringify(seccion4)}`)
+    //request.open('POST', `/resultados/${JSON.stringify(seccion2)}/${JSON.stringify(seccion3)}/${JSON.stringify(seccion4)}`) //Version Local
+    request.open('POST', `/igt/resultados/${JSON.stringify(seccion2)}/${JSON.stringify(seccion3)}/${JSON.stringify(seccion4)}`) //Version En linea
     request.send();
     // $.ajax({
     //     type:'POST',
