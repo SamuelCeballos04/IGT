@@ -662,10 +662,11 @@ def registro():
         print("Sexo: ", sexo)    
         if database:
             cursor = database.cursor()
-            cursor.execute("SELECT * FROM participante WHERE correo=%s AND contraseña=crypt(%s, contraseña);", (correoE, contraseña))
+            cursor.execute("SELECT * FROM participante WHERE correo=%s", (correoE))
             data = cursor.fetchone()
-            cursor.execute("SELECT * FROM aplicador WHERE correo=%s")
-            if data == None:
+            cursor.execute("SELECT * FROM aplicador WHERE correo=%s", (correoE))
+            dataA = cursor.fetchone()
+            if data == None and dataA == None:
                 cursor.execute("INSERT INTO participante (nombre, apellidos, fechanac, telefono, escolaridad, carrera, correo, contraseña, sexo, confirmudg, semestre, nacionalidad)VALUES(%s, %s, %s, %s, %s, %s, %s, crypt(%s, gen_salt('bf')), %s, true, %s, %s)", (nombre, apellidos, fechaN, telefono, escolaridad, carrera, correoE, contraseña, sexo, semestre, nacionalidad))
                 database.commit()
                 flash('Se ha registrado correctamente', 'success')
