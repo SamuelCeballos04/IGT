@@ -70,7 +70,22 @@
                 </li>
                 <li>
                     <input type="text" name="otracarrera" class="campo" id="otro" disabled>
-                </li>  
+                </li> 
+                <li>
+                    <label for="semestre">Semestre</label><br>
+                    <select name="semestre" class="campo" id="semestre">
+                        <option value = "Primero">Primero</option>
+                        <option value = "Segundo">Segundo</option>
+                        <option value = "Tercero">Tercero</option>
+                        <option value = "Cuarto">Cuarto</option>
+                        <option value = "Quinto">Quinto</option>
+                        <option value = "Sexto">Sexto</option>
+                        <option value = "Septimo">Septimo</option>
+                        <option value = "Octavo">Octavo</option>
+                        <option value = "Noveno">Noveno</option>
+                        <option value = "Decimo">Decimo</option>
+                    </select>
+                </li>
                 <li>
                     <label for="sexo">Sexo</label><br>
                     <label for="Hombre" class="radio">Hombre</label>
@@ -79,11 +94,15 @@
                     <input type="radio" name="sexo" id="mujer" class="radio2" value="0">
                 </li>
                 <li>
+                    <label for="nacionalidad">Nacionalidad</label><br>
+                    <input type="text" name="nacionalidad" class="campo" placeholder = "Mexicana" maxlength="25" required>
+                </li>
+                <li>
                     <label for="telefono">Telefono</label><br>
                     <input type="text" name="telefono" class="campo" placeholder = "3311967458" maxlength="10">
                 </li>   
                 <li>
-                    <label for="correo">Correo Electronico</label><br>
+                    <label for="correo">Correo Electrónico</label><br>
                     <input type="email" name="correo" class="campo" placeholder = "juanPerez@gmail.com" maxlength="40" required>
                 </li>   
                 <li>
