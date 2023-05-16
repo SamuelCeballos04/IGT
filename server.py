@@ -631,7 +631,7 @@ def pregunta():
             if band == True:
                 flash('Sus respuestas se registraron correctamente', 'success')
                 return redirect(url_for('opciones'))
-        return render_template('prueba.html', band = bandera)
+        return render_template('prueba.html', band = bandsexo)
 
 @app.route('/registro', methods=['GET', 'POST'])
 def registro():
@@ -662,9 +662,9 @@ def registro():
         print("Sexo: ", sexo)    
         if database:
             cursor = database.cursor()
-            cursor.execute("SELECT * FROM participante WHERE correo=%s", (correoE))
+            cursor.execute("SELECT * FROM participante WHERE correo=%s", (correoE,))
             data = cursor.fetchone()
-            cursor.execute("SELECT * FROM aplicador WHERE correo=%s", (correoE))
+            cursor.execute("SELECT * FROM aplicador WHERE correo=%s", (correoE,))
             dataA = cursor.fetchone()
             if data == None and dataA == None:
                 cursor.execute("INSERT INTO participante (nombre, apellidos, fechanac, telefono, escolaridad, carrera, correo, contraseña, sexo, confirmudg, semestre, nacionalidad)VALUES(%s, %s, %s, %s, %s, %s, %s, crypt(%s, gen_salt('bf')), %s, true, %s, %s)", (nombre, apellidos, fechaN, telefono, escolaridad, carrera, correoE, contraseña, sexo, semestre, nacionalidad))
@@ -673,6 +673,7 @@ def registro():
                 enviarCorreoRegistro(correoE)
                 return redirect(url_for('login'))
             else:
+                flash('El correo que se introdujo ya está registrado', 'error')
                 return redirect(url_for('registro'))
     return render_template('registro.html')
 
