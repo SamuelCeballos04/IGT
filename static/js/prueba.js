@@ -21,7 +21,7 @@ async function activar(pregunta, valor){
             if (valor == "0"){
                 document.getElementById("Tanhos").disabled = true
                 document.getElementById("Tanhos").removeAttribute("required")
-                document.getElementById("Tanhos").value = ""
+                document.getElementById("Tanhos").value = "0"
 
             }
         }
@@ -53,8 +53,8 @@ async function activar(pregunta, valor){
                 document.getElementById("Aanhos").disabled = true
                 document.getElementById("Aml").removeAttribute("required")
                 document.getElementById("Aanhos").removeAttribute("required")
-                document.getElementById("Aml").value = ""
-                document.getElementById("Aanhos").value = ""
+                document.getElementById("Aml").value = "0"
+                document.getElementById("Aanhos").value = "0"
             }
             // if (valor == "1"){
             //     document.getElementById("ALesp").disabled = false
@@ -76,7 +76,7 @@ async function activar(pregunta, valor){
             if (valor == "0"){
                 document.getElementById("Psanhos").disabled = true
                 document.getElementById("Psanhos").removeAttribute("required")
-                document.getElementById("Psanhos").value = ""
+                document.getElementById("Psanhos").value = "0"
             }
         }
         if (pregunta == "5"){
@@ -88,7 +88,7 @@ async function activar(pregunta, valor){
             if (valor == "0"){
                 document.getElementById("ALesp").disabled = true
                 document.getElementById("ALesp").removeAttribute("required")
-                document.getElementById("ALesp").value = ""
+                document.getElementById("ALesp").value = "No"
             }
         }
         if (pregunta == "6"){
@@ -100,7 +100,7 @@ async function activar(pregunta, valor){
             if (valor == "0"){
                 document.getElementById("Fdesp").disabled = true
                 document.getElementById("Fdesp").removeAttribute("required")
-                document.getElementById("Fdesp").value = ""
+                document.getElementById("Fdesp").value = "No"
             }
         }
     }

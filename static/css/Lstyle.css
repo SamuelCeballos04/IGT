@@ -9,6 +9,40 @@
     display: block;
 
 }
+.formulario .boton:hover{
+    background-color: #eebb2e;
+    color: #2C2C2C;
+    text-decoration: none;
+    box-shadow: 4px 4px;
+    font-weight: bold;
+}
+input[type="checkbox"]:focus {
+    /*outline: max(2px, 0.15em) solid currentColor;
+    outline-offset: max(2px, 0.15em);*/
+    color: #D99729;
+    accent-color: #eebb2e;
+  }
+
+  input[type="checkbox"]:checked::after {
+    accent-color: #D99729;
+  }
+
+  input[type="checkbox"]:checked::before {
+    accent-color: #D99729;
+  }
+
+  input[type="checkbox"] {
+    accent-color: #eebb2e;
+  }
+
+.btn-check:active+.btn-warning:focus, .btn-check:checked+.btn-warning:focus, .btn-warning.active:focus, .btn-warning:active:focus, .show>.btn-warning.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.25rem rgba(217,164,6,.5);
+}
+
+.btn-group-vertical>.btn-check:checked+.btn, .btn-group-vertical>.btn-check:focus+.btn, .btn-group-vertical>.btn.active, .btn-group-vertical>.btn:active, .btn-group-vertical>.btn:focus, .btn-group>.btn-check:checked+.btn, .btn-group>.btn-check:focus+.btn, .btn-group>.btn.active, .btn-group>.btn:active, .btn-group>.btn:focus {
+    z-index: 1;
+    box-shadow: 0 0 0 0.25rem rgba(217,164,6,.5);
+}
 
 .subtitulo {
     top: 10%;
