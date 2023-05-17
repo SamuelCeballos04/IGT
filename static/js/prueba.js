@@ -259,7 +259,7 @@ async function pasar(){
             <h2 class="texto" id="texto">Menarquía</h2>
                 <div class="row align-items-center m-5 justify-content-center" style="margin-top: 0!important; margin-bottom: 0!important;">
                     <div class="col-3">
-                        <input type="number" name="Manhos" class="form-control" style="height: 4vh; margin-bottom: 0;" id="Manhos" required>
+                        <input type="number" name="Manhos" class="form-control" style="height: 4vh; margin-bottom: 0;" id="Manhos" required min = "10" max = "16">
                     </div>
                     <label for="años" class="col-form-label col-3 d-flex justify-content-start" style="color: white;">Años</label>
                 </div>
