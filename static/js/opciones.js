@@ -1,4 +1,4 @@
-function onload(flag){
+function onload(flag, flag2){
     if(flag == 1){
         document.getElementById("start").disabled = true
         document.getElementById("startL").disabled = true
@@ -14,6 +14,15 @@ function onload(flag){
         document.getElementById("aprofile").setAttribute("href", "descargarArchivos")
         document.getElementById("btnpr").innerHTML = "Descargar Horarios"
         document.getElementById("btnpr").setAttribute("class", "boton2")
+    }
+    if (flag2 == 0){
+        document.getElementById("btnHorario").setAttribute("disabled", "true")
+        document.getElementById("resultados").setAttribute("disabled", "true")
+        //document.getElementById("btnHorario").disabled = true
+        //document.getElementById("resultados").disabled = true
+        document.getElementById("btnHorario").innerHTML = "YA HAS REGISTRADO LOS HORARIOS"
+        document.getElementById("btnHorario").classList.remove('boton2')
+        document.getElementById("btnHorario").classList.add('boton4')
     }
 }
 

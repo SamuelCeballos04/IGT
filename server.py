@@ -275,78 +275,117 @@ def usuariosExcel():
             exportar.to_csv("experimentos/Exp_"+str(i[1])+"_GSR.csv", encoding='utf-8-sig')
             exportar2.to_csv("experimentos/Exp_"+str(i[1])+"_IGT.csv", encoding='utf-8-sig')         
 
-def usuariosInfoExcel():
-    estres = 0
-    estresL = list()
-    depresion = 0
-    depresionL = list()
-    ansiedad = 0
-    ansiedadL = list()
-
-    id = list()
-    fecha = list()
-    escolaridad = list()
-    carrera = list()
-    genero = list()
-    correo = list()
-    telefono = list()
-    seed = list()
-    fExp = list()
-    idExp = list()
-
-    if database:
-        cursor = database.cursor()
-
-        cursor.execute("SELECT * FROM participante WHERE expterminado = true")
-        n = cursor.fetchall() #Consulta de abajo: Sacaba 25 registros por participante con encuesta y experimento, cada registro correspondia a una pregunta de la encuesta anterior, buscar forma nueva 
-        cursor.execute("SELECT participante.id_participante, fechanac, escolaridad, carrera, case when sexo = false then 'Mujer' when sexo = true then 'Hombre' end as sexo, correo, telefono, nombreconf, value, experimento.fecha, experimento.id_exp FROM encuesta, json_each(encuesta.respuesta), participante, experimento WHERE encuesta.id_participante = participante.id_participante AND encuesta.id_participante = experimento.id_participante")
-        data = cursor.fetchall()
-        print(len(data))
-        if len(n) != 0:
-            print(len(data)/len(n))
-            num = len(data)/len(n)
-        c = 0
-
-        for i in data:
-            c +=1
-            if(c==25):
-                c=0
-                estresL.append(estres)
-                depresionL.append(depresion)
-                ansiedadL.append(ansiedad)
-                estres = 0
-                depresion = 0
-                ansiedad = 0
-                id.append(i[0])
-                fecha.append(i[1])
-                escolaridad.append(i[2])
-                carrera.append(i[3])
-                genero.append(i[4])
-                correo.append(i[5])
-                telefono.append(i[6])
-                seed.append(i[7])
-                fExp.append(i[9])
-                idExp.append(i[10])
-                exportar = pd.DataFrame({"ID":id, "Fecha nac":fecha, "Escolaridad":escolaridad, "Carrera": carrera, "Genero": genero, "Correo": correo, "Telefono": telefono, "DASS21 Depression": depresionL, "DASS21 Anxiety": ansiedadL, "DASS21 Stress": estresL, "Seed": seed, "Fecha Exp":fExp, "ID Exp":idExp})
-                #exportar = pd.DataFrame({"ID":id, "Fecha":fecha, "Escolaridad":escolaridad, "Carrera": carrera, "Genero": genero, "Correo": correo, "Telefono": telefono, "DASS21 Depression": depresionL, "DASS21 Anxiety": ansiedadL, "DASS21 Stress": estresL, "Seed": seed, "Fecha Exp":fExp})
-                exportar.to_csv("experimentos/sujetos.csv", encoding='utf-8-sig')
-
-                continue
-            #cursor.execute("SELECT respuesta#>'{Enunciado %s}' FROM encuesta WHERE id_participante = %s ", (c, i[0] ))
-            if (int(i[8][0]) < 22):
-                cursor.execute("SELECT respuesta#>'{Enunciado %s}' FROM encuesta WHERE id_participante = %s ", (int(i[8][0]), i[0] ))
-                if (i[8][3]) == 'Estres':
-                    # print(i)
-                    # print(estres)
-                    estres += i[8][2]
-                elif (i[8][3]) == 'Depresion':
-                    depresion += i[8][2]
-                elif (i[8][3]) == 'Ansiedad':
-                    ansiedad += i[8][2]
-            tipo = cursor.fetchall()
-
-        '''exportar = pd.DataFrame({"ID":id, "Fecha":fecha, "Escolaridad":escolaridad, "Carrera": carrera, "Genero": genero, "Correo": correo, "Telefono": telefono, "DASS21 Depression": depresionL, "DASS21 Anxiety": ansiedadL, "DASS21 Stress": estresL, "Seed": seed})
-        exportar.to_excel("experimentos\sujetos.xlsx", sheet_name="sujetos", index=False)'''
+def usuariosInfoExcel(): 
+    tabaquismoL = list() 
+    tabaquismoCL = list()
+    tabaquismoAL = list()
+    alcoholismoL = list() 
+    alcoholismoCL = list()
+    alcoholismoAL = list() 
+    sustanciaL = list()
+    sustanciaCL = list()
+    sustanciaAL = list()
+    fechaUML = list()
+    ciclosL = list() 
+    diasL = list() 
+    anticonceptivosL = list()
+    anticonceptivosesL = list()
+    epilepsiaL = list()
+    epilepsiapadresL = list()
+    enfPsicoL = list() 
+    enfPsicoesL = list()
+    enfPsicopadresL = list()
+    enfPsiquiL = list() 
+    enfPsiquiesL = list()
+    enfPsiquipadresL = list()
+    traumatismoL = list()
+    # enfNeuroL = list() 
+    # estres = 0 
+    # estresL = list() 
+    # depresion = 0 
+    # depresionL = list() 
+    # ansiedad = 0 
+    # ansiedadL = list() 
+ 
+    id = list() 
+    fecha = list() 
+    escolaridad = list() 
+    carrera = list() 
+    genero = list() 
+    correo = list() 
+    telefono = list() 
+    seed = list() 
+    fExp = list() 
+    idExp = list() 
+ 
+    if database: 
+        cursor = database.cursor() 
+ 
+        cursor.execute("SELECT * FROM participante WHERE expterminado = true") 
+        n = cursor.fetchall() #Consulta de abajo: Sacaba 25 registros por participante con encuesta y experimento, cada registro correspondia a una pregunta de la encuesta anterior, buscar forma nueva  
+        cursor.execute("SELECT participante.id_participante, fechanac, escolaridad, carrera, case when sexo = false then 'Mujer' when sexo = true then 'Hombre' end as sexo, correo, telefono, value FROM encuesta, json_each(encuesta.respuesta), participante WHERE encuesta.id_participante = participante.id_participante") 
+         
+        data = cursor.fetchall() 
+        print(len(data)) 
+        if len(n) != 0: 
+            print(len(data)/len(n)) 
+            num = len(data)/len(n) 
+        c = 0 
+ 
+        for i in data: 
+            c +=1 
+            if (i[7][0]) == '1': 
+                tabaquismoL.append(i[7][1]) 
+                tabaquismoCL.append(i[7][2]) 
+                tabaquismoAL.append(i[7][3]) 
+            elif (i[7][0]) == '2': 
+                alcoholismoL.append(i[7][1]) 
+                alcoholismoCL.append(i[7][2]) 
+                alcoholismoAL.append(i[7][3]) 
+            elif (i[7][0]) == '3': 
+                sustanciaL.append(i[7][1]) 
+                sustanciaCL.append(i[7][2]) 
+                sustanciaAL.append(i[7][3]) 
+            elif (i[7][0]) == '4': 
+                fechaUML.append(i[7][1])  
+            elif (i[7][0]) == '5': 
+                ciclosL.append(i[7][1]) 
+            elif (i[7][0]) == '6': 
+                diasL.append(i[7][1]) 
+            elif (i[7][0]) == '7': 
+                anticonceptivosL.append(i[7][1]) 
+                anticonceptivosesL.append(i[7][2]) 
+            elif (i[7][0]) == '8': 
+                epilepsiaL.append(i[7][1]) 
+                epilepsiapadresL.append(i[7][2])
+            elif (i[7][0]) == '9': 
+                enfPsicoL.append(i[7][1]) 
+                enfPsicoesL.append(i[7][2])
+                enfPsicopadresL.append(i[7][3])
+            elif (i[7][0]) == '10': 
+                enfPsiquiL.append(i[7][1]) 
+                enfPsiquiesL.append(i[7][2])
+                enfPsiquipadresL.append(i[7][3])
+            elif (i[7][0]) == '11': 
+                traumatismoL.append(i[7][1]) 
+            if(c==11): 
+                c=0 
+                id.append(i[0]) 
+                fecha.append(i[1]) 
+                escolaridad.append(i[2]) 
+                carrera.append(i[3]) 
+                genero.append(i[4]) 
+                correo.append(i[5]) 
+                telefono.append(i[6]) 
+                exportar = pd.DataFrame({"ID":id, "Fecha nac":fecha, "Escolaridad":escolaridad, "Carrera": carrera, "Genero": genero, "Correo": correo, "Telefono": telefono, "Tabaquismo": tabaquismoL, "Cigarros por semana": tabaquismoCL, "Años de exposición": tabaquismoAL, "Alcoholismo": alcoholismoL, "ml por mes":alcoholismoCL, "A単os de consumo":alcoholismoAL, "Consumo de sustancias psicotropicas":sustanciaL, "Dosis por mes":sustanciaCL, "A単os de consumo":sustanciaAL, "Última menstruación":fechaUML, "Ciclos regulares":ciclosL, "Días ciclo":diasL, "Anticonceptivos":anticonceptivosL, "Especificar":anticonceptivosesL, "Epilepsia":epilepsiaL, "Epilepsia en padres":epilepsiapadresL, "Enfermedades Psicologicas":enfPsicoL, "Especificar":enfPsicoesL, "Enfermedades psicológicas en padres":enfPsicopadresL, "Enfermades Psiquiatricas":enfPsiquiL, "Especificar":enfPsiquiesL, "Enfermedades psiquiatricas en padres":enfPsiquipadresL, "Traumatismo craneoencefalico":traumatismoL}) 
+                #exportar = pd.DataFrame({"ID":id, "Fecha":fecha, "Escolaridad":escolaridad, "Carrera": carrera, "Genero": genero, "Correo": correo, "Telefono": telefono, "DASS21 Depression": depresionL, "DASS21 Anxiety": ansiedadL, "DASS21 Stress": estresL, "Seed": seed, "Fecha Exp":fExp}) 
+                exportar.to_csv("experimentos/sujetos.csv", encoding='utf-8-sig') 
+ 
+                continue 
+            #cursor.execute("SELECT respuesta#>'{Enunciado %s}' FROM encuesta WHERE id_participante = %s ", (c, i[0] )) 
+ 
+        '''exportar = pd.DataFrame({"ID":id, "Fecha":fecha, "Escolaridad":escolaridad, "Carrera": carrera, "Genero": genero, "Correo": correo, "Telefono": telefono, "DASS21 Depression": depresionL, "DASS21 Anxiety": ansiedadL, "DASS21 Stress": estresL, "Seed": seed}) 
+        exportar.to_excel("experimentos\sujetos.xlsx", sheet_name="sujetos", index=False)''' 
 
 def horariosExcel():
     horas = ["9", "10", "11", "12", "1", "2", "3", "4", "5", "6"]
@@ -473,6 +512,7 @@ def opciones():
     else:
         my_var3 = session.get('my_var3', "")  
         if database:
+            bandHorario = 0
             band = 1
             cursor = database.cursor()
             cursor.execute("SELECT id_participante FROM participante WHERE correo=%s AND contraseña = crypt(%s, contraseña);", (user, password))
@@ -486,9 +526,12 @@ def opciones():
                 cursor = database.cursor()
                 cursor.execute("SELECT * FROM encuesta WHERE id_participante=%s;", (data))
                 data_2 = cursor.fetchone()
+                print(data_2[3])
+                if data_2[3] == None:
+                    bandHorario = 1
                 if data_2 == None:
                     band = 0   
-        return render_template('opciones.html', name=my_var3, bandera = band)
+        return render_template('opciones.html', name=my_var3, bandera = band, bandera2 = bandHorario)
 
 @app.route('/exportarExcel', defaults={'req_path': ''})  
 @app.route('/exportarExcel/<path:req_path>')
@@ -799,7 +842,7 @@ def resultadoss(seccion2, seccion3, seccion4):
         print(valores4)
         dicc = dict()
         dicc2 = dict()
-        enunciado = ["Tabaquismo", "Fumador Pasivo", "Alcoholismo", "Consumo de sustancias psicotropicas", "Alergias", "Farmacodependencia", "Menarquia", "Fecha Ultima Menstruacion", "Enfermedades Psicologicas", "Enfermedades Psiquiatricas", "Enfermedades Neurologicas"]
+        enunciado = ["Tabaquismo", "Alcoholismo", "Sustancias", "Fecha Ultima Menstruacion", "Ciclos regulares", "Dias de ciclo", "Anticonceptivos hormonales", "Epilepsia", "Enfermedades Psicologicas", "Enfermedades Psiquiatricas", "Traumatismo craneoencefalico"]
         i = 1
         j = 0
         y = 0
@@ -809,35 +852,42 @@ def resultadoss(seccion2, seccion3, seccion4):
             dicc[clave] = [enunciado[i-1]]
             if i <= 6:
                 if i == 1:
-                    dicc2[clave] = [num, valores2[0], valores2[1]]
+                    dicc2[clave] = [num, valores2[0], valores2[1], valores2[2]]
                 if i == 2:
-                    dicc2[clave] = [num, valores2[2]]
-                if i == 3:
                     dicc2[clave] = [num, valores2[3], valores2[4], valores2[5]]
-                if i == 4:
-                    dicc2[clave] = [num, valores2[6], valores2[7]]
-                if i == 5:
-                    dicc2[clave] = [num, valores2[8], valores2[9]]
-                if i == 6:
-                    print("RANGOOO", len(valores2))
-                    dicc2[clave] = [num, valores2[10], valores2[11]]
+                if i == 3:
+                    dicc2[clave] = [num, valores2[6], valores2[7], valores2[8]]
                     j = 1
+                # if i == 4:
+                #     dicc2[clave] = [num, valores2[6], valores2[7]]
+                # if i == 5:
+                #     dicc2[clave] = [num, valores2[8], valores2[9]]
+                # if i == 6:
+                #     print("RANGOOO", len(valores2))
+                #     dicc2[clave] = [num, valores2[10], valores2[11]]
+                #     j = 1
             if j == 1:
-                if i == 7:
-                    dicc2[clave] = [num, valores3[0]+ valores3[1]]
-                if i == 8:
+                if i == 4:
+                    dicc2[clave] = [num, valores3[0]]
+                if i == 5:
+                    dicc2[clave] = [num, valores3[1]]
+                if i == 6:
                     dicc2[clave] = [num, valores3[2]]
+                if i == 7:
+                    dicc2[clave] = [num, valores3[3], valores3[4]]
                     y = 1
             if y == 1:
+                if i == 8:
+                    dicc2[clave] = [num, valores4[0], valores4[1]]
                 if i == 9:
-                    dicc2[clave] = [num, valores4[0]]
+                    dicc2[clave] = [num, valores4[2], valores4[3], valores4[4]]
                 if i == 10:
-                    dicc2[clave] = [num, valores4[1]]
+                    dicc2[clave] = [num, valores4[5], valores4[6], valores4[7]]
                 if i == 11:
-                    dicc2[clave] = [num, valores4[2]]
+                    dicc2[clave] = [num, valores4[8]]
             i+=1
         aptitud = True
-        if valores4[0] == '1' or valores4[1] == '1' or valores4[2] == '1':
+        if valores4[0] == '1' or valores4[2] == '1' or valores4[5] == '1' or valores4[8] == '1':
             aptitud = False
         preguntasJson = json.dumps(dicc)
         respuestasJson = json.dumps(dicc2)
@@ -976,7 +1026,7 @@ def resultados():
                 cursor.execute("UPDATE encuesta set cita = %s where id_participante=%s", (diasJson, data))
                 database.commit()
                 horariosExcel()
-                flash('Sus respuestas se han registrado correctamente, por favor recarga esta página', 'success')
+                flash('Sus horarios se han registrado correctamente, por favor recarga esta página', 'success')
             return redirect(url_for('opciones'))
         return render_template('resultados.html')
     

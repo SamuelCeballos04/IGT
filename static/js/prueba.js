@@ -422,6 +422,7 @@ async function pasar(){
             seccion3.push("NO APLICA")
             seccion3.push("NO APLICA")
             seccion3.push("NO APLICA")
+            seccion3.push("NO APLICA")
             return
         }
         else{

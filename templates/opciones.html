@@ -12,6 +12,7 @@
     <script type="text/javascript" src = "{{ url_for('static', filename='js/opciones.js') }}"></script>
     <script type="text/javascript">
         var flag = {{bandera}}
+        var flag2 = {{bandera2}}
     </script>
     <title>Opciones</title>
 </head>
@@ -22,7 +23,7 @@
       {% endfor %}
    {% endif %}
 {% endwith %}
-<body onload="onload({{bandera}})">
+<body onload="onload({{bandera}}, {{bandera2}})">
     <h1 class="titulo">GoGamblerGo
         <div class = "usuario" style = "font-size: 70%" >¡Bienvenid@, {{name}}!</div>
     </h1>
@@ -43,7 +44,11 @@
         <a href = "{{url_for('perfil')}}" id="aprofile" >
             <button class = "boton" id="btnpr" type = "submit" action = "{{url_for('perfil')}}">Perfil</button>
         </a>
-        
+        <form action="{{url_for('resultados')}}" method = 'get' class="formulario">
+            <a href = "{{url_for('resultados')}}" id="resultados" >
+                <button class = "boton2" id="btnHorario" type = "submit" action = "{{url_for('resultados')}}">Llenar horarios</button>
+            </a>
+        </form>
         <a href="{{url_for('index')}}">
                 <button class="boton" action="{{url_for('login')}}" type="submit">Salir</button>
         </a>
