@@ -5,11 +5,15 @@ let seccion4 = []
 flag1 = 0
 flag2 = 0
 flag3 = 0
+flag4 = 0
+flag5 = 0
+flag6 = 0
+flag7 = 0
 var form = document.getElementById("form");
 function onload(flag){
     console.log(flag)
 }
-function handleForm(event) { event.preventDefault(); } 
+function handleForm(event) { event.preventDefault(); }
 form.addEventListener('submit', handleForm);
 async function activar(pregunta, valor){
     if (sec == 1){
@@ -131,14 +135,115 @@ async function activar(pregunta, valor){
         }
         if (pregunta == "3"){
             flag3 = 1
+            if (valor == "1"){
+                document.getElementById("EpscEs").disabled = false
+                document.getElementById("EpscEs").required = true
+                document.getElementById("PEpscbtnradio1").disabled = false
+                document.getElementById("PEpscbtnradio1").required = true
+                document.getElementById("PEpscbtnradio2").disabled = false
+                document.getElementById("PEpsctexto").style.color = "white";
+            }
+            if (valor == "0"){
+                flag4 = 0
+                document.querySelector('input[name="PEpscbtnradio"]:checked').checked = false
+                document.getElementById("EpscEs").disabled = true
+                document.getElementById("EpscEs").value = "No"
+                document.getElementById("EpscEs").required = false
+                document.getElementById("PEpscbtnradio1").disabled = true
+                document.getElementById("PEpscbtnradio1").required = false
+                document.getElementById("PEpscbtnradio2").disabled = true
+                document.getElementById("PEpsctexto").style.color = "rgba(255, 255, 255, 0.735)";
+            }
         }
-        if (flag1==1 && flag2==1 && flag3==1){
+        if (pregunta == "4"){
+            flag4 = 1
+        }
+        if (pregunta == "5"){
+            flag5 = 1
+            if (valor == "1"){
+                document.getElementById("EpsqEs").disabled = false
+                document.getElementById("EpsqEs").required = true
+                document.getElementById("PEpsqbtnradio1").disabled = false
+                document.getElementById("PEpsqbtnradio1").required = true
+                document.getElementById("PEpsqbtnradio2").disabled = false
+                document.getElementById("PEpsqtexto").style.color = "white";
+            }
+            if (valor == "0"){
+                flag6 = 0
+                document.querySelector('input[name="PEpsqbtnradio"]:checked').checked = false
+                document.getElementById("EpsqEs").disabled = true
+                document.getElementById("EpsqEs").required = false
+                document.getElementById("EpsqEs").value = "No"
+                document.getElementById("PEpsqbtnradio1").disabled = true
+                document.getElementById("PEpsqbtnradio1").required = false
+                document.getElementById("PEpsqbtnradio2").disabled = true
+                document.getElementById("PEpsqtexto").style.color = "rgba(255, 255, 255, 0.735)";
+            }
+        }
+        if (pregunta == "6"){
+            flag6 = 1
+        }
+        if (pregunta == "7"){
+            flag7 = 1
+        }
+        bandConf = 0
+        bandConf2 = 0
+        if (flag1 == 1 && flag2 == 1 && flag3 == 1 && flag5 == 1 && flag7 == 1){
+            console.log("HOLA")
+            pr3 = document.querySelector('input[name="Epscbtnradio"]:checked').value;
+            if (pr3 == 1){
+                bandConf = 0
+                if (flag4 == 1){
+                    bandConf = 1
+                }
+                else{
+                    document.getElementById("resultados").disabled = true
+                    var a = document.getElementById("link");
+                    a.href = "" //Version Local
+                }
+            }
+            else if (pr3 == 0){
+                bandConf = 1
+            }
+            pr5 = document.querySelector('input[name="Epsqbtnradio"]:checked').value;
+            if (pr5 == 1){
+                bandConf2 = 0
+                if (flag6 == 1){
+                    bandConf2 = 1
+                }
+                else{
+                    document.getElementById("resultados").disabled = true
+                    var a = document.getElementById("link");
+                    a.href = "" //Version Local
+                }
+            }
+            else if (pr5 == 0){
+                bandConf2 = 1
+            }
+        }
+        if (bandConf == 1 && bandConf2 == 1){
             document.getElementById("resultados").disabled = false
             var a = document.getElementById("link");
-            //a.href = "/resultados" //Version Local
-            a.href = "/igt/resultados" //Version En linea
-            document.getElementById("link").setAttribute("href", "resultados")
+            a.href = "/opciones" //Version Local
+            //a.href = "/igt/resultados" //Version En linea
+            document.getElementById("link").setAttribute("href", "opciones")
         }
+        // if (pregunta == "1"){
+        //     flag1 = 1
+        // }
+        // if (pregunta == "2"){
+        //     flag2 = 1
+        // }
+        // if (pregunta == "3"){
+        //     flag3 = 1
+        // }
+        // if (flag1==1 && flag2==1 && flag3==1){
+        //     document.getElementById("resultados").disabled = false
+        //     var a = document.getElementById("link");
+        //     //a.href = "/resultados" //Version Local
+        //     a.href = "/igt/resultados" //Version En linea
+        //     document.getElementById("link").setAttribute("href", "resultados")
+        // }
     }
 }
 async function pasar(){
@@ -148,7 +253,7 @@ async function pasar(){
     //     btn.innerHTML= "Aceptar";
     //     btn.id="resultados";
     //     document.getElementById("resultados").setAttribute("onclick", "enviar()")
-        
+
     // }
     // if (i==20)
     // {
@@ -227,39 +332,88 @@ async function pasar(){
             sec += 2
             console.log("HOMBRE")
             document.getElementById("instruccion").innerHTML = "Antecedentes personal Patológicos"
-            document.getElementById("form").innerHTML = `
+            document.getElementById("formulario").innerHTML = `
+            <form onsubmit="enviar(); return false;" id="form">
             <div class="container mt-0 mb-5" style="padding: 0;">
-                <h2 class="texto" id="texto">Enfermedades Psicológicas</h2>
+                <h2 class="texto" id="texto">¿Padeces epilepsia?</h2>
                 <div class="btn-group d-flex align-items-center m-5" style="margin-bottom: 1.5rem!important;" role="group" aria-label="Basic radio toggle button group">
-                    <input type="radio" class="btn-check" name="Epsbtnradio" id="Epsbtnradio1" autocomplete="off" onclick="activar('1', '1')" required value="1">
-                    <label class="btn btn-warning" for="Epsbtnradio1" id="Epsbtn1">Si</label>
-                
-                    <input type="radio" class="btn-check" name="Epsbtnradio" id="Epsbtnradio2" autocomplete="off" onclick="activar('1', '0')" value="0">
-                    <label class="btn btn-warning" for="Epsbtnradio2" id="Epsbtn2">No</label>
+                    <input type="radio" class="btn-check" name="Epibtnradio" id="Epibtnradio1" autocomplete="off" onclick="activar('1', '1')" required value="1">
+                    <label class="btn btn-warning" for="Epibtnradio1" id="Epibtn1">Si</label>
+
+                    <input type="radio" class="btn-check" name="Epibtnradio" id="Epibtnradio2" autocomplete="off" onclick="activar('1', '0')" value="0">
+                    <label class="btn btn-warning" for="Epibtnradio2" id="Epibtn2">No</label>
                 </div>
-                <h2 class="texto" id="texto">Enfermedades Psiquiátricas</h2>
+                <h2 class="texto" id="texto" >¿Tu mamá o papá lo padecen?</h2>
+                <div class="btn-group d-flex align-items-center m-5" style="margin-bottom: 1.5rem!important; role="group" aria-label="Basic radio toggle button group">
+                    <input type="radio" class="btn-check" name="PEpibtnradio" id="PEpibtnradio1" autocomplete="off" onclick="activar('2', '1')" required value="1" >
+                    <label class="btn btn-warning" for="PEpibtnradio1" id="PEpibtn1">Si</label>
+
+                    <input type="radio" class="btn-check" name="PEpibtnradio" id="PEpibtnradio2" autocomplete="off" onclick="activar('2', '0')" value="0" >
+                    <label class="btn btn-warning" for="PEpibtnradio2" id="PEpibtn2">No</label>
+                </div>
+                <h2 class="texto" id="texto">¿Padeces alguna enfermedad psicológica diagnosticada? (Ansiedad, Depresión, TDA, entre otras) </h2>
                 <div class="btn-group d-flex align-items-center m-5" style="margin-bottom: 1.5rem!important;" role="group" aria-label="Basic radio toggle button group">
-                    <input type="radio" class="btn-check" name="Epsqbtnradio" id="Epsqbtnradio1" autocomplete="off" onclick="activar('2', '1')" required value="1">
-                    <label class="btn btn-warning" for="Epsqbtnradio1" id="Eppsbtn1">Si</label>
-                
-                    <input type="radio" class="btn-check" name="Epsqbtnradio" id="Epsqbtnradio2" autocomplete="off" onclick="activar('2', '0')" value="0">
+                    <input type="radio" class="btn-check" name="Epscbtnradio" id="Epscbtnradio1" autocomplete="off" onclick="activar('3', '1')" required value="1">
+                    <label class="btn btn-warning" for="Epscbtnradio1" id="Epscbtn1">Si</label>
+
+                    <input type="radio" class="btn-check" name="Epscbtnradio" id="Epscbtnradio2" autocomplete="off" onclick="activar('3', '0')" value="0">
+                    <label class="btn btn-warning" for="Epscbtnradio2" id="Epscbtn2">No</label>
+                </div>
+                <div class="row align-items-center m-5 justify-content-center h-auto" style="margin-top: 0!important;">
+                    <label for="EpscEs" class="col-form-label col-2 d-flex justify-content-center" style="color: white;">¿Cuál o cuáles? </label>
+                    <div class="col h-auto">
+                        <input type="text" name="EpscEs" class="form-control" style="height: 20vw; margin-bottom: 0;"id="EpscEs" value="No" disabled>
+                    </div>
+                </div>
+                <h2 class="texto" id="texto" style="color: rgba(255, 255, 255, 0.735);">¿Tu mamá o papá lo padecen?</h2>
+                <div class="btn-group d-flex align-items-center m-5" style="margin-bottom: 1.5rem!important; role="group" aria-label="Basic radio toggle button group">
+                    <input type="radio" class="btn-check" name="PEpscbtnradio" id="PEpscbtnradio1" autocomplete="off" onclick="activar('4', '1')" required value="1" disabled>
+                    <label class="btn btn-warning" for="PEpscbtnradio1" id="PEpscbtn1">Si</label>
+
+                    <input type="radio" class="btn-check" name="PEpscbtnradio" id="PEpscbtnradio2" autocomplete="off" onclick="activar('4', '0')" value="0" disabled>
+                    <label class="btn btn-warning" for="PEpscbtnradio2" id="PEpscbtn2">No</label>
+                </div>
+                <h2 class="texto" id="texto">¿Padeces alguna enfermedad psiquiátrica diagnosticada? (Trastorno bipolar, Esquizofrenia, psicosis, entre otras) </h2>
+                <div class="btn-group d-flex align-items-center m-5" style="margin-bottom: 1.5rem!important;" role="group" aria-label="Basic radio toggle button group">
+                    <input type="radio" class="btn-check" name="Epsqbtnradio" id="Epsqbtnradio1" autocomplete="off" onclick="activar('5', '1')" required value="1">
+                    <label class="btn btn-warning" for="Epsqbtnradio1" id="Epsqsbtn1">Si</label>
+
+                    <input type="radio" class="btn-check" name="Epsqbtnradio" id="Epsqbtnradio2" autocomplete="off" onclick="activar('5', '0')" value="0">
                     <label class="btn btn-warning" for="Epsqbtnradio2" id="Epsqbtn2">No</label>
                 </div>
-                <h2 class="texto" id="texto">Enfermedades Neurológicas</h2>
+                <div class="row align-items-center m-5 justify-content-center h-auto" style="margin-top: 0!important;">
+                    <label for="EpsqEs" class="col-form-label col-2 d-flex justify-content-center" style="color: white;">¿Cuál o cuáles? </label>
+                    <div class="col h-auto">
+                        <input type="text" name="EpsqEs" class="form-control" style="height: 20vw; margin-bottom: 0;"id="EpsqEs" value="No" disabled>
+                    </div>
+                </div>
+                <h2 class="texto" id="texto" style="color: rgba(255, 255, 255, 0.735);">¿Tu mamá o papá lo padecen?</h2>
+                <div class="btn-group d-flex align-items-center m-5" style="margin-bottom: 1.5rem!important; role="group" aria-label="Basic radio toggle button group">
+                    <input type="radio" class="btn-check" name="PEpsqbtnradio" id="PEpsqbtnradio1" autocomplete="off" onclick="activar('6', '1')" required value="1" disabled>
+                    <label class="btn btn-warning" for="PEpsqbtnradio1" id="PEpsqbtn1">Si</label>
+
+                    <input type="radio" class="btn-check" name="PEpsqbtnradio" id="PEpsqbtnradio2" autocomplete="off" onclick="activar('6', '0')" value="0" disabled>
+                    <label class="btn btn-warning" for="PEpsqbtnradio2" id="PEpsqbtn2">No</label>
+                </div>
+                <h2 class="texto" id="texto">4.	¿Alguna vez has tenido algún traumatismo craneoencefálico (golpes en la cabeza que te hayan causado inconsciencia)?</h2>
                 <div class="btn-group d-flex align-items-center m-5" style="margin-bottom: 1.5rem!important;" role="group" aria-label="Basic radio toggle button group">
-                    <input type="radio" class="btn-check" name="Enbtnradio" id="Enbtnradio1" autocomplete="off" onclick="activar('3', '1')" required value="1">
-                    <label class="btn btn-warning" for="Enbtnradio1" id="Enbtn1">Si</label>
-                
-                    <input type="radio" class="btn-check" name="Enbtnradio" id="Enbtnradio2" autocomplete="off" onclick="activar('3', '0')" value="0">
-                    <label class="btn btn-warning" for="Enbtnradio2" id="Enbtn2">No</label>
+                    <input type="radio" class="btn-check" name="Traumabtnradio" id="Traumabtnradio1" autocomplete="off" onclick="activar('7', '1')" required value="1">
+                    <label class="btn btn-warning" for="Traumabtnradio1" id="Traumabtn1">Si</label>
+
+                    <input type="radio" class="btn-check" name="Traumabtnradio" id="Traumabtnradio2" autocomplete="off" onclick="activar('7', '0')" value="0">
+                    <label class="btn btn-warning" for="Traumabtnradio2" id="Traumabtn2">No</label>
+
+                    <input type="radio" class="btn-check" name="Traumabtnradio" id="Traumabtnradio3" autocomplete="off" onclick="activar('7', '2')" value="2">
+                    <label class="btn btn-warning" for="Traumabtnradio3" id="Traumabtn3">No lo sé</label>
                 </div>
                 <a id="link">
-                <button type="button" class="btn btn-light enviar" id="siguiente" disabled>Siguiente</button>
+                    <button type="button" class="btn btn-light enviar" id="siguiente" disabled>Siguiente</button>
                 </a>
                 <div class="progress">
                     <div id="barra" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
                 </div>
-            </div>`
+            </div>
+            </form>`
             btn = document.getElementById("siguiente");
             btn.innerHTML= "Aceptar";
             btn.id="resultados";
@@ -267,10 +421,11 @@ async function pasar(){
             seccion3.push("NO APLICA")
             seccion3.push("NO APLICA")
             seccion3.push("NO APLICA")
+            seccion3.push("NO APLICA")
             return
         }
         else{
-            sec += 1 
+            sec += 1
         }
         document.getElementById("instruccion").innerHTML = "Antecedentes Gineco-obstétricos"
         document.getElementById("form").innerHTML = `
@@ -284,7 +439,7 @@ async function pasar(){
         <h2 class="texto" id="texto">¿Tus ciclos son regulares?</h2>
             <div class="btn-group d-flex align-items-center m-5" style="margin-top: 1.5rem!important;" role="group" aria-label="Basic radio toggle button group">
                 <input type="radio" class="btn-check" name="Crbtnradio" id="Crbtnradio1" autocomplete="off" onclick="activar('1', '1')" required value="1">
-                <label class="btn btn-warning" for="Crbtnradio1" id="Crbtn1">Si</label>                
+                <label class="btn btn-warning" for="Crbtnradio1" id="Crbtn1">Si</label>
                 <input type="radio" class="btn-check" name="Crbtnradio" id="Crbtnradio2" autocomplete="off" onclick="activar('1', '0')" value="0">
                 <label class="btn btn-warning" for="Crbtnradio2" id="Crbtn2">No</label>
             </div>
@@ -296,9 +451,9 @@ async function pasar(){
                 </div>
         </div>
         <h2 class="texto" id="texto">¿Usas anticonceptivos hormonales (pastillas, parches u otros) de forma regular?</h2>
-        <div class="btn-group d-flex align-items-center m-5" style="margin-top: 1.5rem!important;" role="group" aria-label="Basic radio toggle button group">    
+        <div class="btn-group d-flex align-items-center m-5" style="margin-top: 1.5rem!important;" role="group" aria-label="Basic radio toggle button group">
         <input type="radio" class="btn-check" name="Anbtnradio" id="Anbtnradio1" autocomplete="off" onclick="activar('4', '1')" required value="1">
-            <label class="btn btn-warning" for="Anbtnradio1" id="ALbtn1">Si</label>    
+            <label class="btn btn-warning" for="Anbtnradio1" id="ALbtn1">Si</label>
             <input type="radio" class="btn-check" name="Anbtnradio" id="Anbtnradio2" autocomplete="off" onclick="activar('4', '0')" value="0">
             <label class="btn btn-warning" for="Anbtnradio2" id="ALbtn2">No</label>
                 </div>
@@ -319,18 +474,7 @@ async function pasar(){
         return
     }
     console.log("HOLAAAA")
-    console.log(taba)
-    console.log(tabaA)
-    console.log(fump)
-    console.log(alco)
-    console.log(alcoMl)
-    console.log(alcoA)
-    console.log(susps)
-    console.log(suspsA)
-    console.log(aler)
-    console.log(alerE)
-    console.log(farm)
-    console.log(farmE)
+    console.log(seccion2)
     //console.log(mena)
     //console.log(menaA)
     // console.log("Valor del boton: ", valor)
@@ -368,7 +512,7 @@ async function pasar(){
         //             <label for="años" class="col-form-label col-3 d-flex justify-content-start" style="color: white;">¿Ciclos Regulares?</label>
         //             <input type="radio" class="btn-check" name="Mbtnradio" id="Mbtnradio1" autocomplete="off" onclick="activar('4', '1')" required value="1">
         //             <label class="btn btn-warning" for="Mbtnradio1" id="Mbtn1">Si</label>
-                
+
         //             <input type="radio" class="btn-check" name="Mbtnradio" id="Mbtnradio2" autocomplete="off" onclick="activar('4', '0')" value="0">
         //             <label class="btn btn-warning" for="Mbtnradio2" id="Mbtn2">No</label>
         //         </div>
@@ -403,9 +547,7 @@ async function pasar(){
         antiEsp = document.getElementById("Anesp").value
         seccion3.push(anti)
         seccion3.push(antiEsp)
-        console.log(mena)
-        console.log(menaA)
-        console.log(fechaUM)
+        console.log(seccion3)
         sec += 1
 
 
@@ -414,29 +556,76 @@ async function pasar(){
         document.getElementById("formulario").innerHTML = `
         <form onsubmit="enviar(); return false;" id="form">
         <div class="container mt-0 mb-5" style="padding: 0;">
-            <h2 class="texto" id="texto">Enfermedades Psicológicas</h2>
+            <h2 class="texto" id="texto">¿Padeces epilepsia?</h2>
             <div class="btn-group d-flex align-items-center m-5" style="margin-bottom: 1.5rem!important;" role="group" aria-label="Basic radio toggle button group">
-                <input type="radio" class="btn-check" name="Epsbtnradio" id="Epsbtnradio1" autocomplete="off" onclick="activar('1', '1')" required value="1">
-                <label class="btn btn-warning" for="Epsbtnradio1" id="Epsbtn1">Si</label>
-            
-                <input type="radio" class="btn-check" name="Epsbtnradio" id="Epsbtnradio2" autocomplete="off" onclick="activar('1', '0')" value="0">
-                <label class="btn btn-warning" for="Epsbtnradio2" id="Epsbtn2">No</label>
+                <input type="radio" class="btn-check" name="Epibtnradio" id="Epibtnradio1" autocomplete="off" onclick="activar('1', '1')" required value="1">
+                <label class="btn btn-warning" for="Epibtnradio1" id="Epibtn1">Si</label>
+
+                <input type="radio" class="btn-check" name="Epibtnradio" id="Epibtnradio2" autocomplete="off" onclick="activar('1', '0')" value="0">
+                <label class="btn btn-warning" for="Epibtnradio2" id="Epibtn2">No</label>
             </div>
-            <h2 class="texto" id="texto">Enfermedades Psiquiátricas</h2>
+            <h2 class="texto" id="PEpitexto" ">¿Tu mamá o papá lo padecen?</h2>
+            <div class="btn-group d-flex align-items-center m-5" style="margin-bottom: 1.5rem!important; role="group" aria-label="Basic radio toggle button group">
+                <input type="radio" class="btn-check" name="PEpibtnradio" id="PEpibtnradio1" autocomplete="off" onclick="activar('2', '1')" required value="1">
+                <label class="btn btn-warning" for="PEpibtnradio1" id="PEpibtn1">Si</label>
+
+                <input type="radio" class="btn-check" name="PEpibtnradio" id="PEpibtnradio2" autocomplete="off" onclick="activar('2', '0')" value="0">
+                <label class="btn btn-warning" for="PEpibtnradio2" id="PEpibtn2">No</label>
+            </div>
+            <h2 class="texto" id="texto">¿Padeces alguna enfermedad psicológica diagnosticada? (Ansiedad, Depresión, TDA, entre otras) </h2>
             <div class="btn-group d-flex align-items-center m-5" style="margin-bottom: 1.5rem!important;" role="group" aria-label="Basic radio toggle button group">
-                <input type="radio" class="btn-check" name="Epsqbtnradio" id="Epsqbtnradio1" autocomplete="off" onclick="activar('2', '1')" required value="1">
-                <label class="btn btn-warning" for="Epsqbtnradio1" id="Eppsbtn1">Si</label>
-            
-                <input type="radio" class="btn-check" name="Epsqbtnradio" id="Epsqbtnradio2" autocomplete="off" onclick="activar('2', '0')" value="0">
+                <input type="radio" class="btn-check" name="Epscbtnradio" id="Epscbtnradio1" autocomplete="off" onclick="activar('3', '1')" required value="1">
+                <label class="btn btn-warning" for="Epscbtnradio1" id="Epscbtn1">Si</label>
+
+                <input type="radio" class="btn-check" name="Epscbtnradio" id="Epscbtnradio2" autocomplete="off" onclick="activar('3', '0')" value="0">
+                <label class="btn btn-warning" for="Epscbtnradio2" id="Epscbtn2">No</label>
+            </div>
+            <div class="row align-items-center m-5 justify-content-center h-auto" style="margin-top: 0!important;">
+                <label for="EpscEs" class="col-form-label col-2 d-flex justify-content-center" style="color: white;">¿Cuál o cuáles? </label>
+                <div class="col h-auto">
+                    <input type="text" name="EpscEs" class="form-control" style="height: 20vw; margin-bottom: 0;"id="EpscEs" value="No" disabled>
+                </div>
+            </div>
+            <h2 class="texto" id="PEpsctexto" style="color: rgba(255, 255, 255, 0.735);">¿Tu mamá o papá lo padecen?</h2>
+            <div class="btn-group d-flex align-items-center m-5" style="margin-bottom: 1.5rem!important; role="group" aria-label="Basic radio toggle button group">
+                <input type="radio" class="btn-check" name="PEpscbtnradio" id="PEpscbtnradio1" autocomplete="off" onclick="activar('4', '1')" required value="1" disabled>
+                <label class="btn btn-warning" for="PEpscbtnradio1" id="PEpscbtn1">Si</label>
+
+                <input type="radio" class="btn-check" name="PEpscbtnradio" id="PEpscbtnradio2" autocomplete="off" onclick="activar('4', '0')" value="0" disabled>
+                <label class="btn btn-warning" for="PEpscbtnradio2" id="PEpscbtn2">No</label>
+            </div>
+            <h2 class="texto" id="PEpstexto">¿Padeces alguna enfermedad psiquiátrica diagnosticada? (Trastorno bipolar, Esquizofrenia, psicosis, entre otras) </h2>
+            <div class="btn-group d-flex align-items-center m-5" style="margin-bottom: 1.5rem!important;" role="group" aria-label="Basic radio toggle button group">
+                <input type="radio" class="btn-check" name="Epsqbtnradio" id="Epsqbtnradio1" autocomplete="off" onclick="activar('5', '1')" required value="1">
+                <label class="btn btn-warning" for="Epsqbtnradio1" id="Epsqsbtn1">Si</label>
+
+                <input type="radio" class="btn-check" name="Epsqbtnradio" id="Epsqbtnradio2" autocomplete="off" onclick="activar('5', '0')" value="0">
                 <label class="btn btn-warning" for="Epsqbtnradio2" id="Epsqbtn2">No</label>
             </div>
-            <h2 class="texto" id="texto">Enfermedades Neurológicas</h2>
+            <div class="row align-items-center m-5 justify-content-center h-auto" style="margin-top: 0!important;">
+                <label for="EpsqEs" class="col-form-label col-2 d-flex justify-content-center" style="color: white;">¿Cuál o cuáles? </label>
+                <div class="col h-auto">
+                    <input type="text" name="EpsqEs" class="form-control" style="height: 20vw; margin-bottom: 0;"id="EpsqEs" value="No" disabled>
+                </div>
+            </div>
+            <h2 class="texto" id="PEpsqtexto" style="color: rgba(255, 255, 255, 0.735);">¿Tu mamá o papá lo padecen?</h2>
+            <div class="btn-group d-flex align-items-center m-5" style="margin-bottom: 1.5rem!important; role="group" aria-label="Basic radio toggle button group">
+                <input type="radio" class="btn-check" name="PEpsqbtnradio" id="PEpsqbtnradio1" autocomplete="off" onclick="activar('6', '1')" required value="1" disabled>
+                <label class="btn btn-warning" for="PEpsqbtnradio1" id="PEpsqbtn1">Si</label>
+
+                <input type="radio" class="btn-check" name="PEpsqbtnradio" id="PEpsqbtnradio2" autocomplete="off" onclick="activar('6', '0')" value="0" disabled>
+                <label class="btn btn-warning" for="PEpsqbtnradio2" id="PEpsqbtn2">No</label>
+            </div>
+            <h2 class="texto" id="texto">4.	¿Alguna vez has tenido algún traumatismo craneoencefálico (golpes en la cabeza que te hayan causado inconsciencia)?</h2>
             <div class="btn-group d-flex align-items-center m-5" style="margin-bottom: 1.5rem!important;" role="group" aria-label="Basic radio toggle button group">
-                <input type="radio" class="btn-check" name="Enbtnradio" id="Enbtnradio1" autocomplete="off" onclick="activar('3', '1')" required value="1">
-                <label class="btn btn-warning" for="Enbtnradio1" id="Enbtn1">Si</label>
-            
-                <input type="radio" class="btn-check" name="Enbtnradio" id="Enbtnradio2" autocomplete="off" onclick="activar('3', '0')" value="0">
-                <label class="btn btn-warning" for="Enbtnradio2" id="Enbtn2">No</label>
+                <input type="radio" class="btn-check" name="Traumabtnradio" id="Traumabtnradio1" autocomplete="off" onclick="activar('7', '1')" required value="1">
+                <label class="btn btn-warning" for="Traumabtnradio1" id="Traumabtn1">Si</label>
+
+                <input type="radio" class="btn-check" name="Traumabtnradio" id="Traumabtnradio2" autocomplete="off" onclick="activar('7', '0')" value="0">
+                <label class="btn btn-warning" for="Traumabtnradio2" id="Traumabtn2">No</label>
+
+                <input type="radio" class="btn-check" name="Traumabtnradio" id="Traumabtnradio3" autocomplete="off" onclick="activar('7', '2')" value="2">
+                <label class="btn btn-warning" for="Traumabtnradio3" id="Traumabtn3">No lo sé</label>
             </div>
             <a id="link">
                 <button type="button" class="btn btn-light enviar" id="siguiente" disabled>Siguiente</button>
@@ -447,7 +636,7 @@ async function pasar(){
         </div>
         </form>`
         // var form = document.getElementById("form");
-        // function handleForm(event) { event.preventDefault(); } 
+        // function handleForm(event) { event.preventDefault(); }
         // form.addEventListener('submit', handleForm);
         btn = document.getElementById("siguiente");
         btn.innerHTML= "Aceptar";
@@ -478,30 +667,58 @@ async function pasar(){
 }
 
 async function enviar(){
-    enfps = document.getElementsByName("Epsbtnradio")
-    for (i = 0; i < enfps.length; i++) {
-        if (enfps[i].checked)
-            enfps = enfps[i].value
+    // enfps = document.getElementsByName("Epsbtnradio")
+    // for (i = 0; i < enfps.length; i++) {
+    //     if (enfps[i].checked)
+    //         enfps = enfps[i].value
+    // }
+    // seccion4.push(enfps)
+    // enfpsq = document.getElementsByName("Epsqbtnradio")
+    // for (i = 0; i < enfpsq.length; i++) {
+    //     if (enfpsq[i].checked)
+    //         enfpsq = enfpsq[i].value
+    // }
+    // seccion4.push(enfpsq)
+    // enfne = document.getElementsByName("Enbtnradio")
+    // for (i = 0; i < enfne.length; i++) {
+    //     if (enfne[i].checked)
+    //         enfne = enfne[i].value
+    // }
+    // seccion4.push(enfne)
+    epilepsia = document.querySelector('input[name="Epibtnradio"]:checked').value;
+    epilepsiaPadres = document.querySelector('input[name="PEpibtnradio"]:checked').value;
+    seccion4.push(epilepsia)
+    seccion4.push(epilepsiaPadres)
+    ePsi = document.querySelector('input[name="Epscbtnradio"]:checked').value;
+    ePsiEs = document.getElementById("EpscEs").value
+    if (ePsi == 1){
+        ePsiPadres = document.querySelector('input[name="PEpscbtnradio"]:checked').value;
     }
-    seccion4.push(enfps)
-    enfpsq = document.getElementsByName("Epsqbtnradio")
-    for (i = 0; i < enfpsq.length; i++) {
-        if (enfpsq[i].checked)
-            enfpsq = enfpsq[i].value
+    else{
+        ePsiPadres = 0
     }
-    seccion4.push(enfpsq)
-    enfne = document.getElementsByName("Enbtnradio")
-    for (i = 0; i < enfne.length; i++) {
-        if (enfne[i].checked)
-            enfne = enfne[i].value
+    seccion4.push(ePsi)
+    seccion4.push(ePsiEs)
+    seccion4.push(ePsiPadres)
+    ePsiq = document.querySelector('input[name="Epsqbtnradio"]:checked').value;
+    ePsiqEs = document.getElementById("EpsqEs").value
+    if (ePsiq == 1){
+        ePsiqPadres = document.querySelector('input[name="PEpsqbtnradio"]:checked').value;
     }
-    seccion4.push(enfne)
+    else{
+        ePsiqPadres = 0
+    }
+    seccion4.push(ePsiq)
+    seccion4.push(ePsiqEs)
+    seccion4.push(ePsiqPadres)
+    traumatismo = document.querySelector('input[name="Traumabtnradio"]:checked').value;
+    seccion4.push(traumatismo)
     var a = document.getElementById("link");
-    a.href = "/resultados"
-    document.getElementById("link").setAttribute("href", "resultados")
+    a.href = "/opciones"
+    document.getElementById("link").setAttribute("href", "opciones")
     const request = new XMLHttpRequest()
-    //request.open('POST', `/resultados/${JSON.stringify(seccion2)}/${JSON.stringify(seccion3)}/${JSON.stringify(seccion4)}`) //Version Local
-    request.open('POST', `/igt/resultados/${JSON.stringify(seccion2)}/${JSON.stringify(seccion3)}/${JSON.stringify(seccion4)}`) //Version En linea
+    request.open('POST', `/resultados/${JSON.stringify(seccion2)}/${JSON.stringify(seccion3)}/${JSON.stringify(seccion4)}`) //Version Local
+    //request.open('POST', `/igt/resultados/${JSON.stringify(seccion2)}/${JSON.stringify(seccion3)}/${JSON.stringify(seccion4)}`) //Version En linea
     request.send();
     // $.ajax({
     //     type:'POST',
