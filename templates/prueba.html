@@ -16,33 +16,43 @@
 
 <body style="background-color: #2D3264;" onload="onload({{band}})">
     <h1 class="titulo" style="text-align: center;">GoGamblerGo</h1>
-    <h2 class="subtitulo" id="instruccion">II. Antecedentes Personales no Patológicos</h2>
+    <h2 class="subtitulo" id="instruccion"> Antecedentes Personales no Patológicos</h2>
     <section style="margin: 0 20% 0 20%;" id="formulario">
         <form onsubmit="pasar()" action="#" id="form">
             <div class="container mt-0 mb-5" style="padding: 0;">
-                <h2 class="texto" id="texto">Tabaquismo</h2>
+                <h2 class="texto" id="texto">¿En el último año has consumido tabaco?</h2>
                 <div class="btn-group d-flex align-items-center m-5" style="margin-bottom: 1.5rem!important;" role="group" aria-label="Basic radio toggle button group">
                     <input type="radio" class="btn-check" name="Tbtnradio" id="Tbtnradio1" autocomplete="off" onclick="activar('1', '1')" required value="1">
                     <label class="btn btn-warning" for="Tbtnradio1" id="Tbtn1">Si</label>
-                
                     <input type="radio" class="btn-check" name="Tbtnradio" id="Tbtnradio2" autocomplete="off" onclick="activar('1', '0')" value="0">
                     <label class="btn btn-warning" for="Tbtnradio2" id="Tbtn2">No</label>
                 </div>
                 <div class="row align-items-center m-5 justify-content-center" style="margin-top: 0!important;">
-                    <label for="años" class="col-form-label col-3 d-flex justify-content-end" style="color: white;">Años de consumo o exposición</label>
                     <div class="col-3">
-                        <input type="number" name="Tanhos" class="form-control" style="height: 4vh; margin-bottom: 0;" id="Tanhos" value="0" disabled min="1" max="40">
+                        <input type="number" name="cigarroscantidad" class="form-control" style="height: 4vh; margin-bottom: 0;" id="Tcant" value="0" disabled min="1" max = "100">
+                    </div>
+                    <label for="cigarros" class="col-form-label col-6 d-flex justify-content-center" style="color: white;">cigarros por semana, años de exposición </label>
+                    <div class="col-3">
+                        <input type="number" name="anhoscigarros" class="form-control" style="height: 4vh; margin-bottom: 0;" id="Tanhos" value="0" disabled min="1" max="40">
                     </div>
                 </div>
-                <h2 class="texto" id="texto">Fumador pasivo</h2>
+                <h2 class="texto" id="texto">¿En el último año has consumido alcohol?</h2>
                 <div class="btn-group d-flex align-items-center m-5" style="margin-bottom: 1.5rem!important;" role="group" aria-label="Basic radio toggle button group">
-                    <input type="radio" class="btn-check" name="Fpbtnradio" id="Fpbtnradio1" autocomplete="off" onclick="activar('2', '1')" required value="1">
-                    <label class="btn btn-warning" for="Fpbtnradio1" id="Fpbtn1">Si</label>
-                
-                    <input type="radio" class="btn-check" name="Fpbtnradio" id="Fpbtnradio2" autocomplete="off" onclick="activar('2', '0')" value="0">
-                    <label class="btn btn-warning" for="Fpbtnradio2" id="Fpbtn2">No</label>
+                    <input type="radio" class="btn-check" name="Abtnradio" id="Abtnradio1" autocomplete="off" onclick="activar('2', '1')" required value="1">
+                    <label class="btn btn-warning" for="Abtnradio1" id="Abtn1">Si</label>
+                    <input type="radio" class="btn-check" name="Abtnradio" id="Abtnradio2" autocomplete="off" onclick="activar('2', '0')" value="0">
+                    <label class="btn btn-warning" for="Abtnradio2" id="Abtn2">No</label>
                 </div>
-                <h2 class="texto" id="texto">Alcoholismo</h2>
+                <div class="row align-items-center m-5 justify-content-center" style="margin-top: 0!important;">
+                    <div class="col-3">
+                        <input type="number" name="Aml" class="form-control" style="height: 4vh; margin-bottom: 0;" id="Aml" value="0" disabled min="1" max = "20000">
+                    </div>
+                    <label for="años" class="col-form-label col-6 d-flex justify-content-center" style="color: white;">ml. por mes, años de exposición</label>
+                    <div class="col-3">
+                        <input type="number" name="Aanhos" class="form-control" style="height: 4vh; margin-bottom: 0;" id="Aanhos" value="0" disabled min="1" max="40">
+                    </div>
+                </div>
+                <!-- <h2 class="texto" id="texto">Alcoholismo</h2>
                 <div class="btn-group d-flex align-items-center m-5" style="margin-bottom: 1.5rem!important;" role="group" aria-label="Basic radio toggle button group">
                     <input type="radio" class="btn-check" name="Abtnradio" id="Abtnradio1" autocomplete="off" onclick="activar('3', '1')" required value="1">
                     <label class="btn btn-warning" for="Abtnradio1" id="Abtn1">Si</label>
@@ -58,22 +68,25 @@
                     <div class="col-3">
                         <input type="number" name="Aanhos" class="form-control" style="height: 4vh; margin-bottom: 0;" id="Aanhos" value="0" disabled min="1" max="40">
                     </div>
-                </div>
-                <h2 class="texto" id="texto">Consumo de sustancias psicotrópicas</h2>
+                </div> -->
+                <h2 class="texto" id="texto">¿En el último año has consumido sustancias (marihuana, cocaína, entre otras)?</h2>
                 <div class="btn-group d-flex align-items-center m-5" style="margin-bottom: 1.5rem!important;" role="group" aria-label="Basic radio toggle button group">
-                    <input type="radio" class="btn-check" name="Psbtnradio" id="Psbtnradio1" autocomplete="off" onclick="activar('4', '1')" required value="1">
+                    <input type="radio" class="btn-check" name="Psbtnradio" id="Psbtnradio1" autocomplete="off" onclick="activar('3', '1')" required value="1">
                     <label class="btn btn-warning" for="Psbtnradio1" id="Psbtn1">Si</label>
                 
-                    <input type="radio" class="btn-check" name="Psbtnradio" id="Psbtnradio2" autocomplete="off" onclick="activar('4', '0')" value="0">
+                    <input type="radio" class="btn-check" name="Psbtnradio" id="Psbtnradio2" autocomplete="off" onclick="activar('3', '0')" value="0">
                     <label class="btn btn-warning" for="Psbtnradio2" id="Psbtn2">No</label>
                 </div>
                 <div class="row align-items-center m-5 justify-content-center" style="margin-top: 0!important;">
-                    <label for="años" class="col-form-label col-3 d-flex justify-content-end" style="color: white;">Años de consumo</label>
                     <div class="col-3">
-                        <input type="number" name="Psanhos" class="form-control" style="height: 4vh; margin-bottom: 0;" id="Psanhos" min="1" max="40" value="0" disabled>
+                        <input type="number" name="Pscant" class="form-control" style="height: 4vh; margin-bottom: 0;" id="Pscant" value="0" disabled min="1" max = "2000">
+                    </div>
+                    <label for="años" class="col-form-label col-6 d-flex justify-content-center" style="color: white;">dosis por mes, años de exposición</label>
+                    <div class="col-3">
+                        <input type="number" name="Psanhos" class="form-control" style="height: 4vh; margin-bottom: 0;" id="Psanhos" value="0" disabled min="1" max="40">
                     </div>
                 </div>
-                <h2 class="texto" id="texto">Alergias</h2>
+                <!-- <h2 class="texto" id="texto">Alergias</h2>
                 <div class="btn-group d-flex align-items-center m-5" style="margin-bottom: 1.5rem!important;" role="group" aria-label="Basic radio toggle button group">
                     <input type="radio" class="btn-check" name="ALbtnradio" id="ALbtnradio1" autocomplete="off" onclick="activar('5', '1')" required value="1">
                     <label class="btn btn-warning" for="ALbtnradio1" id="ALbtn1">Si</label>
@@ -100,7 +113,7 @@
                     <div class="col h-auto">
                         <input type="text" name="Fdesp" class="form-control" style="height: 20vw; margin-bottom: 0;"id="Fdesp" value="No" disabled>
                     </div>
-                </div>
+                </div> -->
                 <a id="link">
                     <button type="submit" class="btn btn-light enviar" id="siguiente">Siguiente</button>
                 </a>

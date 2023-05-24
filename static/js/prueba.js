@@ -17,31 +17,20 @@ async function activar(pregunta, valor){
             if (valor == "1"){
                 document.getElementById("Tanhos").disabled = false
                 document.getElementById("Tanhos").setAttribute("required", "")
+                document.getElementById("Tcant").disabled = false
+                document.getElementById("Tcant").setAttribute("required", "")
             }
             if (valor == "0"){
                 document.getElementById("Tanhos").disabled = true
                 document.getElementById("Tanhos").removeAttribute("required")
                 document.getElementById("Tanhos").value = "0"
+                document.getElementById("Tcant").disabled = true
+                document.getElementById("Tcant").removeAttribute("required")
+                document.getElementById("Tcant").value = "0"
 
             }
         }
-        // if (pregunta == "2"){
-        //     if (valor == "1"){
-        //         document.getElementById("Aml").disabled = false
-        //         document.getElementById("Aanhos").disabled = false
-        //         document.getElementById("Aml").setAttribute("required", "")
-        //         document.getElementById("Aanhos").setAttribute("required", "")
-        //     }
-        //     if (valor == "0"){
-        //         document.getElementById("Aml").disabled = true
-        //         document.getElementById("Aanhos").disabled = true
-        //         document.getElementById("Aml").removeAttribute("required")
-        //         document.getElementById("Aanhos").removeAttribute("required")
-        //         document.getElementById("Aml").value = ""
-        //         document.getElementById("Aanhos").value = ""
-        //     }
-        // }
-        if (pregunta == "3"){
+        if (pregunta == "2"){
             if (valor == "1"){
                 document.getElementById("Aml").disabled = false
                 document.getElementById("Aanhos").disabled = false
@@ -56,6 +45,22 @@ async function activar(pregunta, valor){
                 document.getElementById("Aml").value = "0"
                 document.getElementById("Aanhos").value = "0"
             }
+        }
+        if (pregunta == "3"){
+            if (valor == "1"){
+                document.getElementById("Pscant").disabled = false
+                document.getElementById("Psanhos").disabled = false
+                document.getElementById("Pscant").setAttribute("required", "")
+                document.getElementById("Psanhos").setAttribute("required", "")
+            }
+            if (valor == "0"){
+                document.getElementById("Pscant").disabled = true
+                document.getElementById("Psanhos").disabled = true
+                document.getElementById("Pscant").removeAttribute("required")
+                document.getElementById("Psanhos").removeAttribute("required")
+                document.getElementById("Pscant").value = "0"
+                document.getElementById("Psanhos").value = "0"
+            }
             // if (valor == "1"){
             //     document.getElementById("ALesp").disabled = false
             //     document.getElementById("ALesp").setAttribute("required", "")
@@ -67,45 +72,55 @@ async function activar(pregunta, valor){
             //     document.getElementById("ALesp").value = ""
             // }
         }
-        if (pregunta == "4"){
-            if (valor == "1"){
-                document.getElementById("Psanhos").disabled = false
-                document.getElementById("Psanhos").setAttribute("required", "")
+        // if (pregunta == "4"){
+        //     if (valor == "1"){
+        //         document.getElementById("Psanhos").disabled = false
+        //         document.getElementById("Psanhos").setAttribute("required", "")
 
-            }
-            if (valor == "0"){
-                document.getElementById("Psanhos").disabled = true
-                document.getElementById("Psanhos").removeAttribute("required")
-                document.getElementById("Psanhos").value = "0"
-            }
-        }
-        if (pregunta == "5"){
-            if (valor == "1"){
-                document.getElementById("ALesp").disabled = false
-                document.getElementById("ALesp").setAttribute("required", "")
+        //     }
+        //     if (valor == "0"){
+        //         document.getElementById("Psanhos").disabled = true
+        //         document.getElementById("Psanhos").removeAttribute("required")
+        //         document.getElementById("Psanhos").value = "0"
+        //     }
+        // }
+        // if (pregunta == "5"){
+        //     if (valor == "1"){
+        //         document.getElementById("ALesp").disabled = false
+        //         document.getElementById("ALesp").setAttribute("required", "")
 
-            }
-            if (valor == "0"){
-                document.getElementById("ALesp").disabled = true
-                document.getElementById("ALesp").removeAttribute("required")
-                document.getElementById("ALesp").value = "No"
-            }
-        }
-        if (pregunta == "6"){
-            if (valor == "1"){
-                document.getElementById("Fdesp").disabled = false
-                document.getElementById("Fdesp").setAttribute("required", "")
+        //     }
+        //     if (valor == "0"){
+        //         document.getElementById("ALesp").disabled = true
+        //         document.getElementById("ALesp").removeAttribute("required")
+        //         document.getElementById("ALesp").value = "No"
+        //     }
+        // }
+        // if (pregunta == "6"){
+        //     if (valor == "1"){
+        //         document.getElementById("Fdesp").disabled = false
+        //         document.getElementById("Fdesp").setAttribute("required", "")
 
-            }
-            if (valor == "0"){
-                document.getElementById("Fdesp").disabled = true
-                document.getElementById("Fdesp").removeAttribute("required")
-                document.getElementById("Fdesp").value = "No"
-            }
-        }
+        //     }
+        //     if (valor == "0"){
+        //         document.getElementById("Fdesp").disabled = true
+        //         document.getElementById("Fdesp").removeAttribute("required")
+        //         document.getElementById("Fdesp").value = "No"
+        //     }
+        // }
     }
     if (sec == 2){
-
+        if (pregunta == "4"){
+            if (valor == "1"){
+                document.getElementById("Anesp").disabled = false
+                document.getElementById("Anesp").setAttribute("required", "")
+            }
+            if (valor == "0"){
+                document.getElementById("Anesp").disabled = true
+                document.getElementById("Anesp").removeAttribute("required")
+                document.getElementById("Anesp").value = "No"
+            }
+        }
     }
     if (sec == 3){
         if (pregunta == "1"){
@@ -162,14 +177,16 @@ async function pasar(){
                 taba = taba[i].value
         }
         tabaA = document.getElementById("Tanhos").value
+        tabaC = document.getElementById("Tcant").value
         seccion2.push(taba)
+        seccion2.push(tabaC)
         seccion2.push(tabaA)
-        fump = document.getElementsByName("Fpbtnradio")
-        for (i=0; i < fump.length; i++) {
-            if (fump[i].checked)
-                fump = fump[i].value
-        }
-        seccion2.push(fump)
+        // fump = document.getElementsByName("Fpbtnradio")
+        // for (i=0; i < fump.length; i++) {
+        //     if (fump[i].checked)
+        //         fump = fump[i].value
+        // }
+        // seccion2.push(fump)
         alco = document.getElementsByName("Abtnradio")
         for (i = 0; i < alco.length; i++) {
             if (alco[i].checked)
@@ -185,25 +202,27 @@ async function pasar(){
             if (susps[i].checked)
                 susps = susps[i].value
         }
+        suspsD = document.getElementById("Pscant").value
         suspsA = document.getElementById("Psanhos").value
         seccion2.push(susps)
+        seccion2.push(suspsD)
         seccion2.push(suspsA)
-        aler = document.getElementsByName("ALbtnradio")
-        for (i = 0; i < aler.length; i++) {
-            if (aler[i].checked)
-                aler = aler[i].value
-        }
-        alerE = document.getElementById("ALesp").value
-        seccion2.push(aler)
-        seccion2.push(alerE)
-        farm = document.getElementsByName("Fdbtnradio")
-        for (i = 0; i < farm.length; i++) {
-            if (farm[i].checked)
-                farm = farm[i].value
-        }
-        farmE = document.getElementById("Fdesp").value
-        seccion2.push(farm)
-        seccion2.push(farmE)
+        // aler = document.getElementsByName("ALbtnradio")
+        // for (i = 0; i < aler.length; i++) {
+        //     if (aler[i].checked)
+        //         aler = aler[i].value
+        // }
+        // alerE = document.getElementById("ALesp").value
+        // seccion2.push(aler)
+        // seccion2.push(alerE)
+        // farm = document.getElementsByName("Fdbtnradio")
+        // for (i = 0; i < farm.length; i++) {
+        //     if (farm[i].checked)
+        //         farm = farm[i].value
+        // }
+        // farmE = document.getElementById("Fdesp").value
+        // seccion2.push(farm)
+        // seccion2.push(farmE)
         if (flag == 0 && sec == 1){
             sec += 2
             console.log("HOMBRE")
@@ -256,34 +275,47 @@ async function pasar(){
         document.getElementById("instruccion").innerHTML = "Antecedentes Gineco-obstétricos"
         document.getElementById("form").innerHTML = `
         <div class="container mt-0 mb-5" style="padding: 0;" id="cuestionarioMujer">
-            <h2 class="texto" id="texto">Menarquía</h2>
-                <div class="row align-items-center m-5 justify-content-center" style="margin-top: 0!important; margin-bottom: 0!important;">
-                    <div class="col-3">
-                        <input type="number" name="Manhos" class="form-control" style="height: 4vh; margin-bottom: 0;" id="Manhos" required min = "10" max = "16">
-                    </div>
-                    <label for="años" class="col-form-label col-3 d-flex justify-content-start" style="color: white;">Años</label>
-                </div>
-                <div class="btn-group d-flex align-items-center m-5" style="margin-top: 1.5rem!important;" role="group" aria-label="Basic radio toggle button group">
-                    <label for="años" class="col-form-label col-3 d-flex justify-content-start" style="color: white;">¿Ciclos Regulares?</label>
-                    <input type="radio" class="btn-check" name="Mbtnradio" id="Mbtnradio1" autocomplete="off" onclick="activar('1', '1')" required value="1">
-                    <label class="btn btn-warning" for="Mbtnradio1" id="Mbtn1">Si</label>
-                
-                    <input type="radio" class="btn-check" name="Mbtnradio" id="Mbtnradio2" autocomplete="off" onclick="activar('1', '0')" value="0">
-                    <label class="btn btn-warning" for="Mbtnradio2" id="Mbtn2">No</label>
-                </div>
-            <h2 class="texto" id="texto">Fecha de última menstruación</h2>
+        <h2 class="texto" id="texto">Fecha de última menstruación (día del primer sangrado)</h2>
             <div class="row align-items-center m-5 justify-content-center" style="margin-top: 0!important;">
                 <div class="col-5">
                     <input type="date" name="Fechaum" class="form-control" style="height: 4vh; margin-bottom: 0;" id="Fechaum" required>
                 </div>
             </div>
+        <h2 class="texto" id="texto">¿Tus ciclos son regulares?</h2>
+            <div class="btn-group d-flex align-items-center m-5" style="margin-top: 1.5rem!important;" role="group" aria-label="Basic radio toggle button group">
+                <input type="radio" class="btn-check" name="Crbtnradio" id="Crbtnradio1" autocomplete="off" onclick="activar('1', '1')" required value="1">
+                <label class="btn btn-warning" for="Crbtnradio1" id="Crbtn1">Si</label>                
+                <input type="radio" class="btn-check" name="Crbtnradio" id="Crbtnradio2" autocomplete="off" onclick="activar('1', '0')" value="0">
+                <label class="btn btn-warning" for="Crbtnradio2" id="Crbtn2">No</label>
+            </div>
+        </div>
+        <h2 class="texto" id="texto">¿Cuántos días dura tu ciclo menstrual?</h2>
+            <div class="row align-items-center m-5 justify-content-center" style="margin-top: 0!important;">
+                <div class="col-5">
+                    <input type="number" name="Dciclo" class="form-control" style="height: 4vh; margin-bottom: 0;" id="Dciclo" required value = "0" min = "1" max = "20">
+                </div>
+        </div>
+        <h2 class="texto" id="texto">¿Usas anticonceptivos hormonales (pastillas, parches u otros) de forma regular?</h2>
+        <div class="btn-group d-flex align-items-center m-5" style="margin-top: 1.5rem!important;" role="group" aria-label="Basic radio toggle button group">    
+        <input type="radio" class="btn-check" name="Anbtnradio" id="Anbtnradio1" autocomplete="off" onclick="activar('4', '1')" required value="1">
+            <label class="btn btn-warning" for="Anbtnradio1" id="ALbtn1">Si</label>    
+            <input type="radio" class="btn-check" name="Anbtnradio" id="Anbtnradio2" autocomplete="off" onclick="activar('4', '0')" value="0">
+            <label class="btn btn-warning" for="Anbtnradio2" id="ALbtn2">No</label>
+                </div>
+                <div class="row align-items-center m-5 justify-content-center h-auto" style="margin-top: 0!important;">
+                    <label for="años" class="col-form-label col-2 d-flex justify-content-center" style="color: white;">¿Cuáles? </label>
+                    <div class="col h-auto">
+                        <input type="text" name="Anesp" class="form-control" style="height: 20vw; margin-bottom: 0;"id="Anesp" value="No" disabled>
+                    </div>
+                </div>
+        </div>
             <a id="link">
                 <button type="submit" class="btn btn-light enviar" id="siguiente">Siguiente</button>
             </a>
             <div class="progress">
                 <div id="barra" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
             </div>
-        </div>`
+            `
         return
     }
     console.log("HOLAAAA")
@@ -353,20 +385,31 @@ async function pasar(){
         //         <div id="barra" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
         //     </div>
         // </div>`
-        mena = document.getElementsByName("Mbtnradio")
-        for (i = 0; i < mena.length; i++) {
-            if (mena[i].checked)
-                mena = mena[i].value
-        }
-        seccion3.push(mena)
-        menaA = document.getElementById("Manhos").value
-        seccion3.push(menaA)
         fechaUM = document.getElementById("Fechaum").value
         seccion3.push(fechaUM)
+        ciclo = document.getElementsByName("Crbtnradio")
+        for (i = 0; i < ciclo.length; i++) {
+            if (ciclo[i].checked)
+                ciclo = ciclo[i].value
+        }
+        seccion3.push(ciclo)
+        diasCiclo = document.getElementById("Dciclo").value
+        seccion3.push(diasCiclo)
+        anti = document.getElementsByName("Anbtnradio")
+        for (i = 0; i < anti.length; i++) {
+            if (anti[i].checked)
+                anti = anti[i].value
+        }
+        antiEsp = document.getElementById("Anesp").value
+        seccion3.push(anti)
+        seccion3.push(antiEsp)
         console.log(mena)
         console.log(menaA)
         console.log(fechaUM)
         sec += 1
+
+
+
         document.getElementById("instruccion").innerHTML = "Antecedentes personal Patológicos"
         document.getElementById("formulario").innerHTML = `
         <form onsubmit="enviar(); return false;" id="form">
