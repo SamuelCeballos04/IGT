@@ -15,7 +15,6 @@ import pandas as pd
 import pysftp
 import os
 
-
 database = conexion()
 
 app = Flask("__name__")
@@ -316,7 +315,8 @@ def usuariosInfoExcel():
     seed = list() 
     fExp = list() 
     idExp = list() 
- 
+    id2 = list()
+    nombre = list() 
     if database: 
         cursor = database.cursor() 
  
@@ -382,7 +382,14 @@ def usuariosInfoExcel():
  
                 continue 
             #cursor.execute("SELECT respuesta#>'{Enunciado %s}' FROM encuesta WHERE id_participante = %s ", (c, i[0] )) 
- 
+        cursor.execute("SELECT participante.id_participante, nombre, id_exp FROM participante, experimento WHERE participante.id_participante = experimento.id_participante")
+        data2 = cursor.fetchall()
+        for i in data2:
+            id2.append(i[0])
+            nombre.append(i[1])
+            idExp.append(i[2])
+        exportar2 = pd.DataFrame({"IdExperimento":idExp, "IdSujeto":id2, "NombreSujeto":nombre})
+        exportar2.to_csv("experimentos/experimentos.csv", encoding='utf-8-sig')
         '''exportar = pd.DataFrame({"ID":id, "Fecha":fecha, "Escolaridad":escolaridad, "Carrera": carrera, "Genero": genero, "Correo": correo, "Telefono": telefono, "DASS21 Depression": depresionL, "DASS21 Anxiety": ansiedadL, "DASS21 Stress": estresL, "Seed": seed}) 
         exportar.to_excel("experimentos\sujetos.xlsx", sheet_name="sujetos", index=False)''' 
 
@@ -937,6 +944,7 @@ def instrucciones():
 
 @app.route('/resultados', methods=['GET', 'POST'])
 def resultados():
+    return redirect(url_for('perfil'))
     user = session.get('my_var', "")
     password = session.get('my_var2', "")
     nombreUsuario = session.get('my_var3', None)
@@ -1028,7 +1036,7 @@ def resultados():
                 horariosExcel()
                 flash('Sus horarios se han registrado correctamente, por favor recarga esta página', 'success')
             return redirect(url_for('opciones'))
-        return render_template('resultados.html')
+         return render_template('resultados.html')
     
 @app.route('/recuperacion', methods=['GET', 'POST'])
 def recuperacion():
