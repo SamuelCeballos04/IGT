@@ -82,12 +82,11 @@ def enviarCorreoRegistro(destinatario):
     <body>
         <H1 style = "color: black; text-align: center;">¡Gracias por registrarte!</H1>
         <H2 style = "color: black; text-align: center;">Tu perfil fue creado correctamente</H2>
-        <p style = "color: black">A continuación, deberás seguir estos pasos para realizar tu encuesta: </p>
+        <p style = "color: black">A continuación, deberás seguir estos pasos: </p>
         <p style = "color: black">1. Inicia sesión con tu correo y contraseña previamente registrados. </p>
-        <p style = "color: black">2. En la ventana principal, pulsa el botón de <b>comenzar encuesta.</b></p>
+        <p style = "color: black">2. En la ventana principal, pulsa el botón <b>"Cuestionario".</b></p>
         <p style = "color: black">3. Lee las preguntas con atención y responde de acuerdo a lo que se solicite.</p>
-        <p style = "color: black">4. Al terminar tu encuesta, pulsa el botón "Salir" cuando se te pregunte si realmente quieres abandonar el sitio web.</p>
-        <p style = "color: black">5. Sigue las intrucciones de la ventana final.</p>
+        <p style = "color: black">4. Al terminar tu cuestionario, pulsa el botón "Aceptar".</p>
 
         <H3 style = "color: #FFCF40">Gracias por tu cooperación.</H3>
         <p>--</p>
@@ -526,11 +525,12 @@ def opciones():
                 cursor = database.cursor()
                 cursor.execute("SELECT * FROM encuesta WHERE id_participante=%s;", (data))
                 data_2 = cursor.fetchone()
-                print(data_2[3])
-                if data_2[3] == None:
-                    bandHorario = 1
                 if data_2 == None:
                     band = 0   
+                    bandHorario = 1
+                else:
+                    if data_2[3] == None:
+                        bandHorario = 1
         return render_template('opciones.html', name=my_var3, bandera = band, bandera2 = bandHorario)
 
 @app.route('/exportarExcel', defaults={'req_path': ''})  

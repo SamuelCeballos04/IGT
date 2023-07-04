@@ -38,7 +38,7 @@
         <form action="{{url_for('instrucciones')}}" method = 'get' class="formulario" autocomplete="off">
             
             <a href="{{url_for('instrucciones')}}" id="startL">
-                <button type="button" class="boton2" action="{{url_for('instrucciones')}}" id="start">Comenzar encuesta</button><br>
+                <button type="button" class="boton2" action="{{url_for('instrucciones')}}" id="start">Cuestionario</button><br>
             </a>
         </form>
         <a href = "{{url_for('perfil')}}" id="aprofile" >
@@ -46,7 +46,7 @@
         </a>
         <form action="{{url_for('resultados')}}" method = 'get' class="formulario">
             <a href = "{{url_for('resultados')}}" id="resultados" >
-                <button class = "boton2" id="btnHorario" type = "submit" action = "{{url_for('resultados')}}">Llenar horarios</button>
+                <button class = "boton2" id="btnHorario" type = "submit" action = "{{url_for('resultados')}}">Horarios</button>
             </a>
         </form>
         <a href="{{url_for('index')}}">
