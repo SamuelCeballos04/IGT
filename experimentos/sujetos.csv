@@ -1,3 +1,2 @@
-﻿,ID,Fecha,Escolaridad,Carrera,Genero,Correo,Telefono,DASS21 Depression,DASS21 Anxiety,DASS21 Stress,Seed
-0,23,1982-01-25,DOCTORADO,NO APLICABLE,Hombre,israel.roman@academicos.udg.mx,3322578921,0,0,0,Charm1
-1,18,1997-08-14,POSGRADO,INGENIERÍA BIOMEDICA ,Hombre,manuel_mico132@outlook.com,3841084410,12,12,9,configManuel
+﻿,ID,Fecha nac,Escolaridad,Carrera,Genero,Correo,Telefono,Tabaquismo,Cigarros por semana,Años de exposición,Alcoholismo,ml por mes,A単os de consumo,Consumo de sustancias psicotropicas,Dosis por mes,Última menstruación,Ciclos regulares,Días ciclo,Anticonceptivos,Especificar,Epilepsia,Epilepsia en padres,Enfermedades Psicologicas,Enfermedades psicológicas en padres,Enfermades Psiquiatricas,Enfermedades psiquiatricas en padres,Traumatismo craneoencefalico
+0,18,2000-05-05,MAESTRÍA,INBI,Hombre,marco@gmail.com,3322222222,Rara vez,1,Estres,Rara vez,1,Depresion,Rara vez,1,Rara vez,Rara vez,Rara vez,Rara vez,1,Rara vez,1,Rara vez,Ansiedad,Rara vez,Depresion,Rara vez

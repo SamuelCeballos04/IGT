@@ -249,19 +249,31 @@ $(document).ready(function () {
     $('.dataTables_length').addClass('bs-select');
   });
 
-// $(document).on('submit','#config-form',function(e){
-//     e.preventDefault()
-//     console.log('hello');
-//     let obtenerDato = document.getElementsByClassName("check");
-//     for (i=0; i < obtenerDato.length; i++){
-//         if (obtenerDato[i].checked){
-//             console.log("HOLA", obtenerDato[i].id)
-//         }
-//     }
-// });
+$(document).on('submit','#config-form',function(e){
+    e.preventDefault()
+});
 
 function guardar(participantes){
     let rango = document.getElementById("e1").value
-    console.log(rango)
-    console.log(participantes);
+    let fechaInicio = rango.substring(0, 10)
+    let fechaFin = rango.substring(13, 23)
+    $.ajax({
+        type:'POST',
+        url:'/opciones',
+        data:{
+            fechaInicioPy: JSON.stringify(fechaInicio),
+            fechaFinPy: JSON.stringify(fechaFin),
+            participantesPy: JSON.stringify(participantes)
+        },
+        success:function(response)
+        {
+            var base_url = window.location.origin;
+            base_url = base_url + "/opciones"
+            window.location = base_url
+            // $("#target").val('')
+            // $("#button").prop("disabled",true);
+            console.log(response[0])
+            // window.location.reload();
+        }
+    })
 }

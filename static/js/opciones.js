@@ -16,13 +16,14 @@ function onload(flag, flag2){
         document.getElementById("btnpr").setAttribute("class", "boton2")
     }
     if (flag2 == 0){
-        document.getElementById("btnHorario").setAttribute("disabled", "true")
-        document.getElementById("resultados").setAttribute("disabled", "true")
+        //document.getElementById("btnHorario").setAttribute("disabled", "true")
+        document.getElementById("resultados").setAttribute("href", "configuracion")
         //document.getElementById("btnHorario").disabled = true
         //document.getElementById("resultados").disabled = true
-        document.getElementById("btnHorario").innerHTML = "YA HAS REGISTRADO LOS HORARIOS"
-        document.getElementById("btnHorario").classList.remove('boton2')
-        document.getElementById("btnHorario").classList.add('boton4')
+        document.getElementById("btnHorario").setAttribute("action", "")
+        document.getElementById("btnHorario").innerHTML = "Administrar horarios"
+        document.getElementById("btnHorario").setAttribute("class", 'boton2')
+        //document.getElementById("btnHorario").classList.add('boton4')
     }
 }
 

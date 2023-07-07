@@ -471,8 +471,8 @@ def index():
     session['my_var'] = ''
     session['my_var2'] = ''
     session['my_var4'] = 0
-    return redirect(url_for('login'))
-    #return render_template('horariosconfig.html')
+    #return redirect(url_for('login'))
+    return render_template('login.html')
     # return redirect(url_for('configuracion'))
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -513,6 +513,33 @@ def login():
 
 @app.route('/opciones', methods=["GET", "POST"])
 def opciones():
+    if request.method == "POST":
+        fechaInicio = request.form.get("fechaInicioPy")
+        fechaFin = request.form.get("fechaFinPy")
+        participantes = request.form.get("participantesPy")
+        # print("fecha inicio: ", fechaInicio)
+        # print(type(fechaInicio))
+        # print("fecha inicio: ", fechaFin)
+        # print(type(fechaFin))
+        # print("fecha inicio: ", participantes)
+        # print(type(participantes))
+        participantes = participantes[1:-1]
+        # print("Participantes: ", participantes)
+        participantes = participantes + ","
+        ids = []
+        idString = ""
+        for i in participantes:
+            if i != ",":
+                idString += i
+            else:
+                ids.append(idString)
+                idString = ""
+        if database: 
+            cursor = database.cursor()
+            for id in ids:
+                cursor.execute("INSERT INTO participante (horariohab, fechainicio, fechafin) VALUES(true, %s, %s) where id_participante = %s ", (fechaInicio, fechaFin, id))
+                database.commit()
+
     user = session.get('my_var', "")
     password = session.get('my_var2', "")
     if user == '' and password == "":
@@ -912,6 +939,19 @@ def resultadoss(seccion2, seccion3, seccion4):
                 database.commit()
     return render_template('resultados.html')
 
+@app.route('/opciones/<string:fechaInicio>/<string:fechaFin>/<string:participantes>', methods=['GET', 'POST'])
+def opcioness(fechaInicio, fechaFin, participantes):
+    print("Fecha inicio: ", fechaInicio)
+    print("Fecha inicio: ", fechaFin)
+    print("Fecha inicio: ", participantes)
+    user = session.get('my_var', "")
+    password = session.get('my_var2', "")
+    if user == '' and password == "":
+        return redirect(url_for('login'))
+    else:
+        my_var3 = session.get('my_var3', "")  
+        return render_template('opciones.html')
+
 @app.route('/instrucciones', methods=['GET', 'POST']) 
 def instrucciones(): 
     user = session.get('my_var', "") 
@@ -1071,14 +1111,14 @@ def recuperacion():
 
 @app.route('/configuracion', methods = ['GET', 'POST'])
 def configuracion():
-    # if session['my_var4'] != 1:
-    #     return redirect(url_for('opciones'))
-    # else:
-    if database:
-        cursor = database.cursor()          #Falta excluir a los que ya se les asignó horario
-        cursor.execute("SELECT id_participante, nombre, apellidos FROM participante WHERE id_participante IN (SELECT id_participante FROM encuesta WHERE expterminado = 'false' AND cita IS NULL) order by id_participante;")
-        data = cursor.fetchall()
-        return render_template('horariosconfig.html', data = data)
+    if session['my_var4'] != 1:
+        return redirect(url_for('opciones'))
+    else:
+        if database:
+            cursor = database.cursor()          #Falta excluir a los que ya se les asignó horario
+            cursor.execute("SELECT id_participante, nombre, apellidos FROM participante WHERE id_participante IN (SELECT id_participante FROM encuesta WHERE expterminado = 'false' AND cita IS NULL) order by id_participante;")
+            data = cursor.fetchall()
+            return render_template('horariosconfig.html', data = data)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port='5000')
