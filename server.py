@@ -472,6 +472,8 @@ def index():
     session['my_var2'] = ''
     session['my_var4'] = 0
     return redirect(url_for('login'))
+    #return render_template('horariosconfig.html')
+    # return redirect(url_for('configuracion'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -1036,7 +1038,7 @@ def resultados():
                 horariosExcel()
                 flash('Sus horarios se han registrado correctamente, por favor recarga esta página', 'success')
             return redirect(url_for('opciones'))
-         return render_template('resultados.html')
+        return render_template('resultados.html')
     
 @app.route('/recuperacion', methods=['GET', 'POST'])
 def recuperacion():
@@ -1064,11 +1066,19 @@ def recuperacion():
                 return redirect(url_for('recuperacion'))
             elif band == False:
                 flash('Los datos ingresados son incorrectos', 'error')
-                return redirect(url_for('recuperacion'))
-                
-
-
+                return redirect(url_for('recuperacion'))            
     return render_template('recuperacion.html')
+
+@app.route('/configuracion', methods = ['GET', 'POST'])
+def configuracion():
+    # if session['my_var4'] != 1:
+    #     return redirect(url_for('opciones'))
+    # else:
+    if database:
+        cursor = database.cursor()          #Falta excluir a los que ya se les asignó horario
+        cursor.execute("SELECT id_participante, nombre, apellidos FROM participante WHERE id_participante IN (SELECT id_participante FROM encuesta WHERE expterminado = 'false' AND cita IS NULL) order by id_participante;")
+        data = cursor.fetchall()
+        return render_template('horariosconfig.html', data = data)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port='5000')

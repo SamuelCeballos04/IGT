@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>        
+    <script>
+        $(function() { $("#e1").daterangepicker(); });
+    </script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.13.1/sl-1.5.0/datatables.min.css"/>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.13.1/sl-1.5.0/datatables.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+
+    <title>Configuración Horarios</title>
+</head>
+{% with messages = get_flashed_messages(with_categories=true) %}
+   {% if messages %}
+      {% for category, message in messages %}
+      <div class="{{category}}">{{ message }}</div>
+      {% endfor %}
+   {% endif %}
+{% endwith %}
+<body>
+    <h1 class="titulo">GoGamblerGo</h1>
+    <div style="text-align: center;">
+        <label for="e1" style="font-size: medium; color: white;">Semana: </label>
+        <input class="rango" id="e1" name="e1">
+    </div>
+    <form id="config-form" autocomplete="off" method = "POST"> 
+    <div class="resultados" style="border-radius: 15px; padding: 40px 40px 40px 40px;">
+        <!-- <form id="config-form" autocomplete="off" method = "POST">   -->
+            <table class = "tableSujetos" id="tableS" style="width: 100%">
+                <script type="text/javascript">
+                    let sujetos = []
+                    function colorearCelda(rowID, checkID) {
+                        ch = document.getElementById(checkID)
+                        if (ch.checked != false){
+                            var celda = document.getElementById(rowID);
+                            celda.style.backgroundColor = "#d998295a"
+                            sujetos.push(parseInt(checkID.split('h').pop()))
+                        }
+                        else {
+                            var celda = document.getElementById(rowID);
+                            celda.style.backgroundColor = "transparent"
+                            for(var i = 0; i < sujetos.length; i++){ 
+                                if (sujetos[i] === parseInt(checkID.split('h').pop())) { 
+                                    sujetos.splice(i, 1); 
+                                }
+                            }
+                        }
+                    }
+                </script>
+                <thead>
+                    <th class = "celltitle"></th>
+                    <th class = "celltitle">ID</th>
+                    <th class = "celltitle">Nombre</th>
+                </thead>
+                {% for row in data %}
+                    <tr id="fila{{row[0]}}">
+                        <td class = "cell" id="cell{{row[0]}}"><a  onclick="colorearCelda('fila{{row[0]}}', 'ch{{row[0]}}')"><input id="ch{{row[0]}}" type = "checkbox" class = "check"></a></td>
+                        <td class = "cell">{{row[0]}}</td>
+                        <td class = "cell">{{row[1]}} {{row[2]}}</td>
+                    </tr>
+                {% endfor %}
+                <tr id="fila1">
+                    <td class = "cell" id="cell1"><a  onclick="colorearCelda('fila1', 'ch1')"><input id="ch1" type = "checkbox" class = "check"></a></td>
+                    <td class = "cell">1</td>
+                    <td class = "cell">Juan José Ortega Morales</td>
+                </tr>
+                <tr id="fila2">
+                    <td class = "cell" id="cell2"><a  onclick="colorearCelda('fila2', 'ch2')"><input id="ch2" type = "checkbox" class = "check"></a></td>
+                    <td class = "cell">1</td>
+                    <td class = "cell">Juan José Ortega Morales</td>
+                </tr>
+                <tr id="fila3">
+                    <td class = "cell" id="cell3"><a  onclick="colorearCelda('fila3', 'ch3')"><input id="ch3" type = "checkbox" class = "check"></a></td>
+                    <td class = "cell">1</td>
+                    <td class = "cell">Juan José Ortega Morales</td>
+                </tr>
+                <tr id="fila4">
+                    <td class = "cell" id="cell4"><a  onclick="colorearCelda('fila4', 'ch4')"><input id="ch4" type = "checkbox" class = "check"></a></td>
+                    <td class = "cell">1</td>
+                    <td class = "cell">Juan José Ortega Morales</td>
+                </tr>
+                <tr id="fila5">
+                    <td class = "cell" id="cell5"><a  onclick="colorearCelda('fila5', 'ch5')"><input id="ch5" type = "checkbox" class = "check"></a></td>
+                    <td class = "cell">1</td>
+                    <td class = "cell">Juan José Ortega Morales</td>
+                </tr>
+                <tr id="fila6">
+                    <td class = "cell" id="cell6"><a  onclick="colorearCelda('fila6', 'ch6')"><input id="ch6" type = "checkbox" class = "check"></a></td>
+                    <td class = "cell">1</td>
+                    <td class = "cell">Juan José Ortega Morales</td>
+                </tr>
+                <tr id="fila7">
+                    <td class = "cell" id="cell7"><a  onclick="colorearCelda('fila7', 'ch7')"><input id="ch7" type = "checkbox" class = "check"></a></td>
+                    <td class = "cell">1</td>
+                    <td class = "cell">Juan José Ortega Morales</td>
+                </tr>
+            </table>
+            <script type="text/javascript">
+                checks = $("input[type='checkbox']")
+                $(function() {
+                    checks.click(function(e) {
+                        $("#Envia").attr("disabled", !checks.is(":checked"));
+                    });
+                });        
+            </script>
+        <!-- </form> -->
+    </div>
+    <div class="d-flex flex-column justify-content-center align-items-center">
+        <button type="submit" class="botonEnv" id="Envia" onclick="guardar(sujetos)" disabled>Guardar</button>
+    </div>
+    </form>
+    <script src = "{{ url_for('static', filename='js/horariosconfig.js') }}"></script>
+</body>
+</html>

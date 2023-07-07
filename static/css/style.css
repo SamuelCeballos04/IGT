@@ -640,3 +640,136 @@ body {
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 }
+
+.rango {
+  background-color: rgba(37, 37, 37, .61);
+  border-radius: 5px;
+  border-color: #D99729;
+  border-style: solid;
+  width: 20%;
+  height: 35px;
+  margin-bottom: 10px;
+  color: white;
+}
+
+.daterangepicker {
+  border: 2px solid #D99729;
+  background-color: #2D3264;
+}
+
+.daterangepicker .drp-calendar .calendar-table .in-range{
+  background-color: #d998295a;
+}
+
+.daterangepicker .drp-calendar .calendar-table .active{
+  background-color: #D99729;
+}
+
+.daterangepicker .drp-buttons{
+  color: white;
+}
+
+.daterangepicker .cancelBtn{
+  background-color: #D99729;
+  color: white;
+  border-radius: 15px;
+  border-color: #D99729;
+  border-style: solid;
+}
+
+.daterangepicker .cancelBtn:hover{
+  background-color: #eebb2e;
+  color: #2C2C2C;
+  text-decoration: none;
+  box-shadow: 4px 4px;
+  font-weight: bold;
+}
+
+.daterangepicker .applyBtn{
+  background-color: #D99729;
+  color: white;
+  border-radius: 15px;
+  border-color: #D99729;
+  border-style: solid;
+}
+
+.daterangepicker .applyBtn:hover {
+  background-color: #eebb2e;
+  color: #2C2C2C;
+  text-decoration: none;
+  box-shadow: 4px 4px;
+  font-weight: bold;
+}
+
+.page-link {
+  color: #2D3264;
+  font-size: medium;
+  font-weight: bold;
+}
+
+.page-item.active .page-link {
+  background-color: #2D3264;
+  border-color: #2D3264;
+  font-size: medium;
+  font-weight: bold;
+}
+
+.page-item:last-child .page-link {
+  background-color: rgb(123, 119, 119);
+  color: white;
+  border-color: rgb(123, 119, 119);
+  font-size: medium;
+  font-weight: bold;
+}
+
+.page-item:last-child .page-link:hover {
+  background-color: #2C2C2CCF;
+  color: white;
+  text-decoration: none;
+  font-size: medium;
+  font-weight: bold;
+}
+
+.page-item:first-child .page-link {
+  background-color: rgb(123, 119, 119);
+  color: white;
+  border-color: rgb(123, 119, 119);
+  font-size: medium;
+  font-weight: bold;
+}
+
+.page-item:first-child .page-link:hover {
+  background-color: #2c2c2ccf;
+  color: white;
+  text-decoration: none;
+  font-size: medium;
+  font-weight: bold;
+}
+
+.page-item.disabled .page-link {
+  background-color: rgba(123, 119, 119, 0.400);
+  color: white;
+  border-color: rgba(123, 119, 119, 0.400);
+  font-size: medium;
+  font-weight: bold;
+}
+
+div.dataTables_wrapper div.dataTables_filter input {
+  background-color: #afa7a7b7;
+  border-radius: 5px;
+  border-color: #111546;
+  border-style: solid;
+  color: black;
+}
+
+.rango:focus {
+  outline: none;
+}
+
+div.dataTables_wrapper div.dataTables_length select {
+  background-color: #afa7a7b7;
+  border-radius: 5px;
+  border-color: #111546;
+  border-style: solid;
+  color: black;
+}
