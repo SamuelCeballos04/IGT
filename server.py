@@ -1113,6 +1113,7 @@ def recuperacion():
 
 @app.route('/configuracion', methods = ['GET', 'POST'])
 def configuracion():
+    print("AJJJJJJJJJJJJJJJJSDFSDIFJ")
     if session['my_var4'] != 1:
         return redirect(url_for('opciones'))
     else:
@@ -1120,7 +1121,7 @@ def configuracion():
             cursor = database.cursor()          #Falta excluir a los que ya se les asignó horario
             cursor.execute("SELECT id_participante, nombre, apellidos FROM participante WHERE id_participante IN (SELECT id_participante FROM encuesta WHERE expterminado = 'false' AND cita IS NULL) order by id_participante;")
             data = cursor.fetchall()
-            return render_template('horariosconfig.html', data = data)
+        return render_template('horariosconfig.html', data = data)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port='5000')

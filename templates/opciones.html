@@ -34,7 +34,7 @@
             </button>
         </a>
     </div> -->
-    <section class="middle">
+    <section class="middle" id="sex-ion">
         <form action="{{url_for('instrucciones')}}" method = 'get' class="formulario" autocomplete="off">
             
             <a href="{{url_for('instrucciones')}}" id="startL">
@@ -44,7 +44,7 @@
         <a href = "{{url_for('perfil')}}" id="aprofile" >
             <button class = "boton" id="btnpr" type = "submit" action = "{{url_for('perfil')}}">Perfil</button>
         </a>
-        <form action="{{url_for('resultados')}}" method = 'get' class="formulario">
+        <form action="{{url_for('resultados')}}" method = 'get' class="formulario" id="formFinal">
             <a href = "{{url_for('resultados')}}" id="resultados" >
                 <button class = "boton2" id="btnHorario" type = "submit" action = "{{url_for('resultados')}}">Horarios</button>
             </a>
