@@ -1,5 +1,10 @@
-function onload(flag, flag2){
+function onload(flag, flag2, flaghorario){
+    console.log("HOLA")
+    console.log(flag)
+    console.log(flag2)
+    console.log(flaghorario)
     if(flag == 1){
+        console.log(flaghorario)
         document.getElementById("start").disabled = true
         document.getElementById("startL").disabled = true
         document.getElementById("start").innerHTML = "GRACIAS POR REALIZAR LA ENCUESTA"
@@ -11,6 +16,14 @@ function onload(flag, flag2){
             //document.getElementById("btnHorario").disabled = true
             //document.getElementById("resultados").disabled = true
             document.getElementById("btnHorario").innerHTML = "YA HAS REGISTRADO LOS HORARIOS"
+            document.getElementById("btnHorario").classList.remove('boton2')
+            document.getElementById("btnHorario").classList.add('boton4')
+        }
+        if (flaghorario == 0){
+            console.log("BBBBBBBBBBBBB")
+            document.getElementById("btnHorario").setAttribute("disabled", "true")
+            document.getElementById("resultados").setAttribute("disabled", "true")
+            document.getElementById("btnHorario").innerHTML = "NO PUEDES REGISTRAR LOS HORARIOS"
             document.getElementById("btnHorario").classList.remove('boton2')
             document.getElementById("btnHorario").classList.add('boton4')
         }
@@ -39,6 +52,17 @@ function onload(flag, flag2){
         // document.getElementById("aprofile").setAttribute("href", "descargarArchivos")
         // document.getElementById("btnpr").innerHTML = "Descargar Horarios"
         // document.getElementById("btnpr").setAttribute("class", "boton2")
+    }
+    else{
+        console.log("AAAAAAAAAAAAAA")
+        if (flaghorario == 0){
+            console.log("BBBBBBBBBBBBB")
+            document.getElementById("btnHorario").setAttribute("disabled", "true")
+            document.getElementById("resultados").setAttribute("disabled", "true")
+            document.getElementById("btnHorario").innerHTML = "NO PUEDES REGISTRAR LOS HORARIOS"
+            document.getElementById("btnHorario").classList.remove('boton2')
+            document.getElementById("btnHorario").classList.add('boton4')
+        }
     }
 }
 

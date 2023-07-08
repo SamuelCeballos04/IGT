@@ -525,7 +525,18 @@ def opciones():
         # print(type(participantes))
         participantes = participantes[1:-1]
         fechaInicio = fechaInicio[1:-1]
-        fechaFin = fechaFin[1:-1]
+        fechaFin = fechaFin[1:-1] 
+        mesinicio = fechaInicio[0:2]
+        diainicio = fechaInicio[3:5]
+        anhoinicio = fechaInicio[6:10]
+        fechaInicio = anhoinicio + '/' + mesinicio + '/' + diainicio
+        mesfin = fechaFin[0:2]
+        diafin = fechaFin[3:5]
+        anhofin = fechaFin[6:10]
+        fechaFin = anhofin + '/' + mesfin + '/' + diafin
+        print("mes inicio", mesinicio)
+        print("dia inicio ", diainicio)
+        print("año inicio ", anhoinicio)
         # print("Participantes: ", participantes)
         participantes = participantes + ","
         ids = []
@@ -549,6 +560,19 @@ def opciones():
     else:
         my_var3 = session.get('my_var3', "")  
         if database:
+            bandHab = 0
+            cursor = database.cursor()
+            cursor.execute("SELECT horariohab FROM participante WHERE correo=%s AND contraseña = crypt(%s, contraseña);", (user, password))
+            horarioHab = cursor.fetchone()
+            print("HOrARIOHAB", type(horarioHab))
+            print("HORARIOHAB: ", horarioHab)
+            horarioHab = str(horarioHab)
+            print("HORARIOHAB: ", type(horarioHab))
+            if horarioHab == True:
+                bandHab = 1
+            else:
+                bandHab = 0
+            print("bandhab", bandHab)
             bandHorario = 0
             band = 1
             cursor = database.cursor()
@@ -569,7 +593,7 @@ def opciones():
                 else:
                     if data_2[3] == None:
                         bandHorario = 1
-        return render_template('opciones.html', name=my_var3, bandera = band, bandera2 = bandHorario)
+        return render_template('opciones.html', name=my_var3, bandera = band, bandera2 = bandHorario, banderaHorarioH = bandHab)
 
 @app.route('/exportarExcel', defaults={'req_path': ''})  
 @app.route('/exportarExcel/<path:req_path>')
@@ -1080,6 +1104,11 @@ def resultados():
                 horariosExcel()
                 flash('Sus horarios se han registrado correctamente, por favor recarga esta página', 'success')
             return redirect(url_for('opciones'))
+        if database:
+            cursor = database.cursor()
+            cursor.execute("SELECT fechainicio, fechafin FROM participante WHERE correo=%s AND contraseña=crypt(%s, contraseña);", (user, password))
+            data = cursor.fetchone()
+            print("Fechas: ", data)
         return render_template('resultados.html')
     
 @app.route('/recuperacion', methods=['GET', 'POST'])

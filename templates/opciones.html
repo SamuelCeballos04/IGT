@@ -13,6 +13,7 @@
     <script type="text/javascript">
         var flag = {{bandera}}
         var flag2 = {{bandera2}}
+        var flaghorario = {{banderaHorarioH}}
     </script>
     <title>Opciones</title>
 </head>
@@ -23,7 +24,7 @@
       {% endfor %}
    {% endif %}
 {% endwith %}
-<body onload="onload({{bandera}}, {{bandera2}})">
+<body onload="onload({{bandera}}, {{bandera2}}, {{banderaHorarioH}})">
     <h1 class="titulo">GoGamblerGo
         <div class = "usuario" style = "font-size: 70%" >¡Bienvenid@, {{name}}!</div>
     </h1>
