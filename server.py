@@ -524,6 +524,8 @@ def opciones():
         # print("fecha inicio: ", participantes)
         # print(type(participantes))
         participantes = participantes[1:-1]
+        fechaInicio = fechaInicio[1:-1]
+        fechaFin = fechaFin[1:-1]
         # print("Participantes: ", participantes)
         participantes = participantes + ","
         ids = []
@@ -537,7 +539,7 @@ def opciones():
         if database: 
             cursor = database.cursor()
             for id in ids:
-                cursor.execute("INSERT INTO participante (horariohab, fechainicio, fechafin) VALUES(true, %s, %s) where id_participante = %s ", (fechaInicio, fechaFin, id))
+                cursor.execute("UPDATE participante set horariohab = true, fechainicio = %s, fechafin = %s where id_participante = %s ", (fechaInicio, fechaFin, id))
                 database.commit()
 
     user = session.get('my_var', "")
