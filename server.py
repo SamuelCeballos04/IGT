@@ -487,16 +487,25 @@ def login():
             cursor = database.cursor()
             cursor.execute("SELECT * FROM participante WHERE correo=%s AND contraseña = crypt(%s, contraseña);", (user, password))
             data = cursor.fetchone()
+            if data != None: 
+                idPartiConsulta = data[0]
+                print("Parti: ", type(idPartiConsulta))
             cursor.execute("SELECT * FROM aplicador WHERE correo=%s AND contraseña = %s;", (user, password))
             data2 = cursor.fetchone()
+            if data2 != None: 
+                idApliConsulta = data2[0]
+                print("Apli: ", idApliConsulta)
             print("Data: ", data)
             print("Data2: ", data2)
+            
+            
             band = True
             if data == None and data2 == None:
                 band = False
             if band == True:    
                 session['my_var'] = user
                 session['my_var2'] = password
+                session['my_var5'] = idPartiConsulta
                 if data2 == None:
                     session['my_var3'] = data[1]
                     session['my_var4'] = 0
@@ -558,11 +567,12 @@ def opciones():
     if user == '' and password == "":
         return redirect(url_for('login'))
     else:
-        my_var3 = session.get('my_var3', "")  
+        my_var3 = session.get('my_var3', "") 
+        id = session.get('my_var5', "")  
         if database:
             bandHab = 0
             cursor = database.cursor()
-            cursor.execute("SELECT horariohab FROM participante WHERE correo=%s AND contraseña = crypt(%s, contraseña);", (user, password))
+            cursor.execute("SELECT horariohab FROM participante WHERE correo=%s AND id_participante = %s", (user, id))
             horarioHab = cursor.fetchone()
             print("HOrARIOHAB", type(horarioHab))
             print("HORARIOHAB: ", horarioHab)
@@ -1010,9 +1020,110 @@ def instrucciones():
                 return redirect(url_for('opciones'))
         return render_template('instrucciones.html')
 
+# @app.route('/resultados', methods=['GET', 'POST'])
+# def resultados():
+#     return redirect(url_for('perfil'))
+#     user = session.get('my_var', "")
+#     password = session.get('my_var2', "")
+#     nombreUsuario = session.get('my_var3', None)
+#     if user == '' and password == "":
+#         return redirect(url_for('login'))
+#     elif session['my_var4'] == 1:
+#         return redirect(url_for('opciones'))
+#     else:
+#         if database:
+#             cursor = database.cursor()
+#             cursor.execute("SELECT id_participante FROM participante WHERE correo=%s AND contraseña=crypt(%s, contraseña);", (user, password))
+#             data = cursor.fetchone()
+#             cursor = database.cursor()
+#             cursor.execute("SELECT * FROM encuesta WHERE id_participante=%s;", (data))
+#             data_2 = cursor.fetchone()
+#             band = True
+#             if data_2 != None:
+#                 band = False
+#                 if data_2[3] != None:
+#                     band = True
+#             if band == True:
+#                 return redirect(url_for('opciones'))
+#         print("Entra al else")
+#         if request.method == "POST":
+#             print("Sí entra al POST")
+#             dicc = request.form["diccInvisible"]
+#             print("Dias: ", dicc)
+#             dicc += ","
+#             print("Tipo de dicc: ", type(dicc))
+#             aux = ""
+#             lista = []
+#             dicc3 = dict()
+#             horasLunes = []
+#             horasMartes = []
+#             horasMiercoles = []
+#             horasJueves = []
+#             horasViernes = []
+#             for i in dicc:
+#                 if i != ",":
+#                     aux += i
+#                 else:
+#                     lista.append(aux)
+#                     aux = ""
+#             for obj in lista:
+#                 dia = obj[0]
+#                 print("Objeto: ", obj)
+#                 if dia == "L":
+#                     horas = obj[1:]
+#                     horasLunes.append(horas)
+#                     dicc3["Lunes"] = horasLunes
+#                 elif dia == "M":
+#                     horas = obj[1:]
+#                     horasMartes.append(horas)
+#                     dicc3["Martes"] = horasMartes
+#                 elif dia == "I":
+#                     horas = obj[1:]
+#                     horasMiercoles.append(horas)
+#                     dicc3["Miercoles"] = horasMiercoles
+#                 elif dia == "J":
+#                     horas = obj[1:]
+#                     horasJueves.append(horas)
+#                     dicc3["Jueves"] = horasJueves
+#                 elif dia == "V":
+#                     horas = obj[1:]
+#                     horasViernes.append(horas)
+#                     dicc3["Viernes"] = horasViernes
+#             if len(horasLunes) == 0:
+#                 dicc3["Lunes"] = []
+#             if len(horasMartes) == 0:
+#                 dicc3["Martes"] = []
+#             if len(horasMiercoles) == 0:
+#                 dicc3["Miercoles"] = []
+#             if len(horasJueves) == 0:
+#                 dicc3["Jueves"] = []
+#             if len(horasViernes) == 0:
+#                 dicc3["Viernes"] = []
+            
+#             diasJson = json.dumps(dicc3)
+#             print("Dias Json: ", diasJson)
+#             print("Dicc3: ", dicc3)
+#             funcionPDF(dicc3, nombreUsuario)
+#             enviarCorreoHorarios(user)
+#             if database:            
+#                 cursor = database.cursor()
+#                 cursor.execute("SELECT id_participante FROM participante WHERE correo=%s AND contraseña=crypt(%s, contraseña);", (user, password))
+#                 data = cursor.fetchone()
+#                 cursor.execute("UPDATE encuesta set cita = %s where id_participante=%s", (diasJson, data))
+#                 database.commit()
+#                 horariosExcel()
+#                 flash('Sus horarios se han registrado correctamente, por favor recarga esta página', 'success')
+#             return redirect(url_for('opciones'))
+#         if database:
+#             cursor = database.cursor()
+#             cursor.execute("SELECT fechainicio, fechafin FROM participante WHERE correo=%s AND contraseña=crypt(%s, contraseña);", (user, password))
+#             data = cursor.fetchone()
+#             print("Fechas: ", data)
+#         return render_template('resultados.html')
+
+
 @app.route('/resultados', methods=['GET', 'POST'])
 def resultados():
-    return redirect(url_for('perfil'))
     user = session.get('my_var', "")
     password = session.get('my_var2', "")
     nombreUsuario = session.get('my_var3', None)
@@ -1020,96 +1131,15 @@ def resultados():
         return redirect(url_for('login'))
     elif session['my_var4'] == 1:
         return redirect(url_for('opciones'))
-    else:
-        if database:
+    else: 
+        if database: 
             cursor = database.cursor()
-            cursor.execute("SELECT id_participante FROM participante WHERE correo=%s AND contraseña=crypt(%s, contraseña);", (user, password))
-            data = cursor.fetchone()
-            cursor = database.cursor()
-            cursor.execute("SELECT * FROM encuesta WHERE id_participante=%s;", (data))
-            data_2 = cursor.fetchone()
-            band = True
-            if data_2 != None:
-                band = False
-                if data_2[3] != None:
-                    band = True
-            if band == True:
-                return redirect(url_for('opciones'))
-        print("Entra al else")
-        if request.method == "POST":
-            print("Sí entra al POST")
-            dicc = request.form["diccInvisible"]
-            print("Dias: ", dicc)
-            dicc += ","
-            print("Tipo de dicc: ", type(dicc))
-            aux = ""
-            lista = []
-            dicc3 = dict()
-            horasLunes = []
-            horasMartes = []
-            horasMiercoles = []
-            horasJueves = []
-            horasViernes = []
-            for i in dicc:
-                if i != ",":
-                    aux += i
-                else:
-                    lista.append(aux)
-                    aux = ""
-            for obj in lista:
-                dia = obj[0]
-                print("Objeto: ", obj)
-                if dia == "L":
-                    horas = obj[1:]
-                    horasLunes.append(horas)
-                    dicc3["Lunes"] = horasLunes
-                elif dia == "M":
-                    horas = obj[1:]
-                    horasMartes.append(horas)
-                    dicc3["Martes"] = horasMartes
-                elif dia == "I":
-                    horas = obj[1:]
-                    horasMiercoles.append(horas)
-                    dicc3["Miercoles"] = horasMiercoles
-                elif dia == "J":
-                    horas = obj[1:]
-                    horasJueves.append(horas)
-                    dicc3["Jueves"] = horasJueves
-                elif dia == "V":
-                    horas = obj[1:]
-                    horasViernes.append(horas)
-                    dicc3["Viernes"] = horasViernes
-            if len(horasLunes) == 0:
-                dicc3["Lunes"] = []
-            if len(horasMartes) == 0:
-                dicc3["Martes"] = []
-            if len(horasMiercoles) == 0:
-                dicc3["Miercoles"] = []
-            if len(horasJueves) == 0:
-                dicc3["Jueves"] = []
-            if len(horasViernes) == 0:
-                dicc3["Viernes"] = []
-            
-            diasJson = json.dumps(dicc3)
-            print("Dias Json: ", diasJson)
-            print("Dicc3: ", dicc3)
-            funcionPDF(dicc3, nombreUsuario)
-            enviarCorreoHorarios(user)
-            if database:            
-                cursor = database.cursor()
-                cursor.execute("SELECT id_participante FROM participante WHERE correo=%s AND contraseña=crypt(%s, contraseña);", (user, password))
-                data = cursor.fetchone()
-                cursor.execute("UPDATE encuesta set cita = %s where id_participante=%s", (diasJson, data))
-                database.commit()
-                horariosExcel()
-                flash('Sus horarios se han registrado correctamente, por favor recarga esta página', 'success')
-            return redirect(url_for('opciones'))
-        if database:
-            cursor = database.cursor()
-            cursor.execute("SELECT fechainicio, fechafin FROM participante WHERE correo=%s AND contraseña=crypt(%s, contraseña);", (user, password))
-            data = cursor.fetchone()
-            print("Fechas: ", data)
-        return render_template('resultados.html')
+            id = session.get('my_var5', "")
+            cursor.execute("Select fechainicio, fechafin from participante where id_participante = %s", (id,))
+            fechas = cursor.fetchone()
+            print("Fechas: ", fechas)
+            print("Tipo fecha: ", type(fechas[0]))
+    return render_template('resultados.html')
     
 @app.route('/recuperacion', methods=['GET', 'POST'])
 def recuperacion():
