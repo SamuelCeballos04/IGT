@@ -14,6 +14,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
     <title>Horarios</title>
 </head>
+<script type="text/javascript">
+  var inicio = {{fechainicio}}
+  var fin = {{fechafin}}
+</script>
 {% with messages = get_flashed_messages(with_categories=true) %}
    {% if messages %}
       {% for category, message in messages %}
@@ -21,7 +25,7 @@
       {% endfor %}
    {% endif %}
 {% endwith %}
-<body>
+<body onload="onload({{fechainicio}}, {{fechafin}})">
     <h1 class="titulo">GoGamblerGo</h1>
         <div class="resultados">
             <h1 class="titulo2">¡Gracias por participar en la aplicación de esta prueba!</h1>
@@ -73,14 +77,20 @@
                   <script type="text/javascript">
                     function colorearCelda(cellID, checkID) {
                       ch = document.getElementById(checkID)
-                      if (ch.checked != false){
                         var celda = document.getElementById(cellID);
-                        celda.style.backgroundColor = "#eebb2e"
-                      }
-                      else {
-                        var celda = document.getElementById(cellID);
-                        celda.style.backgroundColor = "transparent"
-                      }
+                        celda.style.backgroundColor = "#01C929"
+                        var checkbox = document.getElementById(checkID);
+                        var menu = document.getElementById("menu"); 
+                        checkbox.addEventListener("change", function() {
+                          // Verifica si el checkbox está marcado o no
+                          if (this.checked) {
+                            // Si está marcado, muestra el menú
+                            menu.classList.remove("oculto");
+                          } else {
+                            // Si no está marcado, oculta el menú
+                            menu.classList.add("oculto");
+                          }
+                        }); 
                     }
                   </script>
                   <tr>
@@ -112,7 +122,11 @@
                     <td class = "cell" id="cell14"><a  onclick="colorearCelda('cell14', 'ch14')"><label for="ch14" id="la14">27</label><input id="ch14" type = "checkbox" class = "check" value = "J11" style="display: none;"></a></td>
                   </tr>
                   <tr>
-                    <td class = "cell" id="cell15"><a  onclick="colorearCelda('cell15', 'ch15')"><label for="ch15" id="la15">27</label><input id="ch15" type = "checkbox" class = "check" value = "V11" style="display: none;"></a></td>
+                    <td class = "cell" id="cell15"><a  onclick="colorearCelda('cell15', 'ch15')"><label for="ch15" id="la15">27</label><input id="ch15" type = "checkbox" class = "check" value = "V11" style="display: none;"><ul id="menu" class="oculto">
+                      <li>Opción 1</li>
+                      <li>Opción 2</li>
+                      <li>Opción 3</li>
+                    </ul></a></td>
                     <td class = "cell" id="cell16"><a  onclick="colorearCelda('cell16', 'ch16')"><label for="ch16" id="la16">27</label><input id="ch16" type = "checkbox" class = "check" value = "L12" style="display: none;"></a></td>
                     <td class = "cell" id="cell17"><a  onclick="colorearCelda('cell17', 'ch17')"><label for="ch17" id="la17">27</label><input id="ch17" type = "checkbox" class = "check" value = "M12" style="display: none;"></a></td>
                     <td class = "cell" id="cell18"><a  onclick="colorearCelda('cell18', 'ch18')"><label for="ch18" id="la18">27</label><input id="ch18" type = "checkbox" class = "check" value = "I12" style="display: none;"></a></td>

@@ -505,10 +505,11 @@ def login():
             if band == True:    
                 session['my_var'] = user
                 session['my_var2'] = password
-                session['my_var5'] = idPartiConsulta
+                
                 if data2 == None:
                     session['my_var3'] = data[1]
                     session['my_var4'] = 0
+                    session['my_var5'] = idPartiConsulta
                 else:
                     session['my_var4'] = 1
                     session['my_var3'] = data2[1]
@@ -570,39 +571,50 @@ def opciones():
         my_var3 = session.get('my_var3', "") 
         id = session.get('my_var5', "")  
         if database:
-            bandHab = 0
-            cursor = database.cursor()
-            cursor.execute("SELECT horariohab FROM participante WHERE correo=%s AND id_participante = %s", (user, id))
-            horarioHab = cursor.fetchone()
-            print("HOrARIOHAB", type(horarioHab))
-            print("HORARIOHAB: ", horarioHab)
-            horarioHab = str(horarioHab)
-            print("HORARIOHAB: ", type(horarioHab))
-            if horarioHab == True:
-                bandHab = 1
-            else:
-                bandHab = 0
-            print("bandhab", bandHab)
-            bandHorario = 0
+            banderaapli = session.get("my_var4", "")
             band = 1
-            cursor = database.cursor()
-            cursor.execute("SELECT id_participante FROM participante WHERE correo=%s AND contraseña = crypt(%s, contraseña);", (user, password))
-            data = cursor.fetchone()
-            if data == None:
-                cursor.execute("SELECT id_aplicador FROM aplicador WHERE correo=%s AND contraseña = %s;", (user, password))
-                data_3 = cursor.fetchone()
-                if data_3 != None:
-                    band = 2
-            else:
+            bandHorario = 0
+            bandHab = 0
+            if banderaapli != 1:
+                
                 cursor = database.cursor()
-                cursor.execute("SELECT * FROM encuesta WHERE id_participante=%s;", (data))
-                data_2 = cursor.fetchone()
-                if data_2 == None:
-                    band = 0   
-                    bandHorario = 1
+                cursor.execute("SELECT horariohab FROM participante WHERE correo=%s AND id_participante = %s", (user, id))
+                horarioHab = cursor.fetchone()
+                print("HOrARIOHAB", type(horarioHab))
+                print("HORARIOHAB: ", horarioHab)
+                print(horarioHab[0])
+                if horarioHab[0] == True:
+                    bandHab = 1
                 else:
-                    if data_2[3] == None:
+                    bandHab = 0
+                print("bandhab", bandHab)
+                
+                
+                cursor = database.cursor()
+                id = session.get("my_var5", "")
+                print("IDDDDD: ", id)
+                cursor.execute("SELECT id_participante FROM participante WHERE correo=%s AND contraseña = crypt(%s, contraseña);", (user, password))
+                data = cursor.fetchone()
+                print("ID: ", data)
+                print("ID: ", type(data))
+                if data == None:
+                    cursor.execute("SELECT id_aplicador FROM aplicador WHERE correo=%s AND contraseña = %s;", (user, password))
+                    data_3 = cursor.fetchone()
+                    if data_3 != None:
+                        band = 2
+                else:
+                    cursor = database.cursor()
+                    cursor.execute("SELECT * FROM encuesta WHERE id_participante=%s;", (data))
+                    data_2 = cursor.fetchone()
+                    print("ENCUESTA: ", data_2)
+                    if data_2 == None:
+                        band = 0   
                         bandHorario = 1
+                    else:
+                        if data_2[3] == None:
+                            bandHorario = 1
+            else:
+                band = 2
         return render_template('opciones.html', name=my_var3, bandera = band, bandera2 = bandHorario, banderaHorarioH = bandHab)
 
 @app.route('/exportarExcel', defaults={'req_path': ''})  
@@ -893,6 +905,7 @@ def editarDatos():
 
 @app.route('/resultados/<string:seccion2>/<string:seccion3>/<string:seccion4>', methods=['GET', 'POST'])
 def resultadoss(seccion2, seccion3, seccion4):
+
     user = session.get('my_var', "")
     password = session.get('my_var2', "")
     if user == '' and password == "":
@@ -900,12 +913,13 @@ def resultadoss(seccion2, seccion3, seccion4):
     elif session['my_var4'] == 1:
         return redirect(url_for('opciones'))
     else:
-
         if database:
+            print("DATABASE")
             cursor = database.cursor()
             cursor.execute("SELECT sexo FROM participante WHERE correo=%s AND contraseña=crypt(%s, contraseña);", (user, password)) 
             boolsexo = cursor.fetchone() 
             boolsexo = boolsexo[0]
+        print("VALOREEEEEEEEEES")
         valores2 = json.loads(seccion2)
         valores3 = json.loads(seccion3)
         valores4 = json.loads(seccion4)
@@ -1137,9 +1151,13 @@ def resultados():
             id = session.get('my_var5', "")
             cursor.execute("Select fechainicio, fechafin from participante where id_participante = %s", (id,))
             fechas = cursor.fetchone()
-            print("Fechas: ", fechas)
-            print("Tipo fecha: ", type(fechas[0]))
-    return render_template('resultados.html')
+            print("Fechas: ", fechas[0])
+            print("Fechas: ", fechas[1])
+            fechainiciostring = str(fechas[0])
+            fechafinstring = str(fechas[1])
+            fechainiciostring = json.dumps(fechainiciostring)
+            fechafinstring = json.dumps(fechafinstring)
+    return render_template('resultados.html', fechainicio = fechainiciostring, fechafin = fechafinstring)
     
 @app.route('/recuperacion', methods=['GET', 'POST'])
 def recuperacion():

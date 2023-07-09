@@ -773,3 +773,18 @@ div.dataTables_wrapper div.dataTables_length select {
   border-style: solid;
   color: black;
 }
+
+.modal-dialog {
+  position: absolute;
+  top: 50px;
+  right: 100px;
+  bottom: 0;
+  left: 0;
+  z-index: 10040;
+  overflow: auto;
+  overflow-y: auto;
+}
+
+.oculto {
+  display: none;
+}
