@@ -524,44 +524,56 @@ def login():
 @app.route('/opciones', methods=["GET", "POST"])
 def opciones():
     if request.method == "POST":
-        fechaInicio = request.form.get("fechaInicioPy")
-        fechaFin = request.form.get("fechaFinPy")
-        participantes = request.form.get("participantesPy")
-        # print("fecha inicio: ", fechaInicio)
-        # print(type(fechaInicio))
-        # print("fecha inicio: ", fechaFin)
-        # print(type(fechaFin))
-        # print("fecha inicio: ", participantes)
-        # print(type(participantes))
-        participantes = participantes[1:-1]
-        fechaInicio = fechaInicio[1:-1]
-        fechaFin = fechaFin[1:-1] 
-        mesinicio = fechaInicio[0:2]
-        diainicio = fechaInicio[3:5]
-        anhoinicio = fechaInicio[6:10]
-        fechaInicio = anhoinicio + '/' + mesinicio + '/' + diainicio
-        mesfin = fechaFin[0:2]
-        diafin = fechaFin[3:5]
-        anhofin = fechaFin[6:10]
-        fechaFin = anhofin + '/' + mesfin + '/' + diafin
-        print("mes inicio", mesinicio)
-        print("dia inicio ", diainicio)
-        print("año inicio ", anhoinicio)
-        # print("Participantes: ", participantes)
-        participantes = participantes + ","
-        ids = []
-        idString = ""
-        for i in participantes:
-            if i != ",":
-                idString += i
-            else:
-                ids.append(idString)
-                idString = ""
-        if database: 
-            cursor = database.cursor()
-            for id in ids:
-                cursor.execute("UPDATE participante set horariohab = true, fechainicio = %s, fechafin = %s where id_participante = %s ", (fechaInicio, fechaFin, id))
+        bandera = request.form.get("bandera")
+        if bandera == "1":
+            fechaInicio = request.form.get("fechaInicioPy")
+            fechaFin = request.form.get("fechaFinPy")
+            participantes = request.form.get("participantesPy")
+            # print("fecha inicio: ", fechaInicio)
+            # print(type(fechaInicio))
+            # print("fecha inicio: ", fechaFin)
+            # print(type(fechaFin))
+            # print("fecha inicio: ", participantes)
+            # print(type(participantes))
+            participantes = participantes[1:-1]
+            fechaInicio = fechaInicio[1:-1]
+            fechaFin = fechaFin[1:-1] 
+            mesinicio = fechaInicio[0:2]
+            diainicio = fechaInicio[3:5]
+            anhoinicio = fechaInicio[6:10]
+            fechaInicio = anhoinicio + '/' + mesinicio + '/' + diainicio
+            mesfin = fechaFin[0:2]
+            diafin = fechaFin[3:5]
+            anhofin = fechaFin[6:10]
+            fechaFin = anhofin + '/' + mesfin + '/' + diafin
+            print("mes inicio", mesinicio)
+            print("dia inicio ", diainicio)
+            print("año inicio ", anhoinicio)
+            # print("Participantes: ", participantes)
+            participantes = participantes + ","
+            ids = []
+            idString = ""
+            for i in participantes:
+                if i != ",":
+                    idString += i
+                else:
+                    ids.append(idString)
+                    idString = ""
+            if database: 
+                cursor = database.cursor()
+                for id in ids:
+                    cursor.execute("UPDATE participante set horariohab = true, fechainicio = %s, fechafin = %s where id_participante = %s ", (fechaInicio, fechaFin, id))
+                    database.commit()
+        else:
+            id = session.get("my_var5", "")
+            horarios = request.form.get("horariosPy")
+            # horarios = json.dumps(horarios)
+            print("TIPOOOOOOOOOOOOOOOOOOOO", horarios)
+            if database:
+                cursor = database.cursor()
+                cursor.execute("UPDATE encuesta set cita = %s where id_participante = %s", (horarios,id))
                 database.commit()
+            return("True")
 
     user = session.get('my_var', "")
     password = session.get('my_var2', "")

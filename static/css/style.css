@@ -788,3 +788,9 @@ div.dataTables_wrapper div.dataTables_length select {
 .oculto {
   display: none;
 }
+
+.celltitle2 {
+  background-color: #afa7a7b7;
+  text-align: center;
+  border: 2px solid #111546;
+}

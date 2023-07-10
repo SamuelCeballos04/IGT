@@ -261,6 +261,7 @@ function guardar(participantes){
         type:'POST',
         url:'/opciones',
         data:{
+            bandera: JSON.stringify("1"),
             fechaInicioPy: JSON.stringify(fechaInicio),
             fechaFinPy: JSON.stringify(fechaFin),
             participantesPy: JSON.stringify(participantes)

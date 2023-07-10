@@ -6,6 +6,7 @@ let anhofechainicio = ""
 let diafechafin = ""
 let mesfechafin = ""
 let anhofechafin = ""
+let arreglohorarios = []
 
 async function valores(){
     lista = []
@@ -176,4 +177,150 @@ function onload(inicio, fin){
 
     // document.write("</tr></table>")
 
+}
+
+async function cerrar(){
+    var band = 0
+    var menu = document.getElementById("menu"); 
+    var celda = document.getElementById("celdaSel").innerHTML
+    console.log("CELDA: ", celda)
+    menu.classList.add("oculto");
+    for (i=43; i<=53; i++){
+        if(document.getElementById("ch"+String(i)).checked == true){
+            band = 1
+        }
+        document.getElementById("ch"+String(i)).checked = false         
+    }
+    if (band == 0){
+        document.getElementById(celda).style.backgroundColor = "#eebb2e"
+    }
+    bandcolor = 0
+    for (i = 1; i <= 42; i++){
+        let celda = document.getElementById("cell"+String(i))
+        if (celda.style.backgroundColor == "rgb(238, 187, 46)"){
+            document.getElementById("Envia").disabled = true
+            bandcolor = 1
+            console.log("SUCCESS")
+        }
+    }
+    if (bandcolor == 0){
+        console.log("ACTIVADO CERRAR")
+        document.getElementById("Envia").disabled = false
+    }
+}
+
+async function closemodal(){
+    var horas = []
+    var menu = document.getElementById("menu"); 
+    menu.classList.add("oculto");
+    for (i=43; i<=53; i++){
+        document.getElementById("ch"+String(i)).checked = false         
+    }
+    let dia = document.getElementById("dia").innerHTML
+    let mes = document.getElementById("mes").innerHTML
+    mes = parseInt(mes)
+    if (mes < 10){
+        mes = String(mes)
+        mes = "0" + mes
+    }
+    else{
+        mes = String(mes)
+    }
+    var hora = "NA"
+    let cita = dia + mes + hora
+    horas.push(cita)
+    horas = JSON.stringify(horas)
+    arreglohorarios.push(horas)
+    console.log(arreglohorarios)
+}
+
+async function guardarhorario(){
+    var horasdicc = {id: "", valor: ""}
+    var horas = []
+    var menu = document.getElementById("menu"); 
+    menu.classList.add("oculto");
+    let dia = document.getElementById("dia").innerHTML
+    console.log("Dia: ", dia)
+    let mes = document.getElementById("mes").innerHTML
+    mes = parseInt(mes)
+    if (mes < 10){
+        mes = String(mes)
+        mes = "0" + mes
+    }
+    else{
+        mes = String(mes)
+    }
+    for (i=43; i<=53; i++){
+        if(document.getElementById("ch"+String(i)).checked == true){    
+            var hora = document.getElementById("la"+String(i)).innerHTML
+            let cita = hora
+            horas.push(cita)
+        }
+        document.getElementById("ch"+String(i)).checked = false         
+    }
+    bandcolor = 0
+    for (i = 1; i <= 42; i++){
+        let celda = document.getElementById("cell"+String(i))
+        console.log(celda.style.backgroundColor)
+        if (celda.style.backgroundColor == "rgb(238, 187, 46)"){
+            document.getElementById("Envia").disabled = true
+            bandcolor = 1
+            console.log("ERRRRRRRRRRRRRRRRRRRRRRRRRRROR")
+        }
+    }
+    if (bandcolor == 0){
+        console.log("ACTIVADO GUARDAR")
+        document.getElementById("Envia").disabled = false
+    }
+    let clave = dia + mes
+    for (let index = 0; index < arreglohorarios.length; index++){
+        if (arreglohorarios[index].id == clave){
+            arreglohorarios[index].valor = horas
+            console.log(arreglohorarios)
+            return
+        }
+    }
+    horasdicc.id = dia + mes
+    horasdicc.valor = horas
+    arreglohorarios.push(horasdicc)
+    console.log(arreglohorarios)
+    // bandcolor = 0
+    // for (i = 1; i <= 42; i++){
+    //     let celda = document.getElementById("cell"+String(i))
+    //     console.log(celda.style.backgroundColor)
+    //     if (celda.style.backgroundColor == "rgb(238, 187, 46)"){
+    //         document.getElementById("Envia").disabled = true
+    //         bandcolor = 1
+    //         console.log("ERRRRRRRRRRRRRRRRRRRRRRRRRRROR")
+    //     }
+    // }
+    // if (bandcolor == 0){
+    //     console.log("ACTIVADO GUARDAR")
+    //     document.getElementById("Envia").disabled = false
+    // }
+}
+
+// $(document).on('submit','#formulario',function(e){
+//     e.preventDefault()
+// });
+
+function enviarHorario(){
+    $.ajax({
+        type:'POST',
+        url:'/opciones',
+        data:{
+            bandera: JSON.stringify("0"),
+            horariosPy: JSON.stringify(arreglohorarios)
+        },
+        success:function(response)
+        {
+            var base_url = window.location.origin;
+            base_url = base_url + "/opciones"
+            window.location = base_url
+            // $("#target").val('')
+            // $("#button").prop("disabled",true);
+            console.log(response[0])
+            // window.location.reload();
+        }
+    })
 }
