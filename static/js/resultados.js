@@ -112,6 +112,8 @@ async function valores(){
 // });
 
 function onload(inicio, fin){
+    
+
     console.log("FUNCION")
     console.log("INICIO: ", inicio)
     console.log("FIN: ", fin)
@@ -149,6 +151,47 @@ function onload(inicio, fin){
 
     var dy=1; // day variable for adjustment of starting date.
     // document.write ("<table><tr><td>Su</td><td>Mon</td><td>Tue</td><td>Wed</td><td>Thu</td><td>Fri</td><td>Sat</td>");
+    
+    var mesText = ""
+      if (month+1 == 1){
+          mesText = "Enero"
+      }
+      else if (month+1 == 2){
+          mesText = "Febrero"
+      }
+      else if (month+1 == 3){
+          mesText = "Marzo"
+      }
+      else if (month+1 == 4){
+          mesText = "Abril"
+      }
+      else if (month+1 == 5){
+          mesText = "Mayo"
+      }
+      else if (month+1 == 6){
+          mesText = "Junio"
+      }
+      else if (month+1 == 7){
+          mesText = "Julio"
+      }
+      else if (month+1 == 8){
+          mesText = "Agosto"
+      }
+      else if (month+1 == 9){
+          mesText = "Septiembre"
+      }
+      else if (month+1 == 10){
+          mesText = "Octubre"
+      }
+      else if (month+1 == 11){
+          mesText = "Noviembre"
+      }
+      else if (month+1 == 12){
+          mesText = "Diciembre"
+      }
+
+    document.getElementById("mesActual").innerHTML = mesText
+
     console.log(typeof dy)
     for(i=1;i<=42;i++){
     let cellID = "cell" + String(i)

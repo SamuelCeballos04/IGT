@@ -73,73 +73,8 @@
                   </tr>
                 </table>   
                  -->
+                <h2 id="mesActual" style="text-align: center;"></h2>
                 <table class = "table">
-                  <script type="text/javascript">
-                    // function colorearCelda(cellID, checkID, labelID) {
-                    //   ch = document.getElementById(checkID)
-                    //     var dia = document.getElementById(labelID).innerHTML
-                    //     console.log("DIA: ", dia)
-                    //     document.getElementById("dia").innerHTML = dia
-                    //     var dt= new Date();
-                    //     var month=dt.getMonth();
-                    //     month = month + 1
-                    //     document.getElementById("mes").innerHTML = month
-                    //     var mesText = ""
-                    //     if (month == 1){
-                    //         mesText = "Enero"
-                    //     }
-                    //     else if (month == 2){
-                    //         mesText = "Febrero"
-                    //     }
-                    //     else if (month == 3){
-                    //         mesText = "Marzo"
-                    //     }
-                    //     else if (month == 4){
-                    //         mesText = "Abril"
-                    //     }
-                    //     else if (month == 5){
-                    //         mesText = "Mayo"
-                    //     }
-                    //     else if (month == 6){
-                    //         mesText = "Junio"
-                    //     }
-                    //     else if (month == 7){
-                    //         mesText = "Julio"
-                    //     }
-                    //     else if (month == 8){
-                    //         mesText = "Agosto"
-                    //     }
-                    //     else if (month == 9){
-                    //         mesText = "Septiembre"
-                    //     }
-                    //     else if (month == 10){
-                    //         mesText = "Octubre"
-                    //     }
-                    //     else if (month == 11){
-                    //         mesText = "Noviembre"
-                    //     }
-                    //     else if (month == 12){
-                    //         mesText = "Diciembre"
-                    //     }
-                    //     console.log("Mes: ", mesText)
-                    //     document.getElementById("diasel").innerHTML = dia + " de " + mesText
-                    //     document.getElementById("celdaSel").innerHTML = cellID
-                    //     var checkbox = document.getElementById(checkID);
-                    //     var menu = document.getElementById("menu"); 
-                    //     checkbox.addEventListener("change", function() {
-                    //       // Verifica si el checkbox está marcado o no
-                    //       if (this.checked) {
-                    //         // Si está marcado, muestra el menú
-                    //         menu.classList.remove("oculto");
-                    //         var celda = document.getElementById(cellID);
-                    //       celda.style.backgroundColor = "#01C929"
-                    //       } else {
-                    //         // Si no está marcado, oculta el menú
-                    //         menu.classList.add("oculto");
-                    //       }
-                    //     }); 
-                    // }
-                  </script>
                   <tr>
                       <td class = "celltitle">Lunes</td>
                       <td class = "celltitle">Martes</td>
@@ -205,6 +140,9 @@
                     <td class = "cell" id="cell42"><a  onclick="colorearCelda('cell42', 'ch42', 'la42')" disabled><label for="ch42" id="la42">27</label><input id="ch42" type = "checkbox" class = "check" value = "D2" style="display: none;"></a></td>
                   </tr>
               </table>
+              <h2 class="res">Las celdas amarillas corresponden a los días en los que debes seleccionar tus horarios, cuando selecciones tu horario en alguna celda, esta se pintará de color verde indicando que has marcado algún horario disponible esa fecha.
+                Si no tuvieras disponibilidad alguno de los días deja la celda en color amarillo. Al terminar pulsa el botón Enviar que se encuentra debajo.
+              </h2>
               <h2 class="res">Si deseas consultar tus resultados, comunícate con el alumno a cargo de la investigación Manuel Chávez S. (manuel.chavez2913@alumnos.udg.mx) Muchas gracias!</h2>
                 <input type = "text" style="display: none;" name = "diccInvisible" id = "diccInvisible">
                 <button type="sumbit" class="botonEnv" style="position: relative; left: 43.8%;" id="Envia" onclick = "enviarHorario()" disabled>Enviar</button><br>
