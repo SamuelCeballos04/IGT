@@ -164,7 +164,16 @@ function onload(inicio, fin){
             document.getElementById(idch).setAttribute("disabled", "true")
         }
         else{
-            document.getElementById(cellID).style.backgroundColor = "#eebb2e"
+            let id = document.getElementById(idch)
+            console.log("IIIIIIIIIIIIIIIIID: ", idch)
+            if (idch == "ch41" || idch == "ch42" || idch == "ch34" || idch == "ch35" || idch == "ch27" || idch == "ch28" || idch == "ch20" || idch == "ch21" || idch == "ch13" || idch == "ch14" || idch == "ch6"|| idch == "ch7"){
+                document.getElementById(idch).setAttribute("disabled", "true")
+                console.log("NOOOOOOOOOOOOOOOOO", i)
+            }
+            else{
+                document.getElementById(cellID).style.backgroundColor = "#eebb2e"
+                console.log("Sí entra", i)
+            }
         }
         
     celda.innerHTML = dy
@@ -194,19 +203,19 @@ async function cerrar(){
     if (band == 0){
         document.getElementById(celda).style.backgroundColor = "#eebb2e"
     }
-    bandcolor = 0
-    for (i = 1; i <= 42; i++){
-        let celda = document.getElementById("cell"+String(i))
-        if (celda.style.backgroundColor == "rgb(238, 187, 46)"){
-            document.getElementById("Envia").disabled = true
-            bandcolor = 1
-            console.log("SUCCESS")
-        }
-    }
-    if (bandcolor == 0){
-        console.log("ACTIVADO CERRAR")
-        document.getElementById("Envia").disabled = false
-    }
+    // bandcolor = 0
+    // for (i = 1; i <= 42; i++){
+    //     let celda = document.getElementById("cell"+String(i))
+    //     if (celda.style.backgroundColor == "rgb(238, 187, 46)"){
+    //         document.getElementById("Envia").disabled = true
+    //         bandcolor = 1
+    //         console.log("SUCCESS")
+    //     }
+    // }
+    // if (bandcolor == 0){
+    //     console.log("ACTIVADO CERRAR")
+    //     document.getElementById("Envia").disabled = false
+    // }
 }
 
 async function closemodal(){
@@ -250,7 +259,7 @@ async function guardarhorario(){
     else{
         mes = String(mes)
     }
-    for (i=43; i<=53; i++){
+    for (i=44; i<=53; i++){
         if(document.getElementById("ch"+String(i)).checked == true){    
             var hora = document.getElementById("la"+String(i)).innerHTML
             let cita = hora
@@ -259,19 +268,19 @@ async function guardarhorario(){
         document.getElementById("ch"+String(i)).checked = false         
     }
     bandcolor = 0
-    for (i = 1; i <= 42; i++){
-        let celda = document.getElementById("cell"+String(i))
-        console.log(celda.style.backgroundColor)
-        if (celda.style.backgroundColor == "rgb(238, 187, 46)"){
-            document.getElementById("Envia").disabled = true
-            bandcolor = 1
-            console.log("ERRRRRRRRRRRRRRRRRRRRRRRRRRROR")
-        }
-    }
-    if (bandcolor == 0){
-        console.log("ACTIVADO GUARDAR")
-        document.getElementById("Envia").disabled = false
-    }
+    // for (i = 1; i <= 42; i++){
+    //     let celda = document.getElementById("cell"+String(i))
+    //     console.log(celda.style.backgroundColor)
+    //     if (celda.style.backgroundColor == "rgb(238, 187, 46)"){
+    //         document.getElementById("Envia").disabled = true
+    //         bandcolor = 1
+    //         console.log("ERRRRRRRRRRRRRRRRRRRRRRRRRRROR")
+    //     }
+    // }
+    // if (bandcolor == 0){
+    //     console.log("ACTIVADO GUARDAR")
+    //     document.getElementById("Envia").disabled = false
+    // }
     let clave = dia + mes
     for (let index = 0; index < arreglohorarios.length; index++){
         if (arreglohorarios[index].id == clave){
@@ -305,6 +314,28 @@ async function guardarhorario(){
 // });
 
 function enviarHorario(){
+    for (var i = 1; i <= 42; i++){
+        celda = document.getElementById("cell"+String(i))
+        if (celda.backgroundColor == "rgb(238, 187, 46)"){
+            console.log("SÍ ENTRAAAAAAAAAAAAAAAAAA")
+            var horasdicc = {id: "", valor: ""}
+            let horas = []
+            let diaC = document.getElementById("dia").innerHTML
+            let mes = document.getElementById("mes").innerHTML
+            mes = parseInt(mes)
+            if (mes < 10){
+                mes = String(mes)
+                mes = "0" + mes
+            }
+            else{
+                mes = String(mes)
+            }
+            let clave = diaC + mes
+            horasdicc.id = clave
+            horasdicc.valor = horas
+            arreglohorarios.push(horasdicc)
+            }
+        }
     $.ajax({
         type:'POST',
         url:'/opciones',
@@ -324,3 +355,98 @@ function enviarHorario(){
         }
     })
 }
+
+function colorearCelda(cellID, checkID, labelID) {
+    document.getElementById("Envia").disabled = false
+    console.log("colorear celda")
+    let diaC = document.getElementById("dia").innerHTML
+    let mes = document.getElementById("mes").innerHTML
+    mes = parseInt(mes)
+    if (mes < 10){
+        mes = String(mes)
+        mes = "0" + mes
+    }
+    else{
+        mes = String(mes)
+    }
+    let clave = diaC + mes
+    console.log("CLAVEEEEEE: ", clave)
+    let horas = []
+    for (let index = 0; index < arreglohorarios.length; index++){
+        console.log("FOOOOOOOOOOOOOor")
+        if (arreglohorarios[index].id == clave){
+            console.log(arreglohorarios)
+            horas = arreglohorarios[index].valor
+            console.log("HORAAAAAAAAAAAAAS: ", horas)
+            for (var i = 44; i <= 53; i++){
+                for (let index = 0; index < horas.length; index++){
+                    if (horas[index] == document.getElementById("la"+String(i)).innerHTML){
+                        document.getElementById("ch"+String(i)).checked = true
+                    }
+                }
+            }
+        }
+    }
+    ch = document.getElementById(checkID)
+      var dia = document.getElementById(labelID).innerHTML
+      console.log("DIA: ", dia)
+      document.getElementById("dia").innerHTML = dia
+      var dt= new Date();
+      var month=dt.getMonth();
+      month = month + 1
+      document.getElementById("mes").innerHTML = month
+      var mesText = ""
+      if (month == 1){
+          mesText = "Enero"
+      }
+      else if (month == 2){
+          mesText = "Febrero"
+      }
+      else if (month == 3){
+          mesText = "Marzo"
+      }
+      else if (month == 4){
+          mesText = "Abril"
+      }
+      else if (month == 5){
+          mesText = "Mayo"
+      }
+      else if (month == 6){
+          mesText = "Junio"
+      }
+      else if (month == 7){
+          mesText = "Julio"
+      }
+      else if (month == 8){
+          mesText = "Agosto"
+      }
+      else if (month == 9){
+          mesText = "Septiembre"
+      }
+      else if (month == 10){
+          mesText = "Octubre"
+      }
+      else if (month == 11){
+          mesText = "Noviembre"
+      }
+      else if (month == 12){
+          mesText = "Diciembre"
+      }
+      console.log("Mes: ", mesText)
+      document.getElementById("diasel").innerHTML = dia + " de " + mesText
+      document.getElementById("celdaSel").innerHTML = cellID
+      var checkbox = document.getElementById(checkID);
+      var menu = document.getElementById("menu"); 
+      checkbox.addEventListener("change", function() {
+        // Verifica si el checkbox está marcado o no
+        if (this.checked) {
+          // Si está marcado, muestra el menú
+          menu.classList.remove("oculto");
+          var celda = document.getElementById(cellID);
+        celda.style.backgroundColor = "#01C929"
+        } else {
+          // Si no está marcado, oculta el menú
+          menu.classList.add("oculto");
+        }
+      }); 
+  }
