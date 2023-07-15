@@ -316,11 +316,13 @@ async function guardarhorario(){
 function enviarHorario(){
     for (var i = 1; i <= 42; i++){
         celda = document.getElementById("cell"+String(i))
-        if (celda.backgroundColor == "rgb(238, 187, 46)"){
-            console.log("SÍ ENTRAAAAAAAAAAAAAAAAAA")
+        var color = String(celda.style.backgroundColor)
+        console.log("CADENAAAAAAAAAAAAAAA", color)
+        if (celda.style.backgroundColor == "rgb(238, 187, 46)"){
+            console.log("---------------------------")
             var horasdicc = {id: "", valor: ""}
             let horas = []
-            let diaC = document.getElementById("dia").innerHTML
+            let diaC = document.getElementById("la"+String(i)).innerHTML
             let mes = document.getElementById("mes").innerHTML
             mes = parseInt(mes)
             if (mes < 10){
