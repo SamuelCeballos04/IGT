@@ -259,7 +259,8 @@ function guardar(participantes){
     let fechaFin = rango.substring(13, 23)
     $.ajax({
         type:'POST',
-        url:'/opciones',
+        //url:'/opciones', //Versión local
+        url:'/igt/opciones', //Versión en línea
         data:{
             bandera: JSON.stringify(1),
             fechaInicioPy: JSON.stringify(fechaInicio),
@@ -269,7 +270,7 @@ function guardar(participantes){
         success:function(response)
         {
             var base_url = window.location.origin;
-            base_url = base_url + "/opciones"
+            base_url = base_url + "/igt/opciones"
             window.location = base_url
             // $("#target").val('')
             // $("#button").prop("disabled",true);

@@ -383,15 +383,17 @@ function enviarHorario(){
         }
     $.ajax({
         type:'POST',
-        url:'/opciones',
+        //url:'/igt/opciones', //Versión local
+        url:'/igt/opciones', // Versión en línea
         data:{
             bandera: JSON.stringify("0"),
             horariosPy: JSON.stringify(arreglohorarios)
         },
-        success:function(response)
-        {
+        success: async function(response)
+        {   
+            var response = await response
             var base_url = window.location.origin;
-            base_url = base_url + "/opciones"
+            base_url = base_url + "/igt/opciones"
             window.location = base_url
             // $("#target").val('')
             // $("#button").prop("disabled",true);
@@ -404,7 +406,7 @@ function enviarHorario(){
 function colorearCelda(cellID, checkID, labelID) {
     document.getElementById("Envia").disabled = false
     console.log("colorear celda")
-    let diaC = document.getElementById("dia").innerHTML
+    let diaC = document.getElementById(labelID).innerHTML
     let mes = document.getElementById("mes").innerHTML
     mes = parseInt(mes)
     if (mes < 10){
@@ -433,65 +435,65 @@ function colorearCelda(cellID, checkID, labelID) {
         }
     }
     ch = document.getElementById(checkID)
-      var dia = document.getElementById(labelID).innerHTML
-      console.log("DIA: ", dia)
-      document.getElementById("dia").innerHTML = dia
-      var dt= new Date();
-      var month=dt.getMonth();
-      month = month + 1
-      document.getElementById("mes").innerHTML = month
-      var mesText = ""
-      if (month == 1){
-          mesText = "Enero"
-      }
-      else if (month == 2){
-          mesText = "Febrero"
-      }
-      else if (month == 3){
-          mesText = "Marzo"
-      }
-      else if (month == 4){
-          mesText = "Abril"
-      }
-      else if (month == 5){
-          mesText = "Mayo"
-      }
-      else if (month == 6){
-          mesText = "Junio"
-      }
-      else if (month == 7){
-          mesText = "Julio"
-      }
-      else if (month == 8){
-          mesText = "Agosto"
-      }
-      else if (month == 9){
-          mesText = "Septiembre"
-      }
-      else if (month == 10){
-          mesText = "Octubre"
-      }
-      else if (month == 11){
-          mesText = "Noviembre"
-      }
-      else if (month == 12){
-          mesText = "Diciembre"
-      }
-      console.log("Mes: ", mesText)
-      document.getElementById("diasel").innerHTML = dia + " de " + mesText
-      document.getElementById("celdaSel").innerHTML = cellID
-      var checkbox = document.getElementById(checkID);
-      var menu = document.getElementById("menu"); 
-      checkbox.addEventListener("change", function() {
-        // Verifica si el checkbox está marcado o no
-        if (this.checked) {
-          // Si está marcado, muestra el menú
-          menu.classList.remove("oculto");
-          var celda = document.getElementById(cellID);
-        celda.style.backgroundColor = "#01C929"
-        } else {
-          // Si no está marcado, oculta el menú
-          menu.classList.add("oculto");
-        }
-      }); 
+    var dia = document.getElementById(labelID).innerHTML
+    console.log("DIA: ", dia)
+    document.getElementById("dia").innerHTML = dia
+    var dt= new Date();
+    var month=dt.getMonth();
+    month = month + 1
+    document.getElementById("mes").innerHTML = month
+    var mesText = ""
+    if (month == 1){
+        mesText = "Enero"
+    }
+    else if (month == 2){
+        mesText = "Febrero"
+    }
+    else if (month == 3){
+        mesText = "Marzo"
+    }
+    else if (month == 4){
+        mesText = "Abril"
+    }
+    else if (month == 5){
+        mesText = "Mayo"
+    }
+    else if (month == 6){
+        mesText = "Junio"
+    }
+    else if (month == 7){
+        mesText = "Julio"
+    }
+    else if (month == 8){
+        mesText = "Agosto"
+    }
+    else if (month == 9){
+        mesText = "Septiembre"
+    }
+    else if (month == 10){
+        mesText = "Octubre"
+    }
+    else if (month == 11){
+        mesText = "Noviembre"
+    }
+    else if (month == 12){
+        mesText = "Diciembre"
+    }
+    console.log("Mes: ", mesText)
+    document.getElementById("diasel").innerHTML = dia + " de " + mesText
+    document.getElementById("celdaSel").innerHTML = cellID
+    var checkbox = document.getElementById(checkID);
+    var menu = document.getElementById("menu"); 
+    checkbox.addEventListener("change", function() {
+    // Verifica si el checkbox está marcado o no
+    if (this.checked) {
+        // Si está marcado, muestra el menú
+        menu.classList.remove("oculto");
+        var celda = document.getElementById(cellID);
+    celda.style.backgroundColor = "#01C929"
+    } else {
+        // Si no está marcado, oculta el menú
+        menu.classList.add("oculto");
+    }
+    }); 
   }

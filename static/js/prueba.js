@@ -718,8 +718,8 @@ async function enviar(){
     a.href = "/opciones"
     document.getElementById("link").setAttribute("href", "opciones")
     const request = new XMLHttpRequest()
-    request.open('POST', `/resultados/${JSON.stringify(seccion2)}/${JSON.stringify(seccion3)}/${JSON.stringify(seccion4)}`) //Version Local
-    // request.open('POST', `/igt/resultados/${JSON.stringify(seccion2)}/${JSON.stringify(seccion3)}/${JSON.stringify(seccion4)}`) //Version En linea
+    //request.open('POST', `/resultados/${JSON.stringify(seccion2)}/${JSON.stringify(seccion3)}/${JSON.stringify(seccion4)}`) //Version Local
+    request.open('POST', `/igt/resultados/${JSON.stringify(seccion2)}/${JSON.stringify(seccion3)}/${JSON.stringify(seccion4)}`) //Version En linea
     request.send();
     // $.ajax({
     //     type:'POST',
