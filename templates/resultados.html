@@ -74,7 +74,7 @@
                 </table>   
                  -->
                 <h2 id="mesActual" style="text-align: center;"></h2>
-                <table class = "table">
+                <table class = "table" id="TablaMes">
                   <tr>
                       <td class = "celltitle">Lunes</td>
                       <td class = "celltitle">Martes</td>
@@ -143,7 +143,7 @@
               <br>
 
               <h2 id="mesSig" style="text-align: center;" display="none"></h2>
-                <table class = "table" >
+                <table class = "table" style="display: none;" id="mesSigT">
                   <tr>
                       <td class = "celltitle">Lunes</td>
                       <td class = "celltitle">Martes</td>
@@ -214,7 +214,7 @@
               </h2>
               <h2 class="res">Si deseas consultar tus resultados, comunícate con el alumno a cargo de la investigación Manuel Chávez S. (manuel.chavez2913@alumnos.udg.mx) Muchas gracias!</h2>
                 <input type = "text" style="display: none;" name = "diccInvisible" id = "diccInvisible">
-                <button type="sumbit" class="botonEnv" style="position: relative; left: 43.8%;" id="Envia" onclick = "enviarHorario()" disabled>Enviar</button><br>
+                <button type="button" class="botonEnv" style="position: relative; left: 43.8%;" id="Envia" onclick = "enviarHorario()" disabled>Enviar</button><br>
 
                 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" language="javascript" type="text/javascript"></script>
                 <!-- <script type="text/javascript">
