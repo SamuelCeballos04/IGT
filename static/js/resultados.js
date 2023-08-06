@@ -564,7 +564,8 @@ async function guardarhorario(){
 // });
 
 function enviarHorario(){
-    for (var i = 1; i <= 42; i++){
+    for (var i = 1; i <= 95; i++){
+        if((i>=1 && i<=42)||(i>=54 && i<=95)){
         celda = document.getElementById("cell"+String(i))
         var color = String(celda.style.backgroundColor)
         console.log("CADENAAAAAAAAAAAAAAA", color)
@@ -582,16 +583,24 @@ function enviarHorario(){
             else{
                 mes = String(mes)
             }
+            if (diaC < 10){
+                diaC = String(diaC)
+                diaC = "0" + diaC
+            }
+            else{
+                diaC = String(diaC)
+            }
             let clave = diaC + mes
             horasdicc.id = clave
             horasdicc.valor = horas
             arreglohorarios.push(horasdicc)
             }
         }
+        }
     $.ajax({
         type:'POST',
-        url:'/opciones', //Versión local
-        // url:'/igt/opciones', // Versión en línea
+        //url:'/opciones', //Versión local
+        url:'/igt/opciones', // Versión en línea
         data:{
             bandera: JSON.stringify("0"),
             horariosPy: JSON.stringify(arreglohorarios)
@@ -600,8 +609,8 @@ function enviarHorario(){
         {   
             var response = await response
             var base_url = window.location.origin;
-            // base_url = base_url + "/igt/opciones"   //versión en linea
-            base_url = base_url + "/opciones"       //versión local
+            base_url = base_url + "/igt/opciones"   //versión en linea
+            //base_url = base_url + "/opciones"       //versión local
             window.location = base_url
             // $("#target").val('')
             // $("#button").prop("disabled",true);
