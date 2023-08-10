@@ -393,46 +393,183 @@ def usuariosInfoExcel():
         '''exportar = pd.DataFrame({"ID":id, "Fecha":fecha, "Escolaridad":escolaridad, "Carrera": carrera, "Genero": genero, "Correo": correo, "Telefono": telefono, "DASS21 Depression": depresionL, "DASS21 Anxiety": ansiedadL, "DASS21 Stress": estresL, "Seed": seed}) 
         exportar.to_excel("experimentos\sujetos.xlsx", sheet_name="sujetos", index=False)''' 
 
+# def horariosExcel():
+#     horas = ["9", "10", "11", "12", "1", "2", "3", "4", "5", "6"]
+#     dias = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes"]
+#     citaLunes = []
+#     citaMartes = []
+#     citaMiercoles = []
+#     citaJueves = []
+#     citaViernes = []
+#     if database:
+#         for dia in dias:
+#             for hora in horas:
+#                 cursor = database.cursor()
+#                 cursor.execute("select encuesta.id_participante from participante join encuesta on participante.id_participante=encuesta.id_participante where (cita->%s)::jsonb ? %s and participante.expterminado = false", (dia, hora))
+#                 data = cursor.fetchall()
+#                 if len(data) == 0:
+#                     data.append("Sin participantes")
+#                 if dia == "Lunes":
+#                     citaLunes.append(data)
+#                 elif dia == "Martes":
+#                     citaMartes.append(data)
+#                 elif dia == "Miercoles":
+#                     citaMiercoles.append(data)
+#                 elif dia == "Jueves":
+#                     citaJueves.append(data)
+#                 elif dia == "Viernes":
+#                     citaViernes.append(data)
+#                     print("Data: ", data)
+#     print("Tipo de data: ", type(data))
+#     print("Lunes: ", citaLunes)
+#     print("Martes: ", citaMartes)
+#     print("Miercoles: ", citaMiercoles)
+#     print("Jueves: ", citaJueves)
+#     print("Viernes: ", citaViernes)
+#     col1 = "Horas"
+#     col2 = dias[0]
+#     col3 = dias[1]
+#     col4 = dias[2]
+#     col5 = dias[3]
+#     col6 = dias[4]
+#     exportar = pd.DataFrame({col1:horas,col2:citaLunes,col3:citaMartes,col4:citaMiercoles,col5:citaJueves,col6:citaViernes})
+#     if database:
+#         cursor = database.cursor()
+#         cursor.execute("select id_participante, nombre, apellidos, correo, telefono from participante")
+#         data = cursor.fetchall()
+#     id = []
+#     nombres = []
+#     apellidos = []
+#     correo = []
+#     telefono = []
+#     for datos in data:
+#         j = 0
+#         for i in datos:
+#             if j == 0:
+#                 id.append(i)
+#             elif j == 1:
+#                 nombres.append(i)
+#             elif j == 2:
+#                 apellidos.append(i)
+#             elif j == 3:
+#                 correo.append(i)
+#             elif j == 4:
+#                 telefono.append(i)
+#             j+=1
+#     col1 = "ID"
+#     col2 = "Nombre"
+#     col3 = "Apellidos"
+#     col4 = "Correo"
+#     col5 = "Teléfono"
+#     exportar2 = pd.DataFrame({col1:id,col2:nombres,col3:apellidos,col4:correo,col5:telefono})
+
+#     exportar.to_csv("horarios/horarios.csv", encoding='utf-8-sig')
+#     exportar2.to_csv("horarios/participantes.csv", encoding='utf-8-sig')
+
 def horariosExcel():
-    horas = ["9", "10", "11", "12", "1", "2", "3", "4", "5", "6"]
-    dias = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes"]
-    citaLunes = []
-    citaMartes = []
-    citaMiercoles = []
-    citaJueves = []
-    citaViernes = []
+    horas = ["9", "10", "11", "12", "13", "14", "15", "16", "17", "18", ""]
+    horariosPorSujeto = []
+    sujetosList = []
+    diasExistList = []
+    diasExistListStr = [] #Días que tienen datos ordenados (contiene elementos String)
+    dateFormat = [] #Encabezados del Excel (contiene elementos String)
+    diasExistDict = {} #Dia:lista con los sujetos 
+    auxList = ["", "", "", "", "", "", "", "", "", "", ""]
+    resolHoras = {"9:00 a.m.":0, "10:00 a.m.":1, "11:00 a.m.":2, "12:00 p.m.":3,
+                  "1:00 p.m.":4, "2:00 p.m.":5, "3:00 p.m.":6, "4:00 p.m.":7, 
+                  "5:00 p.m.":8,"6:00 p.m.":9}
     if database:
-        for dia in dias:
-            for hora in horas:
-                cursor = database.cursor()
-                cursor.execute("select encuesta.id_participante from participante join encuesta on participante.id_participante=encuesta.id_participante where (cita->%s)::jsonb ? %s and participante.expterminado = false", (dia, hora))
-                data = cursor.fetchall()
-                if len(data) == 0:
-                    data.append("Sin participantes")
-                if dia == "Lunes":
-                    citaLunes.append(data)
-                elif dia == "Martes":
-                    citaMartes.append(data)
-                elif dia == "Miercoles":
-                    citaMiercoles.append(data)
-                elif dia == "Jueves":
-                    citaJueves.append(data)
-                elif dia == "Viernes":
-                    citaViernes.append(data)
-                    print("Data: ", data)
-    print("Tipo de data: ", type(data))
-    print("Lunes: ", citaLunes)
-    print("Martes: ", citaMartes)
-    print("Miercoles: ", citaMiercoles)
-    print("Jueves: ", citaJueves)
-    print("Viernes: ", citaViernes)
-    col1 = "Horas"
-    col2 = dias[0]
-    col3 = dias[1]
-    col4 = dias[2]
-    col5 = dias[3]
-    col6 = dias[4]
-    exportar = pd.DataFrame({col1:horas,col2:citaLunes,col3:citaMartes,col4:citaMiercoles,col5:citaJueves,col6:citaViernes})
+        cursor = database.cursor()
+
+        cursor.execute("select id_participante from encuesta order by id_participante asc")
+        sujetos = cursor.fetchall()
+        lenSujetos = len(sujetos)
+        cursor.execute("select cita from encuesta order by id_participante asc")
+        citasTotal = cursor.fetchall()
+        cursor.execute("SELECT DISTINCT value->>'id' AS id FROM encuesta, json_array_elements(cita) AS value;")
+        diasExist = cursor.fetchall()
+
+    m = 0
+    while m < len(diasExist):
+        n = 0
+        while n < len(diasExist[m]):
+            stringAux = ""
+            stringAux = diasExist[m][n]
+            stringAux = stringAux[2:] + stringAux[:2]
+            diasExistList.append(int(stringAux))
+            n+=1
+        m+=1
+    diasExistList.sort()
+    for elemento in diasExistList:
+        aux = str(elemento)
+        auxCopy = aux
+        mesString = aux[:-1]
+        if int(mesString) > 10:
+            mesString = "0" + aux[:-2]
+        diaString = auxCopy[-2:]
+        temp = diaString + mesString
+        diasExistListStr.append(temp)
+        dateFormat.append(diaString + "/" + mesString)
+
+    #Repetimos los horarios tantas veces como haya sujetos
+    for sujeto in range(lenSujetos): 
+        for hora in horas:
+            horariosPorSujeto.append(hora)
+
+    #Lista total con repetición de los sujetos
+    for sujeto in sujetos:
+        i = 0
+        while i<=11:
+            if i == 10:
+                sujetosList.append('')
+                break
+            else:
+                sujetosList.append(sujeto[0])
+                i+=1
+    for elem in diasExistListStr:
+        diasExistDict.setdefault(elem, list())
+
+    #Primer corchete es iterador de usuarios, tercer corchete es el iterador de días para cada usuario
+    #print("Cita: ", len(citasTotal[0][0])) #Len CitasTotal[X][0] = Cantidad de días para X usuario
+    #print("Usuarios: ", len(citasTotal)) #Len CitasTotal = Cantidad de usuarios
+    aux1 = 0
+    while aux1 < len(citasTotal):
+        aux = 0
+        usuarioDias = []
+        contDias = 0
+        while contDias < len(citasTotal[aux1][0]):
+            usuarioDias.append(citasTotal[aux1][0][contDias]['id'])
+            contDias+=1
+        set_dif = set(diasExistListStr).symmetric_difference(set(usuarioDias))
+        temp3 = list(set_dif)
+        for space in temp3:
+            for iterador in range(11):
+                diasExistDict[space].append('')
+        while aux < len(citasTotal[aux1][0]):
+            idDia = citasTotal[aux1][0][aux]['id']
+            valores = citasTotal[aux1][0][aux]['valor']
+            for valor in valores:
+                auxList[resolHoras[valor]] = 'X'
+            for valor in auxList:
+                diasExistDict[idDia].append(valor)
+            auxList = ["", "", "", "", "", "", "", "", "", "", ""]
+            aux+=1
+        aux1 += 1
+    DFDict = {}
+    DFDict.setdefault("IDSujeto", sujetosList)
+    DFDict.setdefault("Horas", horariosPorSujeto)
+
+    aux4 = 0
+    for pagina in diasExistDict:
+        dateFormatAux = dateFormat[aux4]
+        diasExistDictAux = diasExistDict[pagina]
+        DFDict.setdefault(dateFormatAux, diasExistDictAux)
+        aux4 += 1
+
+    exportar2 = pd.DataFrame(DFDict)
+    exportar2.to_csv("horarios/horarios.csv", encoding='utf-8-sig')
+
+def sujetosExcel():
     if database:
         cursor = database.cursor()
         cursor.execute("select id_participante, nombre, apellidos, correo, telefono from participante")
@@ -462,8 +599,6 @@ def horariosExcel():
     col4 = "Correo"
     col5 = "Teléfono"
     exportar2 = pd.DataFrame({col1:id,col2:nombres,col3:apellidos,col4:correo,col5:telefono})
-
-    exportar.to_csv("horarios/horarios.csv", encoding='utf-8-sig')
     exportar2.to_csv("horarios/participantes.csv", encoding='utf-8-sig')
 
 @app.route('/')
@@ -671,6 +806,7 @@ def descargarArchivos(req_path):
         return redirect(url_for('opciones'))
     else:
         horariosExcel()
+        sujetosExcel()
         BASE_DIR = '../www-html/horarios/'
         # Joining the base and the requested path
         abs_path = os.path.join(BASE_DIR, req_path)
