@@ -436,6 +436,7 @@ async function cerrar(){
     var celda = document.getElementById("celdaSel").innerHTML
     console.log("CELDA: ", celda)
     menu.classList.add("oculto");
+    document.getElementById(celda).style.backgroundColor = "#eebb2e"
     for (i=44; i<=53; i++){
         if(document.getElementById("ch"+String(i)).checked == true){
             band = 1
