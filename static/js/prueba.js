@@ -224,8 +224,8 @@ async function activar(pregunta, valor){
         if (bandConf == 1 && bandConf2 == 1){
             document.getElementById("resultados").disabled = false
             var a = document.getElementById("link");
-            //a.href = "/opciones" //Version Local
-            a.href = "/igt/opciones" //Version En linea
+            a.href = "/opciones" //Version Local
+            //a.href = "/igt/opciones" //Version En linea
             document.getElementById("link").setAttribute("href", "opciones")
         }
         // if (pregunta == "1"){
@@ -718,8 +718,8 @@ async function enviar(){
     a.href = "/opciones"
     document.getElementById("link").setAttribute("href", "opciones")
     const request = new XMLHttpRequest()
-    //request.open('POST', `/resultados/${JSON.stringify(seccion2)}/${JSON.stringify(seccion3)}/${JSON.stringify(seccion4)}`) //Version Local
-    request.open('POST', `/igt/resultados/${JSON.stringify(seccion2)}/${JSON.stringify(seccion3)}/${JSON.stringify(seccion4)}`) //Version En linea
+    request.open('POST', `/resultados/${JSON.stringify(seccion2)}/${JSON.stringify(seccion3)}/${JSON.stringify(seccion4)}`) //Version Local
+    //request.open('POST', `/igt/resultados/${JSON.stringify(seccion2)}/${JSON.stringify(seccion3)}/${JSON.stringify(seccion4)}`) //Version En linea
     request.send();
     // $.ajax({
     //     type:'POST',

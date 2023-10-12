@@ -600,8 +600,8 @@ function enviarHorario(){
         }
     $.ajax({
         type:'POST',
-        //url:'/opciones', //Versión local
-        url:'/igt/opciones', // Versión en línea
+        url:'/opciones', //Versión local
+        //url:'/igt/opciones', // Versión en línea
         data:{
             bandera: JSON.stringify("0"),
             horariosPy: JSON.stringify(arreglohorarios)
@@ -610,8 +610,8 @@ function enviarHorario(){
         {   
             var response = await response
             var base_url = window.location.origin;
-            base_url = base_url + "/igt/opciones"   //versión en linea
-            //base_url = base_url + "/opciones"       //versión local
+            //base_url = base_url + "/igt/opciones"   //versión en linea
+            base_url = base_url + "/opciones"       //versión local
             window.location = base_url
             // $("#target").val('')
             // $("#button").prop("disabled",true);

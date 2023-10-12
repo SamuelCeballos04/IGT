@@ -259,8 +259,8 @@ function guardar(participantes){
     let fechaFin = rango.substring(13, 23)
     $.ajax({
         type:'POST',
-        //url:'/opciones', //Versión local
-        url:'/igt/opciones', //Versión en línea
+        url:'/opciones', //Versión local
+        //url:'/igt/opciones', //Versión en línea
         data:{
             bandera: JSON.stringify(1),
             fechaInicioPy: JSON.stringify(fechaInicio),
